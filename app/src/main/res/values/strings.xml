@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">MyLearning</string>
+    <string name="search_files">Tìm kiếm files..</string>
+    <string name="filter_ALL">Tất cả</string>
+    <string name="filter_document">Tài liệu</string>
+    <string name="filter_image">Hình ảnh</string>
+    <string name="filter_video">Videos</string>
+    <string name="filter_audio">Âm thanh</string>
+
+    <string name="no_files">Không có file</string>
+    <string name="no_files_found">Không tìm thấy file nào</string>
+    <string name="no_files_description">Thử thay đổi bộ lọc hoặc quét lại để tìm file</string>
+
+    <string name="scanning_files">Đang quét file...</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">Cần cấp quyền</string>
+    <string name="permission_description">Ứng dụng cần quyền truy cập để hiển thị các file trong thiết bị của bạn.</string>
+    <string name="grant_permission">Cấp quyền</string>
+    <string name="later">Để sau</string>
+    <string name="permission_denied_forever">Bạn đã từ chối quyền vĩnh viễn. Vui lòng mở Settings để cấp quyền.</string>
+    <string name="open_settings">Mở Settings</string>
+
+    <!-- Actions -->
+    <string name="scan_files">Quét file</string>
+    <string name="more_options">Tùy chọn khác</string>
+    <string name="file_icon">Icon file</string>
+    <string name="open">Mở</string>
+    <string name="share">Chia sẻ</string>
+    <string name="delete">Xóa</string>
+    <string name="details">Chi tiết</string>
+    <string name="cancel">Hủy</string>
+
+    <!-- Dialogs -->
+    <string name="delete_file">Xóa file?</string>
+    <string name="delete_file_message">Bạn có chắc muốn xóa file này không? Hành động này không thể hoàn tác.</string>
+    <string name="file_deleted">Đã xóa file</string>
+    <string name="file_delete_error">Không thể xóa file</string>
+
+    <!-- File details -->
+    <string name="file_details">Chi tiết file</string>
+    <string name="name">Tên:</string>
+    <string name="path">Đường dẫn:</string>
+    <string name="size">Kích thước:</string>
+    <string name="type">Loại:</string>
+    <string name="last_modified">Sửa đổi lần cuối:</string>
+
+    <!-- Toast messages -->
+    <string name="no_app_to_open">Không có ứng dụng nào để mở file này</string>
+    <string name="files_found">Tìm thấy %d file</string>
+</resources>
