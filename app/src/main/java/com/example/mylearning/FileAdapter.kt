@@ -21,8 +21,8 @@ class FileAdapter (
     }
 
     private class FileDiffCallback(
-        private var oldList: List<FileModel>,
-        private var newList: List<FileModel>
+        private val oldList: List<FileModel>,
+        private val newList: List<FileModel>
     ):DiffUtil.Callback(){
         override fun getOldListSize(): Int {
             return oldList.size
