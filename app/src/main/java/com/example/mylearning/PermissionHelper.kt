@@ -58,7 +58,7 @@ class PermissionHelper (
         }
     }
 
-    fun shouldShowRationable(): Boolean {
+    fun shouldShowRationale(): Boolean {
         val permissions = getRequiresPermissions()
         return permissions.any { permission ->
             ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
