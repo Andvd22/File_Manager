@@ -1,11 +1,11 @@
-package com.example.mylearning
+package com.example.mylearning.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import com.example.mylearning.databinding.ItemFileBinding
+import com.example.mylearning.model.FileModel
 
 class FileAdapter (
     private val onItemClick: (FileModel) -> Unit,
@@ -23,7 +23,7 @@ class FileAdapter (
     private class FileDiffCallback(
         private val oldList: List<FileModel>,
         private val newList: List<FileModel>
-    ):DiffUtil.Callback(){
+    ): DiffUtil.Callback(){
         override fun getOldListSize(): Int {
             return oldList.size
         }

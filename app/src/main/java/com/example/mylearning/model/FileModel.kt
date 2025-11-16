@@ -1,6 +1,10 @@
-package com.example.mylearning
+package com.example.mylearning.model
 
+import com.example.mylearning.R
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 data class FileModel(
     val file: File,
@@ -45,8 +49,8 @@ data class FileModel(
      * Format thời gian sửa đổi cuối cùng
      */
     fun getFormattedDate(): String {
-        val formatter = java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", java.util.Locale.getDefault())
-        return formatter.format(java.util.Date(lastModified))
+        val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        return formatter.format(Date(lastModified))
     }
 }
 

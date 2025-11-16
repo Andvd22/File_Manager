@@ -1,4 +1,4 @@
-package com.example.mylearning
+package com.example.mylearning.util
 
 import android.Manifest
 import android.app.Activity
@@ -10,7 +10,6 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
-import android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 

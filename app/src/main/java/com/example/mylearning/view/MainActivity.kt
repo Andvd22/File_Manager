@@ -1,4 +1,4 @@
-package com.example.mylearning
+package com.example.mylearning.view
 
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
@@ -7,18 +7,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
+import com.example.mylearning.adapter.FileAdapter
+import com.example.mylearning.util.FileScanner
+import com.example.mylearning.util.PermissionHelper
+import com.example.mylearning.R
 import com.example.mylearning.databinding.ActivityMainBinding
+import com.example.mylearning.model.FileModel
+import com.example.mylearning.model.FileType
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import java.io.File
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupRecyclerView(){
         fileAdapter = FileAdapter(
             onItemClick = {},
-            onMoreClick = {file -> showFileOptions(file)}
+            onMoreClick = { file -> showFileOptions(file) }
         )
         binding.recyclerView.adapter = fileAdapter
     }
@@ -59,7 +61,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnLater.setOnClickListener {
             permissionHelper.setUserSaidLater(true)
-            finish()
+            showMainUI()
+//            finish()
         }
 
         binding.fabScan.setOnClickListener {
@@ -70,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.etSearch.addTextChangedListener{ text ->
+        binding.etSearch.addTextChangedListener { text ->
             filterFiles(text?.toString()?:"")
         }
 
@@ -148,7 +151,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG,"Bắt đầu quét file với COROUTINES")
         scanJob = lifecycleScope.launch {
             try {
-                val files = FileScanner.scanFileWithCoroutine(
+                val files = FileScanner.Companion.scanFileWithCoroutine(
                     fileType = currentFileType,
                     onProgress = { file ->
                         //optional: update ui

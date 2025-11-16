@@ -1,13 +1,14 @@
-package com.example.mylearning
+package com.example.mylearning.util
 
-import android.content.ContentValues.TAG
+import android.content.ContentValues
 import android.os.Environment
 import android.util.Log
+import com.example.mylearning.model.FileModel
+import com.example.mylearning.model.FileType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import java.io.File
-import kotlin.math.log
 
 class FileScanner {
     companion object {
@@ -15,17 +16,20 @@ class FileScanner {
             directory: File = Environment.getExternalStorageDirectory(),
             fileType: FileType = FileType.ALL,
             onProgress: (FileModel) -> Unit = {}
-        ): List<FileModel> = withContext(Dispatchers.IO){
-            Log.d(TAG, "🚀 [COROUTINE] Bắt đầu quét file với Coroutine...")
+        ): List<FileModel> = withContext(Dispatchers.IO) {
+            Log.d(ContentValues.TAG, "🚀 [COROUTINE] Bắt đầu quét file với Coroutine...")
             val startTime = System.currentTimeMillis()
             try {
                 val files = mutableListOf<FileModel>()
                 scanDirectoryRecursive(directory, fileType, files, onProgress)
                 val duration = System.currentTimeMillis() - startTime
-                Log.d(TAG, "🚀 [COROUTINE] Hoàn thành! Tìm thấy ${files.size} files trong ${duration}ms")
+                Log.d(
+                    ContentValues.TAG,
+                    "🚀 [COROUTINE] Hoàn thành! Tìm thấy ${files.size} files trong ${duration}ms"
+                )
                 files
-            }catch(e: Exception){
-                Log.e(TAG, "🚀 [COROUTINE] Lỗi: ${e.message}", e)
+            } catch (e: Exception) {
+                Log.e(ContentValues.TAG, "🚀 [COROUTINE] Lỗi: ${e.message}", e)
                 throw e
             }
         }
@@ -33,14 +37,17 @@ class FileScanner {
         suspend fun scanMutipleFoldersParallel(
             directories: List<File>,
             fileType: FileType = FileType.ALL
-        ): List<FileModel> = withContext(Dispatchers.IO){
-            Log.d(TAG, "⚡ [PARALLEL] Bắt đầu quét ${directories.size} folders song song...")
+        ): List<FileModel> = withContext(Dispatchers.IO) {
+            Log.d(
+                ContentValues.TAG,
+                "⚡ [PARALLEL] Bắt đầu quét ${directories.size} folders song song..."
+            )
             val startTime = System.currentTimeMillis()
 
             val deferredResult = directories.map { directory ->
                 async {
                     val files = mutableListOf<FileModel>()
-                    scanDirectoryRecursive(directory, fileType, files){}
+                    scanDirectoryRecursive(directory, fileType, files) {}
                     files
                 }
             }
@@ -48,7 +55,10 @@ class FileScanner {
             val allFiles = deferredResult.flatMap { it.await() }
 
             val duration = System.currentTimeMillis() - startTime
-            Log.d(TAG, "⚡ [PARALLEL] Hoàn thành! Tìm thấy ${allFiles.size} files trong ${duration}ms")
+            Log.d(
+                ContentValues.TAG,
+                "⚡ [PARALLEL] Hoàn thành! Tìm thấy ${allFiles.size} files trong ${duration}ms"
+            )
             allFiles
         }
 
@@ -75,11 +85,11 @@ class FileScanner {
                             }
                         }
                     } catch (e: SecurityException) {
-                        Log.w(TAG, "Ko the doc: ${file.path}")
+                        Log.w(ContentValues.TAG, "Ko the doc: ${file.path}")
                     }
                 }
             } catch (e: Exception) {
-                Log.e(TAG, "Lỗi khi quét directory ${directory.path}: ${e.message}")
+                Log.e(ContentValues.TAG, "Lỗi khi quét directory ${directory.path}: ${e.message}")
             }
         }
 
@@ -107,12 +117,12 @@ class FileScanner {
         }
 
         suspend fun quickScan(directory: File): List<FileModel> =
-            withContext(Dispatchers.IO){
+            withContext(Dispatchers.IO) {
                 val files = mutableListOf<FileModel>()
                 directory.listFiles()?.forEach { file ->
                     try {
                         files.add(FileModel(file))
-                    }catch (e: Exception){
+                    } catch (e: Exception) {
 
                     }
                 }
