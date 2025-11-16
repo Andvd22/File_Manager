@@ -397,7 +397,7 @@ class MainActivity : AppCompatActivity() {
         val hasPermission = permissionHelper.handleActivityResult(requestCode)
 
         if (hasPermission) {
-            checkPermissionAndProceed()
+            showMainUI()
         } else {
             showPermissionUI()
         }
@@ -405,7 +405,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (permissionHelper.hasStoragePermission() && allFiles.isEmpty()) {
+        if (permissionHelper.hasStoragePermission() && allFiles.isEmpty()  && scanJob?.isActive != true) {
             checkPermissionAndProceed()
         }
     }
