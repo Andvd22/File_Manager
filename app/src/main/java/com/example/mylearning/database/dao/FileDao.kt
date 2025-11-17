@@ -34,6 +34,9 @@ interface FileDao {
     @Query("DELETE FROM files WHERE path= :path")
     suspend fun deleteFileByPath(path: String)
 
+    @Query("DELETE FROM files WHERE id = :id")
+    suspend fun deleteFileById(id: Long)
+
     @Query("DELETE FROM files")
     suspend fun clearAllFile()
 

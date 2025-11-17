@@ -1,6 +1,7 @@
 package com.example.mylearning.model
 
 import com.example.mylearning.R
+import com.example.mylearning.database.entity.FileEntity
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -51,6 +52,28 @@ data class FileModel(
     fun getFormattedDate(): String {
         val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
         return formatter.format(Date(lastModified))
+    }
+
+    fun FileModel.toEntity(): FileEntity{
+        val type = determineFileType()
+        return FileEntity(
+            path = this.path,
+            name = this.name,
+            size = this.size,
+            extension = this.extension,
+            lastModified = this.lastModified,
+            fileType = type.name,
+            isDirectory = this.isDirectory
+        )
+    }
+
+    fun FileModel.determineFileType(): FileType {
+        if(isDirectory) return FileType.ALL
+
+        val extension = this.extension.lowercase()
+        return FileType.entries.firstOrNull{type ->
+            type != FileType.ALL && extension in type.getExtensions()
+        } ?: FileType.ALL
     }
 }
 
