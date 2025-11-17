@@ -54,27 +54,7 @@ data class FileModel(
         return formatter.format(Date(lastModified))
     }
 
-    fun FileModel.toEntity(): FileEntity{
-        val type = determineFileType()
-        return FileEntity(
-            path = this.path,
-            name = this.name,
-            size = this.size,
-            extension = this.extension,
-            lastModified = this.lastModified,
-            fileType = type.name,
-            isDirectory = this.isDirectory
-        )
-    }
 
-    fun FileModel.determineFileType(): FileType {
-        if(isDirectory) return FileType.ALL
-
-        val extension = this.extension.lowercase()
-        return FileType.entries.firstOrNull{type ->
-            type != FileType.ALL && extension in type.getExtensions()
-        } ?: FileType.ALL
-    }
 }
 
 /**
@@ -98,4 +78,26 @@ enum class FileType{
             ARCHIVE -> listOf("zip", "rar", "7z", "tar", "gz")
         }
     }
+}
+
+fun FileModel.toEntity(): FileEntity{
+    val type = determineFileType()
+    return FileEntity(
+        path = this.path,
+        name = this.name,
+        size = this.size,
+        extension = this.extension,
+        lastModified = this.lastModified,
+        fileType = type.name,
+        isDirectory = this.isDirectory
+    )
+}
+
+fun FileModel.determineFileType(): FileType {
+    if(isDirectory) return FileType.ALL
+
+    val extension = this.extension.lowercase()
+    return FileType.entries.firstOrNull{type ->
+        type != FileType.ALL && extension in type.getExtensions()
+    } ?: FileType.ALL
 }
