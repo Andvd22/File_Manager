@@ -4,22 +4,22 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import com.example.mylearning.adapter.FileAdapter
-import com.example.mylearning.util.FileScanner
 import com.example.mylearning.util.PermissionHelper
 import com.example.mylearning.R
 import com.example.mylearning.databinding.ActivityMainBinding
 import com.example.mylearning.model.FileModel
 import com.example.mylearning.model.FileType
+import com.example.mylearning.viewmodel.FileViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -27,13 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var permissionHelper: PermissionHelper
     private lateinit var fileAdapter: FileAdapter
 
-    private var allFiles = listOf<FileModel>()
-    private var currentFileType = FileType.ALL
-    private var scanJob: Job? = null
-
-    companion object {
-        private const val TAG = "MainActivity"
-    }
+    private val viewModel: FileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,26 +37,24 @@ class MainActivity : AppCompatActivity() {
         permissionHelper = PermissionHelper(this)
         setupRecyclerView()
         setupListeners()
+        observeViewModel()
         checkPermissionAndProceed()
     }
 
     private fun setupRecyclerView(){
         fileAdapter = FileAdapter(
-            onItemClick = {},
+            onItemClick = { file -> handleFileClick(file)},
             onMoreClick = { file -> showFileOptions(file) }
         )
         binding.recyclerView.adapter = fileAdapter
     }
 
     private fun setupListeners(){
-        binding.btnGrantPermission.setOnClickListener {
-            requestPermission()
-        }
+        binding.btnGrantPermission.setOnClickListener { requestPermission() }
 
         binding.btnLater.setOnClickListener {
             permissionHelper.setUserSaidLater(true)
             showMainUI()
-//            finish()
         }
 
         binding.fabScan.setOnClickListener {
@@ -74,28 +66,31 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.etSearch.addTextChangedListener { text ->
-            filterFiles(text?.toString()?:"")
+            viewModel.updateQuery(text?.toString().orEmpty())
         }
 
-        binding.chipAll.setOnClickListener {
-            currentFileType = FileType.ALL
-            applyFilter()
+        binding.chipAll.setOnClickListener { applyFilter(FileType.ALL) }
+        binding.chipDocument.setOnClickListener { applyFilter(FileType.DOCUMENT) }
+        binding.chipImage.setOnClickListener { applyFilter(FileType.IMAGE) }
+        binding.chipVideo.setOnClickListener { applyFilter(FileType.VIDEO) }
+        binding.chipAudio.setOnClickListener { applyFilter(FileType.AUDIO) }
+    }
+
+    private fun observeViewModel(){
+        lifecycleScope.launch {
+            viewModel.files.collectLatest { files ->
+                fileAdapter.submitList(files)
+                when {
+                    files.isEmpty() -> showEmptyState()
+                    else -> showMainUI()
+                }
+            }
         }
-        binding.chipDocument.setOnClickListener {
-            currentFileType = FileType.DOCUMENT
-            applyFilter()
-        }
-        binding.chipImage.setOnClickListener {
-            currentFileType = FileType.IMAGE
-            applyFilter()
-        }
-        binding.chipVideo.setOnClickListener {
-            currentFileType = FileType.VIDEO
-            applyFilter()
-        }
-        binding.chipAudio.setOnClickListener {
-            currentFileType = FileType.AUDIO
-            applyFilter()
+
+        lifecycleScope.launch {
+            viewModel.isLoading.collectLatest { loading ->
+                if(loading) showLoadingState() else showMainUI()
+            }
         }
     }
 
@@ -142,67 +137,15 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,"Cần cấp quyền để quét file", Toast.LENGTH_SHORT).show()
             return
         }
-        scanJob?.cancel()
-        showLoadingState()
-        scanWithCoroutines()
+        viewModel.refresh()
     }
 
-    private fun scanWithCoroutines(){
-        Log.d(TAG,"Bắt đầu quét file với COROUTINES")
-        scanJob = lifecycleScope.launch {
-            try {
-                val files = FileScanner.Companion.scanFileWithCoroutine(
-                    fileType = currentFileType,
-                    onProgress = { file ->
-                        //optional: update ui
-                    }
-                )
-
-                onScanComplete(files)
-            }catch (e: Exception){
-                Log.e(TAG, "Lỗi khi quét file: ${e.message}",e)
-//                showErrow("Lỗi: ${e.message}")
-            }
-        }
-    }
-
-    private fun onScanComplete(files: List<FileModel>){
-        allFiles = files
-        fileAdapter.submitList(files)
-        if(files.isEmpty()){
-            showEmptyState()
-        }else{
-            showMainUI()
-            Toast.makeText(this, getString(R.string.files_found,files.size), Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun filterFiles(query: String) {
-        val filtered = if (query.isEmpty()) {
-            allFiles
-        } else {
-            allFiles.filter { file ->
-                file.name.contains(query, ignoreCase = true)
-            }
-        }
-
-        fileAdapter.submitList(filtered)
-
-        if (filtered.isEmpty()) {
-            showEmptyState()
-        } else {
-            showMainUI()
-        }
-    }
-
-    private fun applyFilter() {
+    private fun applyFilter(type: FileType) {
         if (!permissionHelper.hasStoragePermission()) {
             Toast.makeText(this, "Vui lòng cấp quyền trước khi lọc file!", Toast.LENGTH_SHORT).show()
             return
         }
-
-        showLoadingState()
-        scanFiles()
+        viewModel.refresh(type)
     }
 
     private fun handleFileClick(file: FileModel) {
@@ -299,25 +242,11 @@ class MainActivity : AppCompatActivity() {
             .setTitle(R.string.delete_file)
             .setMessage(getString(R.string.delete_file_message))
             .setPositiveButton(R.string.delete) { _, _ ->
-                deleteFile(file)
+                viewModel.deleteFile(file)
+                Snackbar.make(binding.root, R.string.file_deleted, Snackbar.LENGTH_SHORT).show()
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
-    }
-
-    private fun deleteFile(file: FileModel) {
-        try {
-            if (file.file.delete()) {
-                allFiles = allFiles.filter { it.path != file.path }
-                fileAdapter.submitList(allFiles)
-
-                Snackbar.make(binding.root, R.string.file_deleted, Snackbar.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, R.string.file_delete_error, Toast.LENGTH_SHORT).show()
-            }
-        } catch (e: Exception) {
-            Toast.makeText(this, "Lỗi: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun getMimeType(file: FileModel): String {
@@ -367,11 +296,6 @@ class MainActivity : AppCompatActivity() {
         binding.fabScan.hide()
     }
 
-    private fun showError(message: String) {
-        showEmptyState()
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-    }
-
     //Lifecycle callbacks
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -408,13 +332,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (permissionHelper.hasStoragePermission() && allFiles.isEmpty()  && scanJob?.isActive != true) {
+        if (permissionHelper.hasStoragePermission() && binding.recyclerView.visibility != View.VISIBLE) {
             checkPermissionAndProceed()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        scanJob?.cancel()
     }
 }
