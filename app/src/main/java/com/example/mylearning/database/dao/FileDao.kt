@@ -1,26 +1,30 @@
 package com.example.mylearning.database.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.mylearning.database.entity.FileEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FileDao {
+    // sửa: chuyển Flow -> LiveData
     @Query("SELECT * FROM files")
-    fun getAllFiles(): Flow<List<FileEntity>>
+    fun getAllFiles(): LiveData<List<FileEntity>>
 
+    // sửa: chuyển Flow -> LiveData
     @Query("SELECT * FROM files WHERE fileType = :type")
-    fun getFilesByType(type: String): Flow<List<FileEntity>>
+    fun getFilesByType(type: String): LiveData<List<FileEntity>>
 
+    // sửa: chuyển Flow -> LiveData
     @Query("SELECT * FROM files WHERE name LIKE '%' || :query || '%' ")
-    fun searchFiles(query: String): Flow<List<FileEntity>>
+    fun searchFiles(query: String): LiveData<List<FileEntity>>
 
+    // sửa: chuyển Flow -> LiveData
     @Query("SELECT * FROM files WHERE fileType = :type AND name LIKE '%' || :query || '%' ")
-    fun searchFilesByType(type: String, query: String): Flow<List<FileEntity>>
+    fun searchFilesByType(type: String, query: String): LiveData<List<FileEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFiles(files: List<FileEntity>)
