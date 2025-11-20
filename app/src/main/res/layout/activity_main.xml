@@ -35,7 +35,10 @@
             android:layout_height="wrap_content"
             android:paddingStart="35dp"
             android:hint="@string/search_files"
-            android:inputType="text"
+            android:inputType="none"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:clickable="true"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -241,6 +244,15 @@
         android:contentDescription="@string/scan_files"
         android:src="@android:drawable/ic_menu_search"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/goToSecond"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:contentDescription="sang man 2"
+        android:src="@android:drawable/btn_star"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

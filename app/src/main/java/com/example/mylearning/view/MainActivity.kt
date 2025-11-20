@@ -62,15 +62,33 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.goToSecond.setOnClickListener {
+            if(permissionHelper.hasStoragePermission())
+            {
+                val intent = Intent(this, SecondActivity::class.java)
+                startActivity(intent)}
+            else {
+                showPermissionUI()
+                Toast.makeText(this, "Cần cấp quyền để sang màn 2", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         binding.chipAll.setOnClickListener { viewModel.updateFilterParams(FileType.ALL)}
         binding.chipDocument.setOnClickListener {viewModel.updateFilterParams(FileType.DOCUMENT) }
         binding.chipImage.setOnClickListener {viewModel.updateFilterParams(FileType.IMAGE) }
         binding.chipVideo.setOnClickListener {viewModel.updateFilterParams(FileType.VIDEO) }
         binding.chipAudio.setOnClickListener {viewModel.updateFilterParams(FileType.AUDIO)}
 
-        binding.etSearch.addTextChangedListener { text ->
-            viewModel.updateFilterParams(query= text?.toString().orEmpty())
-//            viewModel.updateQuery(text?.toString().orEmpty())
+        binding.etSearch.setOnClickListener {
+//            viewModel.updateFilterParams(query= text?.toString().orEmpty())
+            if(permissionHelper.hasStoragePermission())
+            {
+                val intent = Intent(this, SecondActivity::class.java)
+                startActivity(intent)}
+            else {
+                showPermissionUI()
+                Toast.makeText(this, "Cần cấp quyền để tìm kiếm", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -193,9 +211,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Toast.makeText(this, "Lỗi: ${e.message}", Toast.LENGTH_SHORT).show()
         }
-
-
-
     }
 
     private fun shareFile(file: FileModel){
