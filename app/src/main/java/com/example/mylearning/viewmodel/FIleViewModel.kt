@@ -2,19 +2,19 @@ package com.example.mylearning.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.mylearning.database.AppDatabase
 import com.example.mylearning.model.FileModel
 import com.example.mylearning.model.FileType
 import com.example.mylearning.repository.FileRepository
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class FileViewModel(application: Application): AndroidViewModel(application){
 
-    private var observeJob: Job? = null
+    // xóa: observeJob + StateFlow vì chuyển sang LiveData
     private val repository: FileRepository by lazy {
         val db = AppDatabase.getDatabase(application)
         FileRepository(db.fileDao())
@@ -22,28 +22,25 @@ class FileViewModel(application: Application): AndroidViewModel(application){
 
     private var latestFiles: List<FileModel> = emptyList()
 
-    private val _files = MutableStateFlow<List<FileModel>>(emptyList())
-    val files: StateFlow<List<FileModel>> = _files
+    // sửa: dùng MediatorLiveData để dễ dàng thay nguồn dữ liệu
+    private val _files = MediatorLiveData<List<FileModel>>().apply { value = emptyList() }
+    val files: LiveData<List<FileModel>> = _files
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading
+    // sửa: StateFlow -> LiveData
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private var currentType = FileType.ALL
     private var currentQuery =""
 
     fun refresh(type: FileType = currentType){
         currentType = type
-        observeJob?.cancel()
-        observeJob = viewModelScope.launch {
+
+        viewModelScope.launch {
             _isLoading.value = true
             try {
                 repository.refreshFiles(fileType = currentType)
-                repository.observeFilesByType(currentType).collect { list ->
-                    latestFiles = list
-                    _files.value = applyQueryFilter(latestFiles, currentQuery)
-                    _isLoading.value = false
-                }
-            }catch (e: Exception){
+            } catch (_: Exception) {
                 _isLoading.value = false
             }
         }
@@ -63,6 +60,4 @@ class FileViewModel(application: Application): AndroidViewModel(application){
         return if (query.isBlank()) files
         else files.filter { it.name.contains(query, ignoreCase = true) }
     }
-
-
 }

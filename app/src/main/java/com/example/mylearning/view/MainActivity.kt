@@ -10,7 +10,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.lifecycleScope
 import com.example.mylearning.adapter.FileAdapter
 import com.example.mylearning.util.PermissionHelper
 import com.example.mylearning.R
@@ -19,8 +18,6 @@ import com.example.mylearning.model.FileModel
 import com.example.mylearning.model.FileType
 import com.example.mylearning.viewmodel.FileViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -77,20 +74,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel(){
-        lifecycleScope.launch {
-            viewModel.files.collectLatest { files ->
-                fileAdapter.submitList(files)
-                when {
-                    files.isEmpty() -> showEmptyState()
-                    else -> showMainUI()
-                }
+        // sửa: dùng LiveData observers
+        viewModel.files.observe(this) { files ->
+            fileAdapter.submitList(files)
+            when {
+                files.isEmpty() -> showEmptyState()
+                else -> showMainUI()
             }
         }
 
-        lifecycleScope.launch {
-            viewModel.isLoading.collectLatest { loading ->
-                if(loading) showLoadingState() else showMainUI()
-            }
+        viewModel.isLoading.observe(this) { loading ->
+            if(loading) showLoadingState() else showMainUI()
         }
     }
 

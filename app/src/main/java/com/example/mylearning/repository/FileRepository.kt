@@ -1,6 +1,8 @@
 package com.example.mylearning.repository
 
 import android.os.Environment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import com.example.mylearning.database.dao.FileDao
 import com.example.mylearning.database.entity.toModel
 import com.example.mylearning.model.FileModel
@@ -9,8 +11,6 @@ import com.example.mylearning.model.toEntity
 import com.example.mylearning.util.FileScanner
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.io.File
 
@@ -18,11 +18,13 @@ class FileRepository (
     private val fileDao: FileDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ){
-    fun observeAllFiles(): Flow<List<FileModel>> =
+    // sửa: expose LiveData thay vì Flow
+    fun observeAllFiles(): LiveData<List<FileModel>> =
         fileDao.getAllFiles()
             .map { entityList->entityList.map { entity->entity.toModel() } }
 
-    fun observeFilesByType(fileType: FileType): Flow<List<FileModel>> =
+    // sửa: LiveData by type
+    fun observeFilesByType(fileType: FileType): LiveData<List<FileModel>> =
         if(fileType == FileType.ALL){
             observeAllFiles()
         }else{
@@ -30,7 +32,8 @@ class FileRepository (
                 .map { entityList -> entityList.map { entity -> entity.toModel() } }
         }
 
-    fun searchFiles(query: String, fileType: FileType?): Flow<List<FileModel>> =
+    // sửa: LiveData cho search (nếu cần)
+    fun searchFiles(query: String, fileType: FileType?): LiveData<List<FileModel>> =
         when (fileType){
             null, FileType.ALL -> fileDao.searchFiles(query)
                 .map{entityList -> entityList.map { entity -> entity.toModel() }}

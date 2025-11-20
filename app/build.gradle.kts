@@ -52,6 +52,8 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    // thêm: LiveData KTX để hỗ trợ map/asLiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.8.7")
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.androidx.recyclerview)
