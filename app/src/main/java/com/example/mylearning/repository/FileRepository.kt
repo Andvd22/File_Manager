@@ -19,32 +19,20 @@ class FileRepository (
     private val fileDao: FileDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ){
-//    fun observeAllFiles(): LiveData<List<FileModel>> =
-//        fileDao.getAllFiles()
-//            .map { entityList->entityList.map { entity->entity.toModel() } }
+    fun observeAllFiles(): LiveData<List<FileModel>> =
+        fileDao.getAllFiles()
+            .map { entityList->entityList.map { entity->entity.toModel() } }
 
     fun observeAllFilesAndSearchFiles(query: String): LiveData<List<FileModel>> =
         fileDao.searchFiles(query)
             .map { entityList->entityList.map { entity->entity.toModel() } }
     fun getFileByTypeAndQuery(fileType: FileType?, query: String): LiveData<List<FileModel>> =
-        if(fileType == FileType.ALL) observeAllFilesAndSearchFiles(query)
-        else{
-            fileDao.searchFilesByType(fileType!!.name, query).map {
-                entityList -> entityList.map {
-                    entity -> entity.toModel()
-                }
-            }
+            fileDao.searchFilesByType(fileType!!.name, query)
+                .map { entityList -> entityList.map { entity -> entity.toModel() }
         }
-    suspend fun refreshFiles(
-        directory: File = Environment.getExternalStorageDirectory(),
-        fileType: FileType = FileType.ALL
-    ) = withContext(ioDispatcher){
-        val scannedFiles = FileScanner.scanFileWithCoroutine (
-            directory = directory,
-            fileType = fileType
-        )
+    suspend fun refreshFiles() = withContext(ioDispatcher){
+        val scannedFiles = FileScanner.scanFileWithCoroutine ()
         val entities = scannedFiles.map {model -> model.toEntity() }
-
         fileDao.clearAllFile()
         fileDao.insertFiles(entities)
     }

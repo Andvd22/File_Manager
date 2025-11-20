@@ -34,14 +34,18 @@ class FileViewModel(application: Application): AndroidViewModel(application){
     }
 
     fun getFileByTypeAndQuery() = _filterParams.switchMap { (type, query) ->
-            repository.getFileByTypeAndQuery(type, query)
+        when(type){
+            FileType.ALL -> repository.observeAllFilesAndSearchFiles(query)
+            else -> repository.getFileByTypeAndQuery(type,query)
         }
+    }
 
     fun refreshFiles(): Unit{
         viewModelScope.launch{
             _isLoading.value = true
             try {
                 repository.refreshFiles()
+                _isLoading.value = false
             } catch (_: Exception) {
                 _isLoading.value = false
             }

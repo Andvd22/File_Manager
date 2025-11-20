@@ -5,6 +5,7 @@ import android.os.Environment
 import android.util.Log
 import com.example.mylearning.model.FileModel
 import com.example.mylearning.model.FileType
+import com.example.mylearning.model.determineFileType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
@@ -95,11 +96,8 @@ class FileScanner {
 
         private fun matchesFileType(file: File, fileType: FileType): Boolean{
             if(fileType == FileType.ALL) return true
-
-            val extensions = fileType.getExtensions()
-            return extensions.any { ext ->
-                file.extension.equals(ext, ignoreCase = true)
-            }
+            val modelType = FileModel(file).determineFileType()
+            return modelType == fileType
         }
 
         fun getCommonDirectories(): List<File> {

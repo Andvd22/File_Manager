@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnLater.setOnClickListener {
             permissionHelper.setUserSaidLater(true)
-            showMainUI()
+            showPermissionUI()
         }
 
         binding.fabScan.setOnClickListener {
@@ -75,18 +75,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel(){
-        // sửa: dùng LiveData observers
-        viewModel.getFileByTypeAndQuery().observe(this) { files ->
-            fileAdapter.submitList(files)
-            when {
-                files.isEmpty() -> showEmptyState()
-                else -> showMainUI()
-            }
-        }
+            viewModel.getFileByTypeAndQuery().observe(this) { files ->
+                fileAdapter.submitList(files)
 
-        viewModel.isLoading.observe(this) { loading ->
-            if(loading) showLoadingState() else showMainUI()
-        }
+                if (permissionHelper.hasStoragePermission()) {
+                    when {
+                        files.isEmpty() -> showEmptyState()
+                        else -> showMainUI()
+                    }
+                } else showPermissionUI()
+
+            }
+
+            viewModel.isLoading.observe(this) { loading ->
+                if (loading) showLoadingState() else showMainUI()
+            }
     }
 
     private fun checkPermissionAndProceed(){
@@ -133,7 +136,6 @@ class MainActivity : AppCompatActivity() {
             return
         }
         viewModel.refreshFiles()
-        viewModel.getFileByTypeAndQuery()
     }
 
 //    private fun applyFilter(type: FileType) {
@@ -321,6 +323,7 @@ class MainActivity : AppCompatActivity() {
 
         if (hasPermission) {
             showMainUI()
+            scanFiles()
         } else {
             showPermissionUI()
         }

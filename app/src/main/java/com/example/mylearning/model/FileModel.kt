@@ -62,6 +62,7 @@ data class FileModel(
  */
 enum class FileType{
     ALL,
+    OTHER,
     DOCUMENT,
     IMAGE,
     VIDEO,
@@ -71,6 +72,7 @@ enum class FileType{
     fun getExtensions(): List<String> {
         return when (this) {
             ALL -> emptyList()
+            OTHER -> emptyList()
             DOCUMENT -> listOf("pdf", "doc", "docx", "txt", "rtf", "odt")
             IMAGE -> listOf("jpg", "jpeg", "png", "gif", "webp", "bmp")
             VIDEO -> listOf("mp4", "avi", "mkv", "mov", "wmv", "flv")
@@ -94,10 +96,10 @@ fun FileModel.toEntity(): FileEntity{
 }
 
 fun FileModel.determineFileType(): FileType {
-    if(isDirectory) return FileType.ALL
+    if(isDirectory) return FileType.OTHER
 
     val extension = this.extension.lowercase()
     return FileType.entries.firstOrNull{type ->
-        type != FileType.ALL && extension in type.getExtensions()
-    } ?: FileType.ALL
+        type != FileType.ALL && type != FileType.OTHER && extension in type.getExtensions()
+    } ?: FileType.OTHER
 }
