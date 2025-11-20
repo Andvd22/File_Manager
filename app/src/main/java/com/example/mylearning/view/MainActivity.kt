@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
+import androidx.room.util.query
 import com.example.mylearning.adapter.FileAdapter
 import com.example.mylearning.util.PermissionHelper
 import com.example.mylearning.R
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var permissionHelper: PermissionHelper
     private lateinit var fileAdapter: FileAdapter
-
     private val viewModel: FileViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,20 +62,21 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.etSearch.addTextChangedListener { text ->
-            viewModel.updateQuery(text?.toString().orEmpty())
-        }
+        binding.chipAll.setOnClickListener { viewModel.updateFilterParams(FileType.ALL)}
+        binding.chipDocument.setOnClickListener {viewModel.updateFilterParams(FileType.DOCUMENT) }
+        binding.chipImage.setOnClickListener {viewModel.updateFilterParams(FileType.IMAGE) }
+        binding.chipVideo.setOnClickListener {viewModel.updateFilterParams(FileType.VIDEO) }
+        binding.chipAudio.setOnClickListener {viewModel.updateFilterParams(FileType.AUDIO)}
 
-        binding.chipAll.setOnClickListener { applyFilter(FileType.ALL) }
-        binding.chipDocument.setOnClickListener { applyFilter(FileType.DOCUMENT) }
-        binding.chipImage.setOnClickListener { applyFilter(FileType.IMAGE) }
-        binding.chipVideo.setOnClickListener { applyFilter(FileType.VIDEO) }
-        binding.chipAudio.setOnClickListener { applyFilter(FileType.AUDIO) }
+        binding.etSearch.addTextChangedListener { text ->
+            viewModel.updateFilterParams(query= text?.toString().orEmpty())
+//            viewModel.updateQuery(text?.toString().orEmpty())
+        }
     }
 
     private fun observeViewModel(){
         // sửa: dùng LiveData observers
-        viewModel.files.observe(this) { files ->
+        viewModel.getFileByTypeAndQuery().observe(this) { files ->
             fileAdapter.submitList(files)
             when {
                 files.isEmpty() -> showEmptyState()
@@ -131,16 +132,17 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this,"Cần cấp quyền để quét file", Toast.LENGTH_SHORT).show()
             return
         }
-        viewModel.refresh()
+        viewModel.refreshFiles()
+        viewModel.getFileByTypeAndQuery()
     }
 
-    private fun applyFilter(type: FileType) {
-        if (!permissionHelper.hasStoragePermission()) {
-            Toast.makeText(this, "Vui lòng cấp quyền trước khi lọc file!", Toast.LENGTH_SHORT).show()
-            return
-        }
-        viewModel.refresh(type)
-    }
+//    private fun applyFilter(type: FileType) {
+//        if (!permissionHelper.hasStoragePermission()) {
+//            Toast.makeText(this, "Vui lòng cấp quyền trước khi lọc file!", Toast.LENGTH_SHORT).show()
+//            return
+//        }
+//        viewModel.refresh(type)
+//    }
 
     private fun handleFileClick(file: FileModel) {
         if (file.isDirectory) {

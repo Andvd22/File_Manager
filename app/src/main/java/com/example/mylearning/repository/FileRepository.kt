@@ -13,34 +13,28 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
+import kotlin.collections.map
 
 class FileRepository (
     private val fileDao: FileDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ){
-    // sửa: expose LiveData thay vì Flow
-    fun observeAllFiles(): LiveData<List<FileModel>> =
-        fileDao.getAllFiles()
+//    fun observeAllFiles(): LiveData<List<FileModel>> =
+//        fileDao.getAllFiles()
+//            .map { entityList->entityList.map { entity->entity.toModel() } }
+
+    fun observeAllFilesAndSearchFiles(query: String): LiveData<List<FileModel>> =
+        fileDao.searchFiles(query)
             .map { entityList->entityList.map { entity->entity.toModel() } }
-
-    // sửa: LiveData by type
-    fun observeFilesByType(fileType: FileType): LiveData<List<FileModel>> =
-        if(fileType == FileType.ALL){
-            observeAllFiles()
-        }else{
-            fileDao.getFilesByType(fileType.name)
-                .map { entityList -> entityList.map { entity -> entity.toModel() } }
+    fun getFileByTypeAndQuery(fileType: FileType?, query: String): LiveData<List<FileModel>> =
+        if(fileType == FileType.ALL) observeAllFilesAndSearchFiles(query)
+        else{
+            fileDao.searchFilesByType(fileType!!.name, query).map {
+                entityList -> entityList.map {
+                    entity -> entity.toModel()
+                }
+            }
         }
-
-    // sửa: LiveData cho search (nếu cần)
-    fun searchFiles(query: String, fileType: FileType?): LiveData<List<FileModel>> =
-        when (fileType){
-            null, FileType.ALL -> fileDao.searchFiles(query)
-                .map{entityList -> entityList.map { entity -> entity.toModel() }}
-            else -> fileDao.searchFilesByType(fileType.name, query)
-                .map { entityList -> entityList.map { entity -> entity.toModel() } }
-        }
-
     suspend fun refreshFiles(
         directory: File = Environment.getExternalStorageDirectory(),
         fileType: FileType = FileType.ALL
@@ -68,8 +62,26 @@ class FileRepository (
             throw IllegalStateException("Không thể xóa file vật lý: ${file.path}")
         }
     }
-
-    suspend fun clearCache() = withContext(ioDispatcher) {
-        fileDao.clearAllFile()
-    }
 }
+
+//suspend fun clearCache() = withContext(ioDispatcher) {
+//    fileDao.clearAllFile()
+//}
+//
+//// sửa: LiveData by type
+//fun observeFilesByType(fileType: FileType): LiveData<List<FileModel>> =
+//    if(fileType == FileType.ALL){
+//        observeAllFiles()
+//    }else{
+//        fileDao.getFilesByType(fileType.name)
+//            .map { entityList -> entityList.map { entity -> entity.toModel() } }
+//    }
+//
+//// sửa: LiveData cho search (nếu cần)
+//fun searchFiles(query: String, fileType: FileType?): LiveData<List<FileModel>> =
+//    when (fileType){
+//        null, FileType.ALL -> fileDao.searchFiles(query)
+//            .map{entityList -> entityList.map { entity -> entity.toModel() }}
+//        else -> fileDao.searchFilesByType(fileType.name, query)
+//            .map { entityList -> entityList.map { entity -> entity.toModel() } }
+//    }
