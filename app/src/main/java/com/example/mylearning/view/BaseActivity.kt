@@ -18,7 +18,6 @@ import com.example.mylearning.model.FileModel
 import com.example.mylearning.viewmodel.FileViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import java.security.acl.Owner
 
 abstract class BaseActivity : AppCompatActivity(){
     protected abstract val viewModel: FileViewModel
