@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.RecyclerView
 import androidx.room.util.query
 import com.example.mylearning.adapter.FileAdapter
 import com.example.mylearning.util.PermissionHelper
@@ -20,30 +21,27 @@ import com.example.mylearning.model.FileType
 import com.example.mylearning.viewmodel.FileViewModel
 import com.google.android.material.snackbar.Snackbar
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var permissionHelper: PermissionHelper
-    private lateinit var fileAdapter: FileAdapter
-    private val viewModel: FileViewModel by viewModels()
+    // 2. Implement các biến Abstract từ BaseActivity
+    // Sử dụng "get() =" để luôn lấy view mới nhất từ binding
+    override val viewModel: FileViewModel by viewModels()
+    override val recyclerView: RecyclerView get() = binding.recyclerView
+    override val emptyState: View get() = binding.emptyStateLayout
+    override val loadingState: View get() = binding.loadingLayout
+    override val permissionLayout: View get() = binding.permissionLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        permissionHelper = PermissionHelper(this)
-        setupRecyclerView()
-        setupListeners()
-        observeViewModel()
-        checkPermissionAndProceed()
-    }
+        super.onCreate(savedInstanceState)
 
-    private fun setupRecyclerView(){
-        fileAdapter = FileAdapter(
-            onItemClick = { file -> handleFileClick(file)},
-            onMoreClick = { file -> showFileOptions(file) }
-        )
-        binding.recyclerView.adapter = fileAdapter
+        permissionHelper = PermissionHelper(this)
+        setupBaseUI()
+        setupListeners()
+        checkPermissionAndProceed()
     }
 
     private fun setupListeners(){
@@ -92,28 +90,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeViewModel(){
-            viewModel.getFileByTypeAndQuery().observe(this) { files ->
-                fileAdapter.submitList(files)
+    override fun handleFileClick(file: FileModel) {
+        Toast.makeText(this,"${file.name}", Toast.LENGTH_SHORT).show()
+    }
 
-                if (permissionHelper.hasStoragePermission()) {
-                    when {
-                        files.isEmpty() -> showEmptyState()
-                        else -> showMainUI()
-                    }
-                } else showPermissionUI()
-
-            }
-
-            viewModel.isLoading.observe(this) { loading ->
-                if (loading) showLoadingState() else showMainUI()
-            }
+    override fun showFileOptions(file: FileModel) {
+        Toast.makeText(this,"${file.name}", Toast.LENGTH_SHORT).show()
     }
 
     private fun checkPermissionAndProceed(){
         when {
             permissionHelper.hasStoragePermission() -> {
-                showMainUI()
                 scanFiles()
             }
             permissionHelper.isUserSaidLater() -> {
@@ -156,126 +143,6 @@ class MainActivity : AppCompatActivity() {
         viewModel.refreshFiles()
     }
 
-//    private fun applyFilter(type: FileType) {
-//        if (!permissionHelper.hasStoragePermission()) {
-//            Toast.makeText(this, "Vui lòng cấp quyền trước khi lọc file!", Toast.LENGTH_SHORT).show()
-//            return
-//        }
-//        viewModel.refresh(type)
-//    }
-
-    private fun handleFileClick(file: FileModel) {
-        if (file.isDirectory) {
-            Toast.makeText(this, "Đây là folder: ${file.name}", Toast.LENGTH_SHORT).show()
-        } else {
-            openFile(file)
-        }
-    }
-
-    private fun showFileOptions(file: FileModel) {
-        val options = arrayOf(
-            getString(R.string.open),
-            getString(R.string.share),
-            getString(R.string.details),
-            getString(R.string.delete)
-        )
-
-        AlertDialog.Builder(this)
-            .setTitle(file.name)
-            .setItems(options) { _, which ->
-                when (which) {
-                    0 -> openFile(file)
-                    1 -> shareFile(file)
-                    2 -> showFileDetails(file)
-                    3 -> confirmDeleteFile(file)
-                }
-            }
-            .show()
-    }
-
-    private fun openFile(file: FileModel){
-        try{
-            val uri = FileProvider.getUriForFile(
-                this,
-                "${packageName}.fileprovider",
-                file.file
-            )
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(uri, getMimeType(file))
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
-
-            startActivity(intent)
-        }catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, R.string.no_app_to_open, Toast.LENGTH_SHORT).show()
-        } catch (e: Exception) {
-            Toast.makeText(this, "Lỗi: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun shareFile(file: FileModel){
-        try{
-            val uri = FileProvider.getUriForFile(
-                this,
-                "${packageName}.fileprovider",
-                file.file
-            )
-
-            val intent = Intent(Intent.ACTION_SEND).apply {
-                type = getMimeType(file)
-                putExtra(Intent.EXTRA_STREAM, uri)
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            }
-
-            startActivity(Intent.createChooser(intent, getString(R.string.share)))
-        }catch (e: Exception) {
-            Toast.makeText(this, "Lỗi: ${e.message}", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun showFileDetails(file: FileModel) {
-        val message = buildString {
-            append("${getString(R.string.name)} ${file.name}\n\n")
-            append("${getString(R.string.path)} ${file.path}\n\n")
-            append("${getString(R.string.size)} ${file.getFormattedSize()}\n\n")
-            append("${getString(R.string.type)} ${file.extension}\n\n")
-            append("${getString(R.string.last_modified)} ${file.getFormattedDate()}")
-        }
-
-        AlertDialog.Builder(this)
-            .setTitle(R.string.file_details)
-            .setMessage(message)
-            .setPositiveButton(R.string.open) { _, _ -> openFile(file) }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
-    }
-
-    private fun confirmDeleteFile(file: FileModel) {
-        AlertDialog.Builder(this)
-            .setTitle(R.string.delete_file)
-            .setMessage(getString(R.string.delete_file_message))
-            .setPositiveButton(R.string.delete) { _, _ ->
-                viewModel.deleteFile(file)
-                Snackbar.make(binding.root, R.string.file_deleted, Snackbar.LENGTH_SHORT).show()
-            }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
-    }
-
-    private fun getMimeType(file: FileModel): String {
-        return when (file.extension) {
-            "pdf" -> "application/pdf"
-            "doc", "docx" -> "application/msword"
-            "txt" -> "text/plain"
-            "jpg", "jpeg" -> "image/jpeg"
-            "png" -> "image/png"
-            "gif" -> "image/gif"
-            "mp4" -> "video/mp4"
-            "mp3" -> "audio/mpeg"
-            else -> "*/*"
-        }
-    }
-
     //showUI
     private fun showPermissionUI() {
         binding.permissionLayout.visibility = View.VISIBLE
@@ -285,27 +152,26 @@ class MainActivity : AppCompatActivity() {
         binding.fabScan.hide()
     }
 
-    private fun showMainUI() {
-        binding.permissionLayout.visibility = View.GONE
-        binding.recyclerView.visibility = View.VISIBLE
-        binding.emptyStateLayout.visibility = View.GONE
-        binding.loadingLayout.visibility = View.GONE
-        binding.fabScan.show()
+    override fun showMainUI() {
+        if (permissionHelper.hasStoragePermission()) {
+            super.showMainUI() // Base hiện Recycler, ẩn Empty/Loading
+            binding.fabScan.show()
+        } else {
+            showPermissionUI()
+        }
     }
 
-    private fun showEmptyState() {
-        binding.permissionLayout.visibility = View.GONE
-        binding.recyclerView.visibility = View.GONE
-        binding.emptyStateLayout.visibility = View.VISIBLE
-        binding.loadingLayout.visibility = View.GONE
-        binding.fabScan.show()
+    override fun showEmptyState() {
+        if (permissionHelper.hasStoragePermission()) {
+            super.showEmptyState()
+            binding.fabScan.show()
+        } else {
+            showPermissionUI()
+        }
     }
 
-    private fun showLoadingState() {
-        binding.permissionLayout.visibility = View.GONE
-        binding.recyclerView.visibility = View.GONE
-        binding.emptyStateLayout.visibility = View.GONE
-        binding.loadingLayout.visibility = View.VISIBLE
+    override fun showLoadingState() {
+        super.showLoadingState()
         binding.fabScan.hide()
     }
 
