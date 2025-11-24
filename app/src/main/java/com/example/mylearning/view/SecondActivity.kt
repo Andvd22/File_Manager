@@ -67,6 +67,24 @@ class SecondActivity : BaseActivity() {
         binding.goToMain.setOnClickListener {
             finish()
         }
+
+        binding.recyclerView.setOnTouchListener { _, _ ->
+            hideKeyboard()
+            binding.etSearch.clearFocus()
+            false // Trả về false để sự kiện cuộn (scroll) vẫn hoạt động bình thường
+        }
+
+        // B. Khi chạm vào vùng trống (Empty State) nếu đang hiện -> Tắt phím
+        binding.emptyStateLayout.setOnClickListener {
+            hideKeyboard()
+            binding.etSearch.clearFocus()
+        }
+
+        // C. Khi chạm vào vùng nền (Root layout) -> Tắt phím
+        binding.root.setOnClickListener {
+            hideKeyboard()
+            binding.etSearch.clearFocus()
+        }
     }
 
     private fun showKeyboardAndFocus() {
@@ -80,10 +98,24 @@ class SecondActivity : BaseActivity() {
             imm.showSoftInput(binding.etSearch, android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT)
         }
     }
-//    private fun hideKeyboard() {
-//        val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
-//        imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
-//    }
+
+    private fun hideKeyboard() {
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as android.view.inputmethod.InputMethodManager
+        imm.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
 //    private fun showAdDialog() {
 //        MaterialAlertDialogBuilder(this)
