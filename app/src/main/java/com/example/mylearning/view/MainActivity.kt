@@ -59,6 +59,16 @@ class MainActivity : BaseActivity() {
                 checkPermissionAndProceed()
             }
         }
+        binding.goSelectAct.setOnClickListener {
+            if(permissionHelper.hasStoragePermission())
+            {
+                val intent = Intent(this, SelectActivity::class.java)
+                startActivity(intent)}
+            else {
+                showPermissionUI()
+                Toast.makeText(this, "Cần cấp quyền để sang màn select", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         binding.goToSecond.setOnClickListener {
             if(permissionHelper.hasStoragePermission())

@@ -1,8 +1,11 @@
 package com.example.mylearning.adapter
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mylearning.databinding.ItemFileBinding
 import com.example.mylearning.model.FileModel
@@ -10,42 +13,42 @@ import com.example.mylearning.model.FileModel
 class FileAdapter (
     private val onItemClick: (FileModel) -> Unit,
     private val onMoreClick: (FileModel) -> Unit
-) : RecyclerView.Adapter<FileAdapter.FileViewHolder>(){
+) : ListAdapter<FileModel, FileAdapter.FileViewHolder>(FileDiffCallback){
 
-    private var files = listOf<FileModel>()
-    fun submitList(newFiles: List<FileModel>){
-        val diffCallback = FileDiffCallback(files, newFiles)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        files = newFiles
-        diffResult.dispatchUpdatesTo(this)
+    val selectedFiles = HashSet<FileModel>()
+
+    fun toggleSelection(file: FileModel){
+        if(selectedFiles.contains(file)){
+            selectedFiles.remove(file)
+        }else{
+            selectedFiles.add(file)
+        }
+        val index = currentList.indexOf(file)
+        if(index != -1) notifyItemChanged(index)
     }
 
-    private class FileDiffCallback(
-        private val oldList: List<FileModel>,
-        private val newList: List<FileModel>
-    ): DiffUtil.Callback(){
-        override fun getOldListSize(): Int {
-            return oldList.size
+    fun clearSelection(): Unit {
+//        selectedFiles.clear()
+//        notifyDataSetChanged()
+        val listTmpSelectedFiles = selectedFiles.toList()
+        selectedFiles.clear()
+        listTmpSelectedFiles.forEach { file ->
+            val index = currentList.indexOf(file)
+            if(index !=-1) notifyItemChanged(index)
         }
+    }
 
-        override fun getNewListSize(): Int {
-            return newList.size
-        }
-
-        override fun areItemsTheSame(
-            oldItemPosition: Int,
-            newItemPosition: Int
+    companion object FileDiffCallback : DiffUtil.ItemCallback<FileModel>(){
+        override fun areItemsTheSame(oldItem: FileModel, newItem: FileModel
         ): Boolean {
-            return oldList[oldItemPosition].path == newList[newItemPosition].path
+            return oldItem.path == newItem.path
         }
 
-        override fun areContentsTheSame(
-            oldItemPosition: Int,
-            newItemPosition: Int
+        override fun areContentsTheSame(oldItem: FileModel, newItem: FileModel
         ): Boolean {
-            return oldList[oldItemPosition].name == newList[newItemPosition].name
-                    && oldList[oldItemPosition].size == newList[newItemPosition].size
-                    && oldList[oldItemPosition].lastModified == newList[newItemPosition].lastModified
+            return oldItem.name == newItem.name
+                    &&oldItem.size == newItem.size
+                    &&oldItem.lastModified == newItem.lastModified
         }
 
     }
@@ -66,12 +69,9 @@ class FileAdapter (
         holder: FileViewHolder,
         position: Int
     ) {
-        holder.bind(files[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int {
-        return files.size
-    }
 
     inner class FileViewHolder(
         private val binding: ItemFileBinding
@@ -84,6 +84,14 @@ class FileAdapter (
                     append(fileModel.getFormattedSize())
                     append(" * ")
                     append(fileModel.getFormattedDate())
+                }
+
+                if(selectedFiles.contains(fileModel)){
+                    root.setBackgroundColor(Color.GRAY)
+                    tvFileName.setTypeface(null, Typeface.BOLD)
+                } else{
+                    root.setBackgroundColor(Color.WHITE)
+                    tvFileName.setTypeface(null, Typeface.NORMAL)
                 }
 
                 root.setOnClickListener {
