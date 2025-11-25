@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="@string/filter_ALL"/>
+                android:text="@string/filter_ALL" />
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipDocument"
                 style="@style/Widget.Material3.Chip.Filter"
@@ -107,6 +107,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/filter_audio" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipSearch"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="sort" />
+
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
 

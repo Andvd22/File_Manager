@@ -18,6 +18,8 @@ import com.example.mylearning.R
 import com.example.mylearning.databinding.ActivityMainBinding
 import com.example.mylearning.model.FileModel
 import com.example.mylearning.model.FileType
+import com.example.mylearning.model.SortCriteria
+import com.example.mylearning.model.SortOrder
 import com.example.mylearning.viewmodel.FileViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -86,6 +88,12 @@ class MainActivity : BaseActivity() {
         binding.chipImage.setOnClickListener {viewModel.updateFilterParams(FileType.IMAGE) }
         binding.chipVideo.setOnClickListener {viewModel.updateFilterParams(FileType.VIDEO) }
         binding.chipAudio.setOnClickListener {viewModel.updateFilterParams(FileType.AUDIO)}
+        binding.chipSearch.setOnClickListener {
+            val dialog = SortBottomSheetDialog{ criteria, order ->
+                Toast.makeText(this,"Sắp xếp theo ${criteria.name} ${order.name}", Toast.LENGTH_SHORT).show()
+            }
+            dialog.show(supportFragmentManager,"SortBottomSheetDialog")
+        }
 
         binding.etSearch.setOnClickListener {
 //            viewModel.updateFilterParams(query= text?.toString().orEmpty())
