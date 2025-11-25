@@ -17,6 +17,13 @@ class FileAdapter (
 
     val selectedFiles = HashSet<FileModel>()
 
+    fun selectAllFiles(){
+        val listFiles = currentList.toList()
+        if(selectedFiles.isNotEmpty()) clearSelection()
+        else selectedFiles.addAll(listFiles)
+        notifyDataSetChanged()
+    }
+
     fun toggleSelection(file: FileModel){
         if(selectedFiles.contains(file)){
             selectedFiles.remove(file)

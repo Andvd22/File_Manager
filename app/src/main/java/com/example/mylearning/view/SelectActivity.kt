@@ -56,7 +56,18 @@ class SelectActivity : BaseActivity() {
     }
 
     private fun setupListeners(){
-        binding.btnClose.setOnClickListener { finish() }
+        binding.btnOff.setOnClickListener {
+            binding.btnOff.visibility = View.GONE
+            binding.btnOn.visibility = View.VISIBLE
+            fileAdapter.selectAllFiles()
+            hideShowActionBar()
+        }
+        binding.btnOn.setOnClickListener {
+            binding.btnOff.visibility = View.VISIBLE
+            binding.btnOn.visibility = View.GONE
+            fileAdapter.clearSelection()
+            hideShowActionBar()
+        }
         binding.goToMain.setOnClickListener { finish() }
         binding.btnShareMultiple.setOnClickListener {
             shareSelectedFiles()
