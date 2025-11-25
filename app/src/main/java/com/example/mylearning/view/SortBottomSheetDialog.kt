@@ -38,7 +38,7 @@ class SortBottomSheetDialog (
             val selectedOrder = when (binding.rgSortOrder.checkedRadioButtonId) {
                 R.id.rbAsc -> SortOrder.ASCENDING
                 R.id.rbDesc -> SortOrder.DESCENDING
-                else -> SortOrder.DESCENDING
+                else -> SortOrder.ASCENDING
             }
 
             onSortSelected(selectedCriteria, selectedOrder)

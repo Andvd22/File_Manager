@@ -51,13 +51,13 @@
         <RadioButton
             android:id="@+id/rbAsc"
             android:text="Tăng dần"
+            android:checked="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <RadioButton
             android:id="@+id/rbDesc"
             android:text="Giảm dần"
-            android:checked="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </RadioGroup>
