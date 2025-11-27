@@ -6,6 +6,8 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RawQuery
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.example.mylearning.database.entity.FileEntity
 
 @Dao
@@ -17,6 +19,9 @@ interface FileDao {
     // sửa: chuyển Flow -> LiveData
     @Query("SELECT * FROM files WHERE fileType = :type")
     fun getFilesByType(type: String): LiveData<List<FileEntity>>
+
+    @RawQuery(observedEntities = [FileEntity::class])
+    fun searchAndSortAndFileTypeFiles(query: SimpleSQLiteQuery): LiveData<List<FileEntity>>
 
     // sửa: chuyển Flow -> LiveData
     @Query("SELECT * FROM files WHERE name LIKE '%' || :query || '%' ")

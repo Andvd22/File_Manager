@@ -18,6 +18,7 @@ import com.example.mylearning.R
 import com.example.mylearning.databinding.ActivityMainBinding
 import com.example.mylearning.model.FileModel
 import com.example.mylearning.model.FileType
+import com.example.mylearning.model.FilterAndSortParams
 import com.example.mylearning.model.SortCriteria
 import com.example.mylearning.model.SortOrder
 import com.example.mylearning.viewmodel.FileViewModel
@@ -89,9 +90,17 @@ class MainActivity : BaseActivity() {
         binding.chipVideo.setOnClickListener {viewModel.updateFilterParams(FileType.VIDEO) }
         binding.chipAudio.setOnClickListener {viewModel.updateFilterParams(FileType.AUDIO)}
         binding.chipSearch.setOnClickListener {
-            val dialog = SortBottomSheetDialog{ criteria, order ->
-                Toast.makeText(this,"Sắp xếp theo ${criteria.name} ${order.name}", Toast.LENGTH_SHORT).show()
-            }
+            val currentParams = viewModel.filterParams.value ?: FilterAndSortParams()
+
+            val dialog = SortBottomSheetDialog(
+                currentCriteria = currentParams.sortCriteria,
+                currentOrder = currentParams.sortOrder,
+                onSortSelected = {criteria, order ->
+                    viewModel.updateFilterParams(
+                        sortCriteria = criteria, sortOrder = order, isSortMode = true
+                    )
+                }
+            )
             dialog.show(supportFragmentManager,"SortBottomSheetDialog")
         }
 

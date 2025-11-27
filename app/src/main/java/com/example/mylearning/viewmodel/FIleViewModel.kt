@@ -11,6 +11,9 @@ import androidx.room.util.query
 import com.example.mylearning.database.AppDatabase
 import com.example.mylearning.model.FileModel
 import com.example.mylearning.model.FileType
+import com.example.mylearning.model.FilterAndSortParams
+import com.example.mylearning.model.SortCriteria
+import com.example.mylearning.model.SortOrder
 import com.example.mylearning.repository.FileRepository
 import kotlinx.coroutines.launch
 
@@ -20,24 +23,45 @@ class FileViewModel(application: Application): AndroidViewModel(application){
         val db = AppDatabase.getDatabase(application)
         FileRepository(db.fileDao())
     }
+
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
-    private var _filterParams = MutableLiveData(Pair(FileType.ALL,""))
+    private val _filterParams = MutableLiveData(FilterAndSortParams())
+    val filterParams: LiveData<FilterAndSortParams> = _filterParams
 
-    fun updateFilterParams(type: FileType? =null, query: String? =null){
-        var currentFilterParams = _filterParams.value ?: Pair(FileType.ALL,"")
-        var newType = type ?: currentFilterParams.first
-        var newQuery = query ?: currentFilterParams.second
-        if(newType != currentFilterParams.first || newQuery != currentFilterParams.second) {
-            _filterParams.value = Pair(newType, newQuery)
+    private val _shouldScrollToTop = MutableLiveData<Boolean>(false)
+    val shouldScrollToTop: LiveData<Boolean> = _shouldScrollToTop
+
+
+    fun updateFilterParams(type: FileType? =null, query: String? =null, sortCriteria: SortCriteria? = null, sortOrder: SortOrder? = null, isSortMode: Boolean? = null){
+        val currentFilterParams = _filterParams.value ?: FilterAndSortParams()
+        val newFilterParams = currentFilterParams.copy(
+            type = type ?: currentFilterParams.type,
+            query = query ?: currentFilterParams.query,
+            sortCriteria = sortCriteria ?: currentFilterParams.sortCriteria,
+            sortOrder = sortOrder ?: currentFilterParams.sortOrder,
+            isSortMode = isSortMode ?: currentFilterParams.isSortMode
+        )
+
+        if(newFilterParams != currentFilterParams) {
+            _filterParams.value = newFilterParams
         }
     }
 
-    fun getFileByTypeAndQuery() = _filterParams.switchMap { (type, query) ->
-        when(type){
-            FileType.ALL -> repository.observeAllFilesAndSearchFiles(query)
-            else -> repository.getFileByTypeAndQuery(type,query)
-        }
+    fun getFileByTypeAndQuery() = _filterParams.switchMap { filterParams ->
+            if(filterParams.isSortMode==true){
+                _shouldScrollToTop.value = true
+                repository.observeAllFilesBySortAndSearchAndFileType(filterParams)
+            }else{
+                when(filterParams.type){
+                    FileType.ALL -> repository.observeAllFilesAndSearchFiles(filterParams.query)
+                    else -> repository.getFileByTypeAndQuery(filterParams.type,filterParams.query)
+                }
+            }
+    }
+
+    fun onScrolledToTop() {
+        _shouldScrollToTop.value = false
     }
 
     fun refreshFiles(): Unit{

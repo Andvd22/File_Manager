@@ -11,6 +11,8 @@ import com.example.mylearning.model.SortOrder
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SortBottomSheetDialog (
+    private val currentCriteria: SortCriteria,
+    private val currentOrder: SortOrder,
     private val onSortSelected: (SortCriteria, SortOrder) -> Unit
 ): BottomSheetDialogFragment(){
     private lateinit var binding: DialogSortOptionBinding
@@ -26,6 +28,19 @@ class SortBottomSheetDialog (
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val criteriaId = when(currentCriteria) {
+            SortCriteria.DATE -> R.id.rbDate
+            SortCriteria.NAME -> R.id.rbName
+            SortCriteria.SIZE -> R.id.rbSize
+        }
+        binding.rgSortCriteria.check(criteriaId)
+
+        val orderId = when(currentOrder) {
+            SortOrder.ASCENDING -> R.id.rbAsc
+            SortOrder.DESCENDING -> R.id.rbDesc
+        }
+        binding.rgSortOrder.check(orderId)
 
         binding.btnApply.setOnClickListener {
             val selectedCriteria = when (binding.rgSortCriteria.checkedRadioButtonId) {

@@ -26,9 +26,7 @@ abstract class BaseActivity : AppCompatActivity(){
     protected abstract val recyclerView: RecyclerView
     protected abstract val emptyState: View
     protected abstract val loadingState: View
-
     protected open val permissionLayout: View? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -49,6 +47,10 @@ abstract class BaseActivity : AppCompatActivity(){
     private fun observeFiles(owner: LifecycleOwner) {
         viewModel.getFileByTypeAndQuery().observe(owner, Observer { files ->
             fileAdapter.submitList(files)
+            if (viewModel.shouldScrollToTop.value == true) {
+                recyclerView.scrollToPosition(0)
+                viewModel.onScrolledToTop()
+            }
             when{
                 files.isEmpty() -> showEmptyState()
                 else -> showMainUI()

@@ -3,10 +3,14 @@ package com.example.mylearning.repository
 import android.os.Environment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
+import androidx.sqlite.db.SimpleSQLiteQuery
 import com.example.mylearning.database.dao.FileDao
 import com.example.mylearning.database.entity.toModel
 import com.example.mylearning.model.FileModel
 import com.example.mylearning.model.FileType
+import com.example.mylearning.model.FilterAndSortParams
+import com.example.mylearning.model.SortCriteria
+import com.example.mylearning.model.SortOrder
 import com.example.mylearning.model.toEntity
 import com.example.mylearning.util.FileScanner
 import kotlinx.coroutines.CoroutineDispatcher
@@ -19,9 +23,31 @@ class FileRepository (
     private val fileDao: FileDao,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ){
-    fun observeAllFiles(): LiveData<List<FileModel>> =
-        fileDao.getAllFiles()
-            .map { entityList->entityList.map { entity->entity.toModel() } }
+    fun observeAllFilesBySortAndSearchAndFileType(params: FilterAndSortParams): LiveData<List<FileModel>> {
+        val orderByColumn = when(params.sortCriteria){
+            SortCriteria.DATE -> "lastmodified"
+            SortCriteria.NAME -> "name"
+            SortCriteria.SIZE -> "size"
+        }
+
+        val orderDirection = if(params.sortOrder == SortOrder.DESCENDING) "DESC" else "ASC"
+
+
+        val sqlQuery = if(params.type== FileType.ALL) {"SELECT * FROM files " +
+                "WHERE name LIKE '%${params.query}%' "+
+                "ORDER BY $orderByColumn ${orderDirection}"} else {
+            "SELECT * FROM files " +
+                    "WHERE name LIKE '%${params.query}%' AND fileType = '${params.type}' "+
+                    "ORDER BY $orderByColumn ${orderDirection}"
+        }
+
+        val simpleQuery = SimpleSQLiteQuery(sqlQuery)
+
+        return fileDao.searchAndSortAndFileTypeFiles(simpleQuery).map {
+            listEntity -> listEntity.map { entity -> entity.toModel() }
+        }
+    }
+
 
     fun observeAllFilesAndSearchFiles(query: String): LiveData<List<FileModel>> =
         fileDao.searchFiles(query)
