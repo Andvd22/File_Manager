@@ -45,12 +45,12 @@ class FileViewModel(application: Application): AndroidViewModel(application){
 
         if(newFilterParams != currentFilterParams) {
             _filterParams.value = newFilterParams
+            _shouldScrollToTop.value = true
         }
     }
 
     fun getFileByTypeAndQuery() = _filterParams.switchMap { filterParams ->
             if(filterParams.isSortMode==true){
-                _shouldScrollToTop.value = true
                 repository.observeAllFilesBySortAndSearchAndFileType(filterParams)
             }else{
                 when(filterParams.type){

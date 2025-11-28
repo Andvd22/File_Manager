@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.mylearning.R
 import com.example.mylearning.adapter.FileAdapter
 import com.example.mylearning.model.FileModel
@@ -46,10 +48,21 @@ abstract class BaseActivity : AppCompatActivity(){
 
     private fun observeFiles(owner: LifecycleOwner) {
         viewModel.getFileByTypeAndQuery().observe(owner, Observer { files ->
-            fileAdapter.submitList(files)
-            if (viewModel.shouldScrollToTop.value == true) {
-                recyclerView.scrollToPosition(0)
-                viewModel.onScrolledToTop()
+            fileAdapter.submitList(files) {
+                if (viewModel.shouldScrollToTop.value == true) {
+                    if (files.isNotEmpty()) {
+                        recyclerView.post {
+                            when (val layoutManager = recyclerView.layoutManager) {
+                                is StaggeredGridLayoutManager -> layoutManager.scrollToPositionWithOffset(0, 0)
+                                is LinearLayoutManager -> layoutManager.scrollToPositionWithOffset(0, 0)
+                                else -> recyclerView.scrollToPosition(0)
+                            }
+                            viewModel.onScrolledToTop()
+                        }
+                    } else {
+                        viewModel.onScrolledToTop()
+                    }
+                }
             }
             when{
                 files.isEmpty() -> showEmptyState()
