@@ -3,6 +3,7 @@ package com.example.mylearning.view
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -21,6 +22,7 @@ import com.example.mylearning.model.FileType
 import com.example.mylearning.model.FilterAndSortParams
 import com.example.mylearning.model.SortCriteria
 import com.example.mylearning.model.SortOrder
+import com.example.mylearning.service.FileWatchService
 import com.example.mylearning.viewmodel.FileViewModel
 import com.google.android.material.snackbar.Snackbar
 
@@ -124,19 +126,28 @@ class MainActivity : BaseActivity() {
     override fun showFileOptions(file: FileModel) {
         Toast.makeText(this,"${file.name}", Toast.LENGTH_SHORT).show()
     }
-
+// check prmission helper and proceedAfterAllPermissions
     private fun checkPermissionAndProceed(){
         when {
-            permissionHelper.hasStoragePermission() -> {
-                scanFiles()
+            !permissionHelper.hasStoragePermission() -> {
+                if (permissionHelper.isUserSaidLater()) {
+                    showPermissionUI()
+                } else {
+                    showPermissionUI()
+                }
             }
-            permissionHelper.isUserSaidLater() -> {
-                showPermissionUI()
+            !permissionHelper.hasNotificationPermission() -> {
+                permissionHelper.requestNotificationPermission()
             }
             else -> {
-                showPermissionUI()
+                proceedAfterAllPermissionsGranted()
             }
         }
+    }
+
+    private fun proceedAfterAllPermissionsGranted() {
+        scanFiles()
+        startFileWatchService()
     }
 
     private fun requestPermission(){
@@ -209,16 +220,37 @@ class MainActivity : BaseActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+// check
+        when (requestCode) {
+            PermissionHelper.REQUEST_CODE_STORAGE -> {
+                val granted = permissionHelper.handlePermissionResult(
+                    requestCode,
+                    permissions,
+                    grantResults
+                )
 
-        val granted = permissionHelper.handlePermissionResult(requestCode, permissions, grantResults)
-
-        if (granted) {
-            checkPermissionAndProceed()
-        } else {
-            if (permissionHelper.shouldShowRationale()) {
-                showPermissionUI()
-            } else {
-                showRationaleDialog()
+                if (granted) {
+                    checkPermissionAndProceed()
+                } else if (permissionHelper.shouldShowRationale()) {
+                    showPermissionUI()
+                } else {
+                    showRationaleDialog()
+                }
+            }
+            PermissionHelper.REQUEST_CODE_NOTIFICATION -> {
+                val granted = permissionHelper.handleNotificationPermissionResult(
+                    requestCode,
+                    grantResults
+                )
+                if (granted) {
+                    proceedAfterAllPermissionsGranted()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Cần cấp quyền thông báo để nhận cảnh báo thay đổi file",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
     }
@@ -246,5 +278,19 @@ class MainActivity : BaseActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+    }
+// filewatchservice
+    private fun startFileWatchService(){
+        val intent = Intent(this, FileWatchService::class.java)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            startForegroundService(intent)
+        }else{
+            startService(intent)
+        }
+    }
+
+    private fun stopFileWatchService(){
+        val intent = Intent(this, FileWatchService::class.java)
+        stopService(intent)
     }
 }

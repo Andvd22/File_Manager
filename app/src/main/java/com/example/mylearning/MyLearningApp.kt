@@ -15,11 +15,11 @@ class MyLearningApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        if (BuildConfig.DEBUG) {
-            scheduleTestScanWork()
-        } else {
+//        if (BuildConfig.DEBUG) {
+//            scheduleTestScanWork()
+//        } else {
             schedulePeriodicScanWork()
-        }
+//        }
     }
 
     private fun schedulePeriodicScanWork(){
@@ -34,29 +34,29 @@ class MyLearningApp : Application() {
         )
     }
 
-    private fun scheduleTestScanWork(){
-        val request = OneTimeWorkRequestBuilder<ScanFilesWorker>()
-            .setInitialDelay(10, TimeUnit.SECONDS)
-            .build()
-
-        val workManager = WorkManager.getInstance(this)
-
-        workManager.enqueueUniqueWork(
-            TEST_WORK_NAME,
-            ExistingWorkPolicy.REPLACE,
-            request
-        )
-
-        workManager.getWorkInfoByIdLiveData(request.id).observeForever(object : Observer<WorkInfo?>{
-            override fun onChanged(value: WorkInfo?) {
-//                if(value == null) return
-                if(value?.state?.isFinished==true){
-                    workManager.getWorkInfoByIdLiveData(request.id).removeObserver(this)
-                    scheduleTestScanWork()
-                }
-            }
-        })
-    }
+//    private fun scheduleTestScanWork(){
+//        val request = OneTimeWorkRequestBuilder<ScanFilesWorker>()
+//            .setInitialDelay(10, TimeUnit.SECONDS)
+//            .build()
+//
+//        val workManager = WorkManager.getInstance(this)
+//
+//        workManager.enqueueUniqueWork(
+//            TEST_WORK_NAME,
+//            ExistingWorkPolicy.REPLACE,
+//            request
+//        )
+//
+//        workManager.getWorkInfoByIdLiveData(request.id).observeForever(object : Observer<WorkInfo?>{
+//            override fun onChanged(value: WorkInfo?) {
+////                if(value == null) return
+//                if(value?.state?.isFinished==true){
+//                    workManager.getWorkInfoByIdLiveData(request.id).removeObserver(this)
+//                    scheduleTestScanWork()
+//                }
+//            }
+//        })
+//    }
 
 
     companion object {

@@ -26,6 +26,7 @@ class PermissionHelper (
         const val  REQUEST_CODE_STORAGE = 100
         const val REQUEST_CODE_MANAGE_STORAGE = 101
         const val REQUEST_CODE_SETTINGS = 102
+        const val REQUEST_CODE_NOTIFICATION = 103
 
         private fun getRequiresPermissions(): Array<String>{
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
@@ -61,6 +62,27 @@ class PermissionHelper (
         val permissions = getRequiresPermissions()
         return permissions.any { permission ->
             ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)
+        }
+    }
+//noti
+    fun hasNotificationPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
+        }
+    }
+
+    fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ActivityCompat.requestPermissions(
+                activity,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS),
+                REQUEST_CODE_NOTIFICATION
+            )
         }
     }
 
@@ -127,6 +149,17 @@ class PermissionHelper (
             else{
                 return false
             }
+        }
+        return false
+    }
+//noti
+    fun handleNotificationPermissionResult(
+        requestCode: Int,
+        grantResults: IntArray
+    ): Boolean {
+        if (requestCode == REQUEST_CODE_NOTIFICATION) {
+            return grantResults.isNotEmpty() &&
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
         }
         return false
     }
