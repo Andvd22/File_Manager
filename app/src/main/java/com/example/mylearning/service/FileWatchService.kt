@@ -17,6 +17,11 @@ import com.example.mylearning.R
 import java.io.File
 
 class FileWatchService : Service(){
+    private var lastMovedFromPath: String? = null
+    private var lastMovedFromTime: Long = 0L
+    private val RENAME_WINDOW_MS = 1000L
+
+
     private var fileObserver: FileObserver?= null
     override fun onBind(intent: Intent?): IBinder? {
         return null
@@ -142,17 +147,62 @@ class FileWatchService : Service(){
             override fun onEvent(event: Int, path: String?){
                 if(path == null) return
                 val fullPath = "$rootDir/$path"
+                val now = System.currentTimeMillis()
 
-                val eventName = when {
-                    event and CREATE != 0 -> "CREATE (tao moi)"
-                    event and DELETE != 0 -> "DELETE (xoa)"
-                    event and MODIFY != 0 -> "MODIFY (sua)"
-                    event and MOVED_FROM != 0 -> "MOVED_FROM (di chuyen di)"
-                    event and MOVED_TO !=0 -> "MOVED_TO (di chuyen den)"
-                    else -> "OTHER (khac)"
+                // val eventName = when {
+                //     event and CREATE != 0 -> "CREATE (tao moi)"
+                //     event and DELETE != 0 -> "DELETE (xoa)"
+                //     event and MODIFY != 0 -> "MODIFY (sua)"
+                //     event and MOVED_FROM != 0 -> "MOVED_FROM (di chuyen di)"
+                //     event and MOVED_TO !=0 -> "MOVED_TO (di chuyen den)"
+                //     else -> "OTHER (khac)"
+                // }
+                // Log.d(TAG, "File event: $eventName - $fullPath")
+                // showFileChangedNotification(eventName, fullPath)
+
+                when {
+                    event and CREATE !=0 -> {
+                        showFileChangedNotification("CREATE (tao moi)", fullPath)
+                    }
+                    event and DELETE !=0 -> {
+                        showFileChangedNotification("DELETE (xoa)", fullPath)
+                    }
+                    event and MOVED_FROM !=0 -> {
+                        lastMovedFromPath = fullPath
+                        lastMovedFromTime = now
+                    }
+                    event and MOVED_TO !=0 -> {
+                        val oldPath = lastMovedFromPath
+                        val timeDiff = now - lastMovedFromTime
+                        if (oldPath != null && timeDiff <= RENAME_WINDOW_MS) {
+                            // => Xem như một lần ĐỔI TÊN
+                            lastMovedFromPath = null
+            
+                            val oldName = java.io.File(oldPath).name
+                            val newName = java.io.File(fullPath).name
+                            val message = "Đổi tên: $oldName ➜ $newName"
+                            lastMovedFromPath = null
+                            lastMovedFromTime = 0L
+                            showFileChangedNotification("RENAME", message)
+                        } else {
+                            // Không có MOVED_FROM gần đó => thực sự là di chuyển file
+                            showFileChangedNotification("MOVED_TO (di chuyển đến)", fullPath)
+                        }
+                    }
+                    event and MODIFY != 0 -> {
+                        val timeDiff = now - lastMovedFromTime
+                        if (timeDiff > RENAME_WINDOW_MS) {
+                            // Không liên quan rename, xử lý như sửa nội dung thật sự
+                            showFileChangedNotification("MODIFY (sửa)", fullPath)
+                        } else {
+                            // Nằm trong “cửa sổ” rename → bỏ qua, vì đã có noti RENAME rồi
+                        }
+                    }
+            
+                    else -> {
+                        showFileChangedNotification("OTHER (khác)", fullPath)
+                    }
                 }
-                Log.d(TAG, "File event: $eventName - $fullPath")
-                showFileChangedNotification(eventName, fullPath)
             }
         }
         fileObserver?.startWatching()
