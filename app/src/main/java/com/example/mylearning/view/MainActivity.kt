@@ -301,8 +301,9 @@ class MainActivity : BaseActivity() {
         val watchDir = File(baseDir, "MyWatchFolder").apply { mkdirs() }
 
         val testFile = File(watchDir, "test_${System.currentTimeMillis()}.txt")
-        testFile.writeText("Hello from FileObserver")
+        testFile.createNewFile()
+        // testFile.writeText("Hello from FileObserver")
 
-        Toast.makeText(this, "Đã tạo: ${testFile.absolutePath}", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this, "Đã tạo: ${testFile.absolutePath}", Toast.LENGTH_SHORT).show()
     }
 }

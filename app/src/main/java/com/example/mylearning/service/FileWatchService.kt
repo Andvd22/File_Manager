@@ -47,18 +47,31 @@ class FileWatchService : Service(){
 
     private fun createNotificationChannel(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                "File Watch Channel",
-                NotificationManager.IMPORTANCE_LOW
-            )
             val manager = getSystemService(NotificationManager::class.java)
-            manager.createNotificationChannel(channel)
+
+            val foregroundChannel = NotificationChannel(
+                FOREGROUND_CHANNEL_ID,
+                "File Watch Foreground",
+                NotificationManager.IMPORTANCE_LOW
+            ).apply {
+                description = "Channel cho service theo doi file dang chay"
+            }
+
+            val eventChannel = NotificationChannel(
+                EVENT_CHANNEL_ID,
+                "File Change Events",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Thong bao khi file duoc crud"
+            }
+
+            manager.createNotificationChannel(foregroundChannel)
+            manager.createNotificationChannel(eventChannel)
         }
     }
 
     private fun buildForegroundNotification(content: String): Notification{
-        return NotificationCompat.Builder(this, CHANNEL_ID)
+        return NotificationCompat.Builder(this, FOREGROUND_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("Đang theo dõi files")
             .setContentText(content)
@@ -144,11 +157,13 @@ class FileWatchService : Service(){
     private fun showFileChangedNotification(event: String, fullPath: String){
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+        val notification = NotificationCompat.Builder(this, EVENT_CHANNEL_ID)
             .setSmallIcon(R.drawable.bg_bottom_sheet1)
             .setContentTitle("File $event")
             .setContentText(fullPath)
             .setAutoCancel(true)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
             .build()
 
         val id = (System.currentTimeMillis() % Int.MAX_VALUE).toInt()
@@ -156,7 +171,9 @@ class FileWatchService : Service(){
     }
     companion object{
         private const val TAG = "FileWatchService"
-        private const val CHANNEL_ID = "file_watch_channel"
+        private const val FOREGROUND_CHANNEL_ID = "file_watch_forefround"
+
+        private const val EVENT_CHANNEL_ID = "file_watch_events"
         private const val FOREGROUND_ID = 1
     }
 }
