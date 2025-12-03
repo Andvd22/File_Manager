@@ -1,6 +1,7 @@
 package com.example.mylearning.worker
 
 import android.content.Context
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import androidx.work.CoroutineWorker
@@ -21,14 +22,17 @@ class ScanFilesWorker(
             val repository = FileRepository(db.fileDao())
             repository.refreshFiles()
             fun createTestFile(context: Context) {
-                val baseDir = context.getExternalFilesDir(null) ?: return
-                val watchDir = File(baseDir, "MyWatchFolder").apply { mkdirs() }
+ //               val baseDir = context.getExternalFilesDir(null) ?: return
+//                val watchDir = File(baseDir, "MyWatchFolder").apply { mkdirs() }
+                val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+                val testFile = File(downloadsDir,"test_${System.currentTimeMillis()}.txt")
 
-                val testFile = File(watchDir, "test_${System.currentTimeMillis()}.txt")
+
+//                val testFile = File(watchDir, "test_${System.currentTimeMillis()}.txt")
 
                 try {
-                    testFile.writeText("Hello from Worker/Activity at ${System.currentTimeMillis()}")
-
+                    testFile.createNewFile()
+  //                  testFile.writeText("Hello from Worker/Activity at ${System.currentTimeMillis()}")
                     // Log để xem trong Logcat vì Worker không hiện Toast nếu App đang tắt
                     Log.d("FileUtils", "Đã tạo file: ${testFile.absolutePath}")
 

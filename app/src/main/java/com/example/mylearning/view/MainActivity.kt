@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -297,10 +298,11 @@ class MainActivity : BaseActivity() {
     }
 
      fun createTestFileInWatchedFolder() {
-        val baseDir = getExternalFilesDir(null) ?: return
-        val watchDir = File(baseDir, "MyWatchFolder").apply { mkdirs() }
-
-        val testFile = File(watchDir, "test_${System.currentTimeMillis()}.txt")
+//        val baseDir = getExternalFilesDir(null) ?: return
+//        val watchDir = File(baseDir, "MyWatchFolder").apply { mkdirs() }
+         val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+         val testFile = File(downloadsDir,"test_${System.currentTimeMillis()}.txt")
+//        val testFile = File(watchDir, "test_${System.currentTimeMillis()}.txt")
         testFile.createNewFile()
         // testFile.writeText("Hello from FileObserver")
 

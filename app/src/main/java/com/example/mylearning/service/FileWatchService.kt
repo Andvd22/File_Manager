@@ -30,7 +30,8 @@ class FileWatchService : Service(){
             FOREGROUND_ID,
             buildForegroundNotification("Đang theo dõi thay đổi files trong bộ nhớ")
         )
-        startWatchingAppFolder()
+        startWatchingDownloadsFolder()
+        //startWatchingAppFolder()
         // startWatchingRoot()
     }
 
@@ -122,6 +123,40 @@ class FileWatchService : Service(){
     
         fileObserver?.startWatching()
         Log.d(TAG, "FileObserver đã bắt đầu cho thư mục: $rootDir")
+    }
+
+    private fun startWatchingDownloadsFolder(){
+        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+
+        if(downloadsDir == null || !downloadsDir.exists()|| !downloadsDir.canRead()){
+            Log.w(TAG, "Thư mục downloads không đọc, mở, tồn tại")
+            return
+        }
+
+        val rootDir = downloadsDir.absolutePath
+        Log.d(TAG, "FileObserve sẽ theo dõi thư mục : $rootDir")
+        fileObserver = object : FileObserver(
+            rootDir,
+            CREATE or DELETE or MODIFY or MOVED_FROM or MOVED_TO
+        ){
+            override fun onEvent(event: Int, path: String?){
+                if(path == null) return
+                val fullPath = "$rootDir/$path"
+
+                val eventName = when {
+                    event and CREATE != 0 -> "CREATE (tao moi)"
+                    event and DELETE != 0 -> "DELETE (xoa)"
+                    event and MODIFY != 0 -> "MODIFY (sua)"
+                    event and MOVED_FROM != 0 -> "MOVED_FROM (di chuyen di)"
+                    event and MOVED_TO !=0 -> "MOVED_TO (di chuyen den)"
+                    else -> "OTHER (khac)"
+                }
+                Log.d(TAG, "File event: $eventName - $fullPath")
+                showFileChangedNotification(eventName, fullPath)
+            }
+        }
+        fileObserver?.startWatching()
+        Log.d(TAG, "File OBser đã bắt đầu theo dõi thư mục DOWNLOADS: $rootDir")
     }
 
     private fun startWatchingRoot(){
