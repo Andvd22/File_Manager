@@ -25,6 +25,7 @@ import com.example.mylearning.model.SortOrder
 import com.example.mylearning.service.FileWatchService
 import com.example.mylearning.viewmodel.FileViewModel
 import com.google.android.material.snackbar.Snackbar
+import java.io.File
 
 class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -59,6 +60,7 @@ class MainActivity : BaseActivity() {
 
         binding.fabScan.setOnClickListener {
             if(permissionHelper.hasStoragePermission()){
+                createTestFileInWatchedFolder()
                 scanFiles()
             } else {
                 checkPermissionAndProceed()
@@ -292,5 +294,15 @@ class MainActivity : BaseActivity() {
     private fun stopFileWatchService(){
         val intent = Intent(this, FileWatchService::class.java)
         stopService(intent)
+    }
+
+     fun createTestFileInWatchedFolder() {
+        val baseDir = getExternalFilesDir(null) ?: return
+        val watchDir = File(baseDir, "MyWatchFolder").apply { mkdirs() }
+
+        val testFile = File(watchDir, "test_${System.currentTimeMillis()}.txt")
+        testFile.writeText("Hello from FileObserver")
+
+        Toast.makeText(this, "Đã tạo: ${testFile.absolutePath}", Toast.LENGTH_SHORT).show()
     }
 }

@@ -14,6 +14,7 @@ import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.mylearning.R
+import java.io.File
 
 class FileWatchService : Service(){
     private var fileObserver: FileObserver?= null
@@ -29,8 +30,8 @@ class FileWatchService : Service(){
             FOREGROUND_ID,
             buildForegroundNotification("Đang theo dõi thay đổi files trong bộ nhớ")
         )
-
-        startWatchingRoot()
+        startWatchingAppFolder()
+        // startWatchingRoot()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -63,6 +64,51 @@ class FileWatchService : Service(){
             .setContentText(content)
             .setOngoing(true)
             .build()
+    }
+
+    private fun startWatchingAppFolder() {
+        // Thư mục gốc riêng của app: .../Android/data/<package>/files/
+        val baseDir = applicationContext.getExternalFilesDir(null)
+    
+        if (baseDir == null) {
+            Log.w(TAG, "App dir is null, cannot start FileObserver")
+            return
+        }
+    
+
+        val watchDir = File(baseDir, "MyWatchFolder")
+        if (!watchDir.exists()) {
+            watchDir.mkdirs()       // đảm bảo thư mục tồn tại
+        }
+    
+        val rootDir = watchDir.absolutePath
+        Log.d(TAG, "FileObserver sẽ theo dõi thư mục: $rootDir")
+    
+        fileObserver = object : FileObserver(
+            rootDir,
+            CREATE or DELETE or MODIFY or MOVED_TO or MOVED_FROM
+        ) {
+            override fun onEvent(event: Int, path: String?) {
+                if (path == null) return
+    
+                val fullPath = "$rootDir/$path"
+    
+                val eventName = when {
+                    event and CREATE != 0 -> "CREATE (Tạo mới)"
+                    event and DELETE != 0 -> "DELETE (Xóa)"
+                    event and MODIFY != 0 -> "MODIFY (Sửa)"
+                    event and MOVED_TO != 0 -> "MOVED_TO (Di chuyển đến)"
+                    event and MOVED_FROM != 0 -> "MOVED_FROM (Di chuyển đi)"
+                    else -> "OTHER (Khác)"
+                }
+    
+                Log.d(TAG, "File event: $eventName - $fullPath")
+                showFileChangedNotification(eventName, fullPath)
+            }
+        }
+    
+        fileObserver?.startWatching()
+        Log.d(TAG, "FileObserver đã bắt đầu cho thư mục: $rootDir")
     }
 
     private fun startWatchingRoot(){
@@ -99,7 +145,7 @@ class FileWatchService : Service(){
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.bg_bottom_sheet1)
             .setContentTitle("File $event")
             .setContentText(fullPath)
             .setAutoCancel(true)
