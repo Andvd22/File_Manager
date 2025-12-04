@@ -3,6 +3,7 @@ package com.example.mylearning.service
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -12,9 +13,15 @@ import android.os.Environment
 import android.os.FileObserver
 import android.os.IBinder
 import android.util.Log
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.example.mylearning.R
+import com.example.mylearning.view.FileEventPopupActivity
+import com.example.mylearning.view.MainActivity
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class FileWatchService : Service(){
     private var lastMovedFromPath: String? = null
@@ -88,30 +95,30 @@ class FileWatchService : Service(){
     private fun startWatchingAppFolder() {
         // Thư mục gốc riêng của app: .../Android/data/<package>/files/
         val baseDir = applicationContext.getExternalFilesDir(null)
-    
+
         if (baseDir == null) {
             Log.w(TAG, "App dir is null, cannot start FileObserver")
             return
         }
-    
+
 
         val watchDir = File(baseDir, "MyWatchFolder")
         if (!watchDir.exists()) {
             watchDir.mkdirs()       // đảm bảo thư mục tồn tại
         }
-    
+
         val rootDir = watchDir.absolutePath
         Log.d(TAG, "FileObserver sẽ theo dõi thư mục: $rootDir")
-    
+
         fileObserver = object : FileObserver(
             rootDir,
             CREATE or DELETE or MODIFY or MOVED_TO or MOVED_FROM
         ) {
             override fun onEvent(event: Int, path: String?) {
                 if (path == null) return
-    
+
                 val fullPath = "$rootDir/$path"
-    
+
                 val eventName = when {
                     event and CREATE != 0 -> "CREATE (Tạo mới)"
                     event and DELETE != 0 -> "DELETE (Xóa)"
@@ -120,12 +127,12 @@ class FileWatchService : Service(){
                     event and MOVED_FROM != 0 -> "MOVED_FROM (Di chuyển đi)"
                     else -> "OTHER (Khác)"
                 }
-    
+
                 Log.d(TAG, "File event: $eventName - $fullPath")
                 showFileChangedNotification(eventName, fullPath)
             }
         }
-    
+
         fileObserver?.startWatching()
         Log.d(TAG, "FileObserver đã bắt đầu cho thư mục: $rootDir")
     }
@@ -242,17 +249,40 @@ class FileWatchService : Service(){
     private fun showFileChangedNotification(event: String, fullPath: String){
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        val views = RemoteViews(packageName, R.layout.notification_file_event).apply{
+//            setImageViewResource(R.id.ivIcon, R.drawable.bg_bottom_sheet1)
+            setTextViewText(R.id.tvTitle, "File $event")
+            setTextViewText(R.id.tvDescription, fullPath)
+            setTextViewText(R.id.tvTime, SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date()))
+        }
+
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
         val notification = NotificationCompat.Builder(this, EVENT_CHANNEL_ID)
             .setSmallIcon(R.drawable.bg_bottom_sheet1)
-            .setContentTitle("File $event")
-            .setContentText(fullPath)
+             .setContentTitle("File $event")
+             .setContentText(fullPath)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            .setCustomContentView(views)
+            .setCustomBigContentView(views)
+            .setCustomHeadsUpContentView(views)
+            .setContentIntent(pendingIntent)
             .build()
 
         val id = (System.currentTimeMillis() % Int.MAX_VALUE).toInt()
         manager.notify(id, notification)
+
+
+        val popupIntent = Intent(this, FileEventPopupActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            putExtra(FileEventPopupActivity.EXTRA_EVENT, event)
+            putExtra(FileEventPopupActivity.EXTRA_PATH, fullPath)
+        }
+        startActivity(popupIntent)
     }
     companion object{
         private const val TAG = "FileWatchService"
