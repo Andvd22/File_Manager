@@ -13,6 +13,7 @@ import android.os.Environment
 import android.os.FileObserver
 import android.os.IBinder
 import android.util.Log
+import android.view.View
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.example.mylearning.R
@@ -249,11 +250,28 @@ class FileWatchService : Service(){
     private fun showFileChangedNotification(event: String, fullPath: String){
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        val openFileIntent = Intent(this, MainActivity::class.java).apply {
+            putExtra("extra_path", fullPath)
+            putExtra("extra_action_name", "open_file")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+        val openFilePendingIntent = PendingIntent.getActivity(this, 1, openFileIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        val goToFileInAppIntent = Intent(this, MainActivity::class.java).apply {
+            putExtra("extra_path", fullPath)
+            putExtra("extra_action_name", "go_to_file_in_app")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
+
+        val goToFileInAppPendingIntent = PendingIntent.getActivity(this, 2, goToFileInAppIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
         val views = RemoteViews(packageName, R.layout.notification_file_event).apply{
-//            setImageViewResource(R.id.ivIcon, R.drawable.bg_bottom_sheet1)
+           setImageViewResource(R.id.ivIcon, R.drawable.bg_bottom_sheet1)
             setTextViewText(R.id.tvTitle, "File $event")
             setTextViewText(R.id.tvDescription, fullPath)
             setTextViewText(R.id.tvTime, SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date()))
+            setViewVisibility(R.id.btnAction, View.VISIBLE)
+            setOnClickPendingIntent(R.id.btnAction, openFilePendingIntent)
         }
 
         val intent = Intent(this, MainActivity::class.java)
@@ -270,7 +288,7 @@ class FileWatchService : Service(){
             .setCustomContentView(views)
             .setCustomBigContentView(views)
             .setCustomHeadsUpContentView(views)
-            .setContentIntent(pendingIntent)
+            .setContentIntent(goToFileInAppPendingIntent)
             .build()
 
         val id = (System.currentTimeMillis() % Int.MAX_VALUE).toInt()

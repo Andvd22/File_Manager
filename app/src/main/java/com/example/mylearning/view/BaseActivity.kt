@@ -105,6 +105,27 @@ abstract class BaseActivity : AppCompatActivity(){
         }
     }
 
+    protected fun goToFileInApp(path: String){
+        val files = fileAdapter.currentList              // danh sách FileModel hiện tại
+        val index = files.indexOfFirst { it.path == path }
+
+        if (index == -1) {
+            Toast.makeText(this, "Không tìm thấy file: $path", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        recyclerView.post {
+            when (val layoutManager = recyclerView.layoutManager) {
+                is StaggeredGridLayoutManager ->
+                    layoutManager.scrollToPositionWithOffset(index, 0)
+                is LinearLayoutManager ->
+                    layoutManager.scrollToPositionWithOffset(index, 0)
+                else ->
+                    recyclerView.scrollToPosition(index)
+            }
+        }
+    }
+
     protected open fun showFileOptions(file: FileModel){
         val options = arrayOf(
             getString(R.string.open),

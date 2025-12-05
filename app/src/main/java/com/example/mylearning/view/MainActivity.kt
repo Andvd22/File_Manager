@@ -49,6 +49,20 @@ class MainActivity : BaseActivity() {
         setupBaseUI()
         setupListeners()
         checkPermissionAndProceed()
+        handleIntentFromNotification(intent)
+    }
+
+    private fun handleIntentFromNotification(intent: Intent){
+        intent ?: return
+        val path = intent.getStringExtra("extra_path") ?: return
+        when(intent.getStringExtra("extra_action_name")){
+            "open_file" ->{
+                openFile(FileModel(file = File(path)))
+            }
+            "open_file_in_app" ->{
+                goToFileInApp(path)
+            }
+        }
     }
 
     private fun setupListeners(){
