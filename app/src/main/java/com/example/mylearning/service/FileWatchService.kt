@@ -19,16 +19,31 @@ import androidx.core.app.NotificationCompat
 import com.example.mylearning.R
 import com.example.mylearning.view.FileEventPopupActivity
 import com.example.mylearning.view.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+data class FileEvent(
+    val eventType: Int,
+    val path: String,
+    val timestamp: Long = System.currentTimeMillis()
+)
 class FileWatchService : Service(){
-    private var lastMovedFromPath: String? = null
-    private var lastMovedFromTime: Long = 0L
-    private val RENAME_WINDOW_MS = 1000L
+    private val fileEventFlow = MutableSharedFlow<FileEvent>(
+        extraBufferCapacity = 64
+    )
 
+    //do service ko co san scope giong lifecycleScope cua activity
+    private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     private var fileObserver: FileObserver?= null
     override fun onBind(intent: Intent?): IBinder? {
@@ -44,6 +59,7 @@ class FileWatchService : Service(){
             buildForegroundNotification("Đang theo dõi thay đổi files trong bộ nhớ")
         )
         startWatchingDownloadsFolder()
+        setupFlowCollector()
         //startWatchingAppFolder()
         // startWatchingRoot()
     }
@@ -56,6 +72,7 @@ class FileWatchService : Service(){
         super.onDestroy()
         fileObserver?.stopWatching()
         fileObserver = null
+        serviceScope.cancel()
         Log.d(TAG, "FileObserver stoppped")
     }
 
@@ -138,6 +155,31 @@ class FileWatchService : Service(){
         Log.d(TAG, "FileObserver đã bắt đầu cho thư mục: $rootDir")
     }
 
+    private fun setupFlowCollector(){
+        serviceScope.launch {
+            fileEventFlow
+                .debounce { 500L }
+                .collect{fileEvent ->
+                    handleRealProcessing(fileEvent)
+                }
+        }
+    }
+
+    private fun handleRealProcessing(fileEvent: FileEvent){
+        val event = fileEvent.eventType
+        val fullPath = fileEvent.path
+        val eventName = when {
+            event and FileObserver.CREATE != 0 -> "CREATE (Tạo mới)"
+            event and FileObserver.DELETE != 0 -> "DELETE (Xóa)"
+            event and FileObserver.MODIFY != 0 -> "MODIFY (Sửa)"
+            event and FileObserver.MOVED_TO != 0 -> "MOVED_TO (Di chuyển đến/Đổi tên đến)"
+            event and FileObserver.MOVED_FROM != 0 -> "MOVED_FROM (Di chuyển đi/Đổi tên gốc)"
+            else -> "OTHER"
+        }
+        Log.d(TAG, "PROCESSED: $eventName - $fullPath")
+        showFileChangedNotification(eventName, fullPath)
+    }
+
     private fun startWatchingDownloadsFolder(){
         val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
 
@@ -155,62 +197,7 @@ class FileWatchService : Service(){
             override fun onEvent(event: Int, path: String?){
                 if(path == null) return
                 val fullPath = "$rootDir/$path"
-                val now = System.currentTimeMillis()
-
-                // val eventName = when {
-                //     event and CREATE != 0 -> "CREATE (tao moi)"
-                //     event and DELETE != 0 -> "DELETE (xoa)"
-                //     event and MODIFY != 0 -> "MODIFY (sua)"
-                //     event and MOVED_FROM != 0 -> "MOVED_FROM (di chuyen di)"
-                //     event and MOVED_TO !=0 -> "MOVED_TO (di chuyen den)"
-                //     else -> "OTHER (khac)"
-                // }
-                // Log.d(TAG, "File event: $eventName - $fullPath")
-                // showFileChangedNotification(eventName, fullPath)
-
-                when {
-                    event and CREATE !=0 -> {
-                        showFileChangedNotification("CREATE (tao moi)", fullPath)
-                    }
-                    event and DELETE !=0 -> {
-                        showFileChangedNotification("DELETE (xoa)", fullPath)
-                    }
-                    event and MOVED_FROM !=0 -> {
-                        lastMovedFromPath = fullPath
-                        lastMovedFromTime = now
-                    }
-                    event and MOVED_TO !=0 -> {
-                        val oldPath = lastMovedFromPath
-                        val timeDiff = now - lastMovedFromTime
-                        if (oldPath != null && timeDiff <= RENAME_WINDOW_MS) {
-                            // => Xem như một lần ĐỔI TÊN
-                            lastMovedFromPath = null
-            
-                            val oldName = java.io.File(oldPath).name
-                            val newName = java.io.File(fullPath).name
-                            val message = "Đổi tên: $oldName ➜ $newName"
-                            lastMovedFromPath = null
-                            lastMovedFromTime = 0L
-                            showFileChangedNotification("RENAME", message)
-                        } else {
-                            // Không có MOVED_FROM gần đó => thực sự là di chuyển file
-                            showFileChangedNotification("MOVED_TO (di chuyển đến)", fullPath)
-                        }
-                    }
-                    event and MODIFY != 0 -> {
-                        val timeDiff = now - lastMovedFromTime
-                        if (timeDiff > RENAME_WINDOW_MS) {
-                            // Không liên quan rename, xử lý như sửa nội dung thật sự
-                            showFileChangedNotification("MODIFY (sửa)", fullPath)
-                        } else {
-                            // Nằm trong “cửa sổ” rename → bỏ qua, vì đã có noti RENAME rồi
-                        }
-                    }
-            
-                    else -> {
-                        showFileChangedNotification("OTHER (khác)", fullPath)
-                    }
-                }
+                fileEventFlow.tryEmit(FileEvent(event, fullPath))
             }
         }
         fileObserver?.startWatching()
