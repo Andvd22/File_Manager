@@ -11,6 +11,7 @@ import android.media.metrics.Event
 import android.os.Build
 import android.os.Environment
 import android.os.FileObserver
+import android.os.FileObserver.ALL_EVENTS
 import android.os.IBinder
 import android.util.Log
 import android.view.View
@@ -21,8 +22,10 @@ import com.example.mylearning.view.FileEventPopupActivity
 import com.example.mylearning.view.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.debounce
@@ -31,6 +34,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.ConcurrentHashMap
 
 data class FileEvent(
     val eventType: Int,
@@ -39,6 +43,7 @@ data class FileEvent(
 )
 class FileWatchService : Service(){
     private val lastImportantEventTime = mutableMapOf<String, Long>()
+    private val debounceJobs = ConcurrentHashMap<String, Job>()
     private val fileEventFlow = MutableSharedFlow<FileEvent>(
         extraBufferCapacity = 64
     )
@@ -114,10 +119,28 @@ class FileWatchService : Service(){
     private fun setupFlowCollector(){
         serviceScope.launch {
             fileEventFlow
-                .debounce { 500L }
                 .collect{fileEvent ->
-                    handleRealProcessing(fileEvent)
+                    processPerFileDebounce(fileEvent)
                 }
+        }
+    }
+
+    private fun processPerFileDebounce(fileEvent: FileEvent){
+        val path = fileEvent.path
+        val key = path.trim().lowercase()
+        if (key.endsWith(".crdownload") || // Chrome/Cốc Cốc đang tải
+            key.endsWith(".tmp") ||        // File tạm hệ thống
+            key.endsWith(".part") ||       // Firefox/IDM
+            key.endsWith(".download") ||   // Samsung Internet cũ
+            key.endsWith(".opdownload")    // Opera
+        ) {
+            return
+        }
+        debounceJobs[key]?.cancel()
+        debounceJobs[key]=serviceScope.launch {
+            delay(500)
+            handleRealProcessing(fileEvent)
+            debounceJobs.remove(key)
         }
     }
 
