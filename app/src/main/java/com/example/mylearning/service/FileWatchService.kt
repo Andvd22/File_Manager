@@ -38,6 +38,7 @@ data class FileEvent(
     val timestamp: Long = System.currentTimeMillis()
 )
 class FileWatchService : Service(){
+    private val lastImportantEventTime = mutableMapOf<String, Long>()
     private val fileEventFlow = MutableSharedFlow<FileEvent>(
         extraBufferCapacity = 64
     )
@@ -60,8 +61,6 @@ class FileWatchService : Service(){
         )
         startWatchingDownloadsFolder()
         setupFlowCollector()
-        //startWatchingAppFolder()
-        // startWatchingRoot()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -94,6 +93,8 @@ class FileWatchService : Service(){
                 NotificationManager.IMPORTANCE_HIGH
             ).apply {
                 description = "Thong bao khi file duoc crud"
+                enableVibration(true)
+                vibrationPattern = longArrayOf(0, 250, 250, 250)
             }
 
             manager.createNotificationChannel(foregroundChannel)
@@ -110,51 +111,6 @@ class FileWatchService : Service(){
             .build()
     }
 
-    private fun startWatchingAppFolder() {
-        // Thư mục gốc riêng của app: .../Android/data/<package>/files/
-        val baseDir = applicationContext.getExternalFilesDir(null)
-
-        if (baseDir == null) {
-            Log.w(TAG, "App dir is null, cannot start FileObserver")
-            return
-        }
-
-
-        val watchDir = File(baseDir, "MyWatchFolder")
-        if (!watchDir.exists()) {
-            watchDir.mkdirs()       // đảm bảo thư mục tồn tại
-        }
-
-        val rootDir = watchDir.absolutePath
-        Log.d(TAG, "FileObserver sẽ theo dõi thư mục: $rootDir")
-
-        fileObserver = object : FileObserver(
-            rootDir,
-            CREATE or DELETE or MODIFY or MOVED_TO or MOVED_FROM
-        ) {
-            override fun onEvent(event: Int, path: String?) {
-                if (path == null) return
-
-                val fullPath = "$rootDir/$path"
-
-                val eventName = when {
-                    event and CREATE != 0 -> "CREATE (Tạo mới)"
-                    event and DELETE != 0 -> "DELETE (Xóa)"
-                    event and MODIFY != 0 -> "MODIFY (Sửa)"
-                    event and MOVED_TO != 0 -> "MOVED_TO (Di chuyển đến)"
-                    event and MOVED_FROM != 0 -> "MOVED_FROM (Di chuyển đi)"
-                    else -> "OTHER (Khác)"
-                }
-
-                Log.d(TAG, "File event: $eventName - $fullPath")
-                showFileChangedNotification(eventName, fullPath)
-            }
-        }
-
-        fileObserver?.startWatching()
-        Log.d(TAG, "FileObserver đã bắt đầu cho thư mục: $rootDir")
-    }
-
     private fun setupFlowCollector(){
         serviceScope.launch {
             fileEventFlow
@@ -165,19 +121,46 @@ class FileWatchService : Service(){
         }
     }
 
-    private fun handleRealProcessing(fileEvent: FileEvent){
+    private fun handleRealProcessing(fileEvent: FileEvent) {
         val event = fileEvent.eventType
-        val fullPath = fileEvent.path
+        val originalPath = fileEvent.path
+        val now = fileEvent.timestamp
+
+        // 1. Chuẩn hóa Key (Quan trọng để không bị lỗi chữ hoa/thường)
+        val normalizedKey = originalPath.trim().lowercase()
+
+        Log.d(TAG, "Processing Event: $event | Key: $normalizedKey")
+
+        // 2. Logic chặn (Debounce 10s cho tất cả các loại sự kiện)
+        val lastTime = lastImportantEventTime[normalizedKey] ?: 0L
+
+        // Nếu sự kiện mới cách sự kiện cũ dưới 10 giây -> CHẶN
+        if (now - lastTime < 10000L) {
+            // Ngoại lệ: Nếu là DELETE thì cho qua để xóa map, còn lại chặn hết
+            if (event and FileObserver.DELETE == 0) {
+                Log.d(TAG, ">>> BLOCKED (Spam/Echo): $originalPath")
+                return
+            }
+        }
+
         val eventName = when {
             event and FileObserver.CREATE != 0 -> "CREATE (Tạo mới)"
             event and FileObserver.DELETE != 0 -> "DELETE (Xóa)"
-            event and FileObserver.MODIFY != 0 -> "MODIFY (Sửa)"
-            event and FileObserver.MOVED_TO != 0 -> "MOVED_TO (Di chuyển đến/Đổi tên đến)"
-            event and FileObserver.MOVED_FROM != 0 -> "MOVED_FROM (Di chuyển đi/Đổi tên gốc)"
+            event and FileObserver.MODIFY != 0 -> "MODIFY (Sửa nội dung)"
+            event and FileObserver.MOVED_TO != 0 -> "MOVED_TO (Đến/Đổi tên)"
+            event and FileObserver.MOVED_FROM != 0 -> "MOVED_FROM (Đi/Đổi tên)"
             else -> "OTHER"
         }
-        Log.d(TAG, "PROCESSED: $eventName - $fullPath")
-        showFileChangedNotification(eventName, fullPath)
+
+        // 3. Cập nhật thời gian vào Map
+        if (event and FileObserver.DELETE != 0) {
+            lastImportantEventTime.remove(normalizedKey)
+        } else {
+            lastImportantEventTime[normalizedKey] = now
+        }
+
+        Log.d(TAG, "PROCESSED: $eventName - $originalPath")
+        showFileChangedNotification(eventName, originalPath)
     }
 
     private fun startWatchingDownloadsFolder(){
@@ -202,36 +185,6 @@ class FileWatchService : Service(){
         }
         fileObserver?.startWatching()
         Log.d(TAG, "File OBser đã bắt đầu theo dõi thư mục DOWNLOADS: $rootDir")
-    }
-
-    private fun startWatchingRoot(){
-        val rootDir = Environment.getExternalStorageDirectory().absolutePath
-
-        fileObserver = object : FileObserver(
-            rootDir,
-            CREATE or DELETE or MODIFY or MOVED_TO or MOVED_FROM
-        ){
-            override fun onEvent(event: Int, path: String?) {
-                if(path == null) return
-
-                val fullPath = "$rootDir/$path"
-
-                val eventName = when {
-                    event and CREATE !=0 -> "CREATE (Tạo mới)"
-                    event and DELETE !=0 -> "DELETE (xoa)"
-                    event and MODIFY !=0 -> "MODIFY (Sua)"
-                    event and MOVED_TO !=0 -> "MOVED_TO (Di chuyen den)"
-                    event and MOVED_FROM !=0 -> "MOVED_FROM (di chuyen di)"
-                    else -> "OTHER (khac)"
-                }
-
-                Log.d(TAG, "File event: $eventName - $fullPath")
-
-                showFileChangedNotification(eventName, fullPath)
-            }
-        }
-        fileObserver?.startWatching()
-        Log.d(TAG, "FileObserver bat dau: $rootDir")
     }
 
     private fun showFileChangedNotification(event: String, fullPath: String){
@@ -278,16 +231,16 @@ class FileWatchService : Service(){
             .setContentIntent(goToFileInAppPendingIntent)
             .build()
 
-        val id = (System.currentTimeMillis() % Int.MAX_VALUE).toInt()
+        val id = fullPath.trim().lowercase().hashCode()
         manager.notify(id, notification)
 
 
-        val popupIntent = Intent(this, FileEventPopupActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            putExtra(FileEventPopupActivity.EXTRA_EVENT, event)
-            putExtra(FileEventPopupActivity.EXTRA_PATH, fullPath)
-        }
-        startActivity(popupIntent)
+//        val popupIntent = Intent(this, FileEventPopupActivity::class.java).apply {
+//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//            putExtra(FileEventPopupActivity.EXTRA_EVENT, event)
+//            putExtra(FileEventPopupActivity.EXTRA_PATH, fullPath)
+//        }
+//        startActivity(popupIntent)
     }
     companion object{
         private const val TAG = "FileWatchService"
