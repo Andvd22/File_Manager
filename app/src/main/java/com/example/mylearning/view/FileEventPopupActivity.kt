@@ -25,7 +25,7 @@ class FileEventPopupActivity : AppCompatActivity() {
         val event = intent.getStringExtra(EXTRA_EVENT).orEmpty()
         val fullPath = intent.getStringExtra(EXTRA_PATH).orEmpty()
 
-        binding.includeNotification.ivIcon.setImageResource(R.drawable.bg_bottom_sheet1)
+//        binding.includeNotification.ivIcon.setImageResource(R.drawable.bg_bottom_sheet1)
         binding.includeNotification.tvTitle.text = "File $event"
         binding.includeNotification.tvDescription.text = fullPath
         binding.includeNotification.tvTime.text = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())

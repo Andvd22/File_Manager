@@ -3,20 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="#FFF3E0"
     android:padding="12dp">
 
-    <ImageView
-        android:id="@+id/ivIcon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_launcher_foreground"
-        android:scaleType="centerCrop"
-        android:contentDescription="@string/app_name" />
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="🙀"-->
+<!--        android:textSize="45sp"-->
+<!--        android:layout_marginEnd="8dp"-->
+<!--        android:gravity="center"/>-->
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:layout_weight="1"
         android:orientation="vertical">
 
@@ -24,19 +25,20 @@
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tiêu đề"
+            android:text="Không ổn rồi đại vương ơi!"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:textColor="#D32F2F"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Mô tả chi tiết file / đường dẫn"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="13sp"
+            android:layout_marginTop="4dp"
+            android:text="Có file thay đổi 👉"
+            android:textStyle="bold"
+            android:textColor="#E65100"
+            android:textSize="12sp"
             android:maxLines="2"
             android:ellipsize="end" />
     </LinearLayout>
@@ -45,7 +47,8 @@
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="16:30"
+        android:text="Now"
+        android:visibility="gone"
         android:textColor="@android:color/darker_gray"
         android:textSize="11sp" />
 
@@ -53,8 +56,13 @@
         android:id="@+id/btnAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="xem file"
-        android:visibility="gone"
+        android:text="Xem ngay"
+        android:textSize="12sp"
+        android:layout_marginStart="4dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:visibility="visible"
+        style="@style/ThemeOverlay.Material3"
         />
 
 </LinearLayout>

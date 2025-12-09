@@ -51,7 +51,12 @@ class FileWatchService : Service(){
     //do service ko co san scope giong lifecycleScope cua activity
     private val serviceScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    private var fileObserver: FileObserver?= null
+//    private var fileObserver: FileObserver?= null
+
+    private val activeObservers = java.util.ArrayList<FileObserver>()
+    // Giới hạn độ sâu quét (0=root, 1=con, 2=cháu)
+    private val MAX_DEPTH = 2
+
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
@@ -64,7 +69,7 @@ class FileWatchService : Service(){
             FOREGROUND_ID,
             buildForegroundNotification("Đang theo dõi thay đổi files trong bộ nhớ")
         )
-        startWatchingDownloadsFolder()
+        startWatchingRecursiveRoot()
         setupFlowCollector()
     }
 
@@ -74,8 +79,7 @@ class FileWatchService : Service(){
 
     override fun onDestroy() {
         super.onDestroy()
-        fileObserver?.stopWatching()
-        fileObserver = null
+        stopAllObservers()
         serviceScope.cancel()
         Log.d(TAG, "FileObserver stoppped")
     }
@@ -128,12 +132,8 @@ class FileWatchService : Service(){
     private fun processPerFileDebounce(fileEvent: FileEvent){
         val path = fileEvent.path
         val key = path.trim().lowercase()
-        if (key.endsWith(".crdownload") || // Chrome/Cốc Cốc đang tải
-            key.endsWith(".tmp") ||        // File tạm hệ thống
-            key.endsWith(".part") ||       // Firefox/IDM
-            key.endsWith(".download") ||   // Samsung Internet cũ
-            key.endsWith(".opdownload")    // Opera
-        ) {
+        val extension = File(path).extension.lowercase()
+        if (!SUPPORTED_EXTENSIONS.contains(extension)) {
             return
         }
         debounceJobs[key]?.cancel()
@@ -167,12 +167,12 @@ class FileWatchService : Service(){
         }
 
         val eventName = when {
-            event and FileObserver.CREATE != 0 -> "CREATE (Tạo mới)"
-            event and FileObserver.DELETE != 0 -> "DELETE (Xóa)"
-            event and FileObserver.MODIFY != 0 -> "MODIFY (Sửa nội dung)"
-            event and FileObserver.MOVED_TO != 0 -> "MOVED_TO (Đến/Đổi tên)"
-            event and FileObserver.MOVED_FROM != 0 -> "MOVED_FROM (Đi/Đổi tên)"
-            else -> "OTHER"
+            event and FileObserver.CREATE !=0 -> "Không ổn rồi đại vương ơi!"
+            event and FileObserver.DELETE !=0 -> "Không ổn rồi đại vương ơi!"
+//            event and FileObserver.MODIFY != 0 -> "MODIFY (Sửa nội dung)"
+            event and FileObserver.MOVED_FROM !=0 -> "Không ổn rồi đại vương ơi!"
+//            event and FileObserver.MOVED_FROM != 0 -> "MOVED_FROM (Đi/Đổi tên)"
+            else -> return
         }
 
         // 3. Cập nhật thời gian vào Map
@@ -186,17 +186,23 @@ class FileWatchService : Service(){
         showFileChangedNotification(eventName, originalPath)
     }
 
-    private fun startWatchingDownloadsFolder(){
-        val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-
-        if(downloadsDir == null || !downloadsDir.exists()|| !downloadsDir.canRead()){
-            Log.w(TAG, "Thư mục downloads không đọc, mở, tồn tại")
-            return
+    private fun startWatchingRecursiveRoot(){
+        val rootDir = Environment.getExternalStorageDirectory()
+        stopAllObservers()
+        if (rootDir != null && rootDir.exists() && rootDir.canRead()) {
+            Log.d(TAG, "Bắt đầu quét đệ quy từ Root: ${rootDir.absolutePath}")
+            watchDirectoryRecursive(rootDir, 0)
+        } else {
+            Log.e(TAG, "Không đọc được Root. Kiểm tra quyền MANAGE_EXTERNAL_STORAGE")
         }
+    }
 
-        val rootDir = downloadsDir.absolutePath
+    private fun watchDirectoryRecursive(directory: File, currentDepth: Int){
+        if(currentDepth > MAX_DEPTH) return
+//
+        val rootDir = directory.absolutePath
         Log.d(TAG, "FileObserve sẽ theo dõi thư mục : $rootDir")
-        fileObserver = object : FileObserver(
+        val fileObserver = object : FileObserver(
             rootDir,
             CREATE or DELETE or MODIFY or MOVED_FROM or MOVED_TO
         ){
@@ -204,10 +210,34 @@ class FileWatchService : Service(){
                 if(path == null) return
                 val fullPath = "$rootDir/$path"
                 fileEventFlow.tryEmit(FileEvent(event, fullPath))
+
+                val cleanEvent = event and ALL_EVENTS
+                if(cleanEvent == CREATE || cleanEvent == MOVED_TO) {
+                    val file = File(fullPath)
+                    if(file.isDirectory && currentDepth < MAX_DEPTH){
+                        watchDirectoryRecursive(file, currentDepth+1)
+                    }
+                }
             }
         }
-        fileObserver?.startWatching()
+        fileObserver.startWatching()
+        activeObservers.add(fileObserver)
         Log.d(TAG, "File OBser đã bắt đầu theo dõi thư mục DOWNLOADS: $rootDir")
+//
+        if (currentDepth < MAX_DEPTH) {
+            val subFiles = directory.listFiles() ?: return
+            for (file in subFiles) {
+                if (file.isDirectory) {
+                    watchDirectoryRecursive(file, currentDepth + 1)
+                }
+            }
+        }
+    }
+
+    private fun stopAllObservers() {
+        activeObservers.forEach { it.stopWatching() }
+        activeObservers.clear()
+        Log.d(TAG, "Đã dừng tất cả observers")
     }
 
     private fun showFileChangedNotification(event: String, fullPath: String){
@@ -229,9 +259,9 @@ class FileWatchService : Service(){
         val goToFileInAppPendingIntent = PendingIntent.getActivity(this, 2, goToFileInAppIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val views = RemoteViews(packageName, R.layout.notification_file_event).apply{
-           setImageViewResource(R.id.ivIcon, R.drawable.bg_bottom_sheet1)
-            setTextViewText(R.id.tvTitle, "File $event")
-            setTextViewText(R.id.tvDescription, fullPath)
+//           setImageViewResource(R.id.ivIcon, R.drawable.bg_bottom_sheet1)
+//            setTextViewText(R.id.tvTitle, "File $event")
+//            setTextViewText(R.id.tvDescription, fullPath)
             setTextViewText(R.id.tvTime, SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date()))
             setViewVisibility(R.id.btnAction, View.VISIBLE)
             setOnClickPendingIntent(R.id.btnAction, openFilePendingIntent)
@@ -241,7 +271,7 @@ class FileWatchService : Service(){
         val pendingIntent = PendingIntent.getActivity(this, 0, intent,PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val notification = NotificationCompat.Builder(this, EVENT_CHANNEL_ID)
-            .setSmallIcon(R.drawable.bg_bottom_sheet1)
+            .setSmallIcon(R.drawable.icon_foreground)
              .setContentTitle("File $event")
              .setContentText(fullPath)
             .setAutoCancel(true)
@@ -271,5 +301,10 @@ class FileWatchService : Service(){
 
         private const val EVENT_CHANNEL_ID = "file_watch_events"
         private const val FOREGROUND_ID = 1
+
+        private val SUPPORTED_EXTENSIONS = setOf(
+            "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "txt",
+            "jpg", "png", "jpeg", "mp4", "mp3", "zip", "rar", "apk"
+        )
     }
 }
