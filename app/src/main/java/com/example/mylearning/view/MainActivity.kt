@@ -59,8 +59,8 @@ class MainActivity : BaseActivity() {
             "open_file" ->{
                 openFile(FileModel(file = File(path)))
             }
-            "open_file_in_app" ->{
-                goToFileInApp(path)
+            "go_to_app" ->{
+
             }
         }
     }

@@ -44,8 +44,7 @@ data class FileEvent(
     val timestamp: Long = System.currentTimeMillis()
 )
 class FileWatchService : Service(){
-    private val lastImportantEventTime = mutableMapOf<String, Long>()
-    private val debounceJobs = ConcurrentHashMap<String, Job>()
+    private val processedEvents = ConcurrentHashMap<String, BooleanArray>()
     private val fileEventFlow = MutableSharedFlow<FileEvent>(
         extraBufferCapacity = 64
     )
@@ -156,60 +155,68 @@ class FileWatchService : Service(){
                 }
         }
     }
+    private fun isTempFile(fileName: String): Boolean {
+        val lowerName = fileName.lowercase()
+        return lowerName.startsWith(".pending-") ||
+                lowerName.startsWith(".tmp") ||
+                lowerName.startsWith(".thumbnails")
+    }
 
     private fun processPerFileDebounce(fileEvent: FileEvent){
         val path = fileEvent.path
         val key = path.trim().lowercase()
+        val fileName = File(path).name
+        if (isTempFile(fileName)) {
+            return
+        }
         val extension = File(path).extension.lowercase()
+
+        val eventType = fileEvent.eventType
+        if (eventType and FileObserver.DELETE != 0) {
+            processedEvents.remove(key) // Xóa khỏi map
+            handleRealProcessing(fileEvent)
+            return
+        }
         if (!SUPPORTED_EXTENSIONS.contains(extension)) {
             return
         }
-        debounceJobs[key]?.cancel()
-        debounceJobs[key]=serviceScope.launch {
-            delay(500)
-            handleRealProcessing(fileEvent)
-            debounceJobs.remove(key)
+        if (eventType and FileObserver.MODIFY != 0) {
+            return // Bỏ qua, đợi MOVED_TO
         }
+        if (eventType and FileObserver.MOVED_FROM != 0) {
+            return
+        }
+        val eventsProcessed = processedEvents.getOrPut(key){
+            BooleanArray(5){false}
+        }
+        // Check xem file này đã có event nào được xử lý chưa
+        val hasProcessedEvent = eventsProcessed.any { event ->
+            event == true
+        }
+        if (hasProcessedEvent) {
+            return
+        }
+        var eventIndex = -1
+        when {
+            eventType and FileObserver.CREATE != 0 -> eventIndex = 0
+            eventType and FileObserver.MOVED_TO != 0 -> eventIndex = 4
+            else -> return
+        }
+        eventsProcessed[eventIndex] = true
+        handleRealProcessing(fileEvent)
     }
 
     private fun handleRealProcessing(fileEvent: FileEvent) {
         val event = fileEvent.eventType
         val originalPath = fileEvent.path
-        val now = fileEvent.timestamp
-
-        // 1. Chuẩn hóa Key (Quan trọng để không bị lỗi chữ hoa/thường)
-        val normalizedKey = originalPath.trim().lowercase()
-
-        Log.d(TAG, "Processing Event: $event | Key: $normalizedKey")
-
-        // 2. Logic chặn (Debounce 10s cho tất cả các loại sự kiện)
-        val lastTime = lastImportantEventTime[normalizedKey] ?: 0L
-
-        // Nếu sự kiện mới cách sự kiện cũ dưới 10 giây -> CHẶN
-        if (now - lastTime < 10000L) {
-            // Ngoại lệ: Nếu là DELETE thì cho qua để xóa map, còn lại chặn hết
-            if (event and FileObserver.DELETE == 0) {
-                Log.d(TAG, ">>> BLOCKED (Spam/Echo): $originalPath")
-                return
-            }
-        }
 
         val eventName = when {
-            event and FileObserver.CREATE !=0 -> {
-                "create Không ổn rồi đại vương ơi!"
-            }
+            event and FileObserver.CREATE !=0 -> "create Không ổn rồi đại vương ơi!"
             event and FileObserver.DELETE !=0 -> "delete Không ổn rồi đại vương ơi!"
-//            event and FileObserver.MODIFY != 0 -> "MODIFY (Sửa nội dung)"
-//            event and FileObserver.MOVED_FROM !=0 -> "move from Không ổn rồi đại vương ơi!"
+           event and FileObserver.MODIFY != 0 -> "MODIFY (Sửa nội dung)"
+           event and FileObserver.MOVED_FROM !=0 -> "move from Không ổn rồi đại vương ơi!"
             event and FileObserver.MOVED_TO != 0 -> "MOVED_TO (Đến/Đổi tên)"
             else -> return
-        }
-
-        // 3. Cập nhật thời gian vào Map
-        if (event and FileObserver.DELETE != 0) {
-            lastImportantEventTime.remove(normalizedKey)
-        } else {
-            lastImportantEventTime[normalizedKey] = now
         }
 
         Log.d(TAG, "PROCESSED: $eventName - $originalPath")
@@ -282,7 +289,7 @@ class FileWatchService : Service(){
 
         val goToFileInAppIntent = Intent(this, MainActivity::class.java).apply {
             putExtra("extra_path", fullPath)
-            putExtra("extra_action_name", "go_to_file_in_app")
+            putExtra("extra_action_name", "go_to_app")
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
 
