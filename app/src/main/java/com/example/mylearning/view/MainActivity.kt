@@ -318,7 +318,7 @@ class MainActivity : BaseActivity() {
          val testFile = File(downloadsDir,"test_${System.currentTimeMillis()}.txt")
 //        val testFile = File(watchDir, "test_${System.currentTimeMillis()}.txt")
         testFile.createNewFile()
-        // testFile.writeText("Hello from FileObserver")
+         testFile.writeText("Hello from FileObserver")
 
 //        Toast.makeText(this, "Đã tạo: ${testFile.absolutePath}", Toast.LENGTH_SHORT).show()
     }

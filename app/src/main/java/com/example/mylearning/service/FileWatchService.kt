@@ -20,6 +20,8 @@ import androidx.core.app.NotificationCompat
 import com.example.mylearning.R
 import com.example.mylearning.view.FileEventPopupActivity
 import com.example.mylearning.view.MainActivity
+import com.example.mylearning.view.SecondActivity
+import com.example.mylearning.view.SelectActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -112,11 +114,37 @@ class FileWatchService : Service(){
     }
 
     private fun buildForegroundNotification(content: String): Notification{
+        val contentViews = RemoteViews(packageName, R.layout.notification_foreground_content)
+        val bigContentViews = RemoteViews(packageName, R.layout.notification_foreground_big)
+
+
+        val homeIntent = Intent(this, MainActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP) }
+        val homePendingIntent = PendingIntent.getActivity(this,100,homeIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        contentViews.setOnClickPendingIntent(R.id.btnHome, homePendingIntent)
+        bigContentViews.setOnClickPendingIntent(R.id.btnHome, homePendingIntent)
+
+        val searchIntent = Intent(this, SecondActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP) }
+        val searchPendingIntent = PendingIntent.getActivity(this, 101, searchIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        contentViews.setOnClickPendingIntent(R.id.btnSearch, searchPendingIntent)
+        bigContentViews.setOnClickPendingIntent(R.id.btnSearch, searchPendingIntent)
+
+        val selectIntent = Intent(this, SelectActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP) }
+        val selectPendingIntent = PendingIntent.getActivity(this, 102, selectIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        contentViews.setOnClickPendingIntent(R.id.btnSelect, selectPendingIntent)
+        bigContentViews.setOnClickPendingIntent(R.id.btnSelect, selectPendingIntent)
+
+        val defaultIntent = Intent(this, MainActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP) }
+        val defaultPendingIntent = PendingIntent.getActivity(this, 0, defaultIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
         return NotificationCompat.Builder(this, FOREGROUND_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle("Đang theo dõi files")
+            .setContentTitle("Trình đọc tài lệu")
             .setContentText(content)
             .setOngoing(true)
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            .setCustomContentView(contentViews)
+            .setCustomBigContentView(bigContentViews)
+            .setContentIntent(defaultPendingIntent)
             .build()
     }
 
@@ -167,11 +195,13 @@ class FileWatchService : Service(){
         }
 
         val eventName = when {
-            event and FileObserver.CREATE !=0 -> "Không ổn rồi đại vương ơi!"
-            event and FileObserver.DELETE !=0 -> "Không ổn rồi đại vương ơi!"
+            event and FileObserver.CREATE !=0 -> {
+                "create Không ổn rồi đại vương ơi!"
+            }
+            event and FileObserver.DELETE !=0 -> "delete Không ổn rồi đại vương ơi!"
 //            event and FileObserver.MODIFY != 0 -> "MODIFY (Sửa nội dung)"
-            event and FileObserver.MOVED_FROM !=0 -> "Không ổn rồi đại vương ơi!"
-//            event and FileObserver.MOVED_FROM != 0 -> "MOVED_FROM (Đi/Đổi tên)"
+//            event and FileObserver.MOVED_FROM !=0 -> "move from Không ổn rồi đại vương ơi!"
+            event and FileObserver.MOVED_TO != 0 -> "MOVED_TO (Đến/Đổi tên)"
             else -> return
         }
 
