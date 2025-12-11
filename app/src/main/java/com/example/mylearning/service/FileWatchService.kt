@@ -20,6 +20,7 @@ import androidx.core.app.NotificationCompat
 import com.example.mylearning.R
 import com.example.mylearning.view.FileEventPopupActivity
 import com.example.mylearning.view.MainActivity
+import com.example.mylearning.view.ScreenshotActivity
 import com.example.mylearning.view.SecondActivity
 import com.example.mylearning.view.SelectActivity
 import kotlinx.coroutines.CoroutineScope
@@ -280,11 +281,18 @@ class FileWatchService : Service(){
     private fun showFileChangedNotification(event: String, fullPath: String){
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val openFileIntent = Intent(this, MainActivity::class.java).apply {
+        val lower = fullPath.lowercase()
+        val isImage = lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") 
+        
+        val openFileIntent = if(isImage) Intent(this, ScreenshotActivity::class.java).apply {
+            putExtra("extra_path", fullPath)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        } else Intent(this, MainActivity::class.java).apply {
             putExtra("extra_path", fullPath)
             putExtra("extra_action_name", "open_file")
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         }
+            
         val openFilePendingIntent = PendingIntent.getActivity(this, 1, openFileIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val goToFileInAppIntent = Intent(this, MainActivity::class.java).apply {
