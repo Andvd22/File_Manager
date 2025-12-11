@@ -63,7 +63,6 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/btnRotate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -73,6 +72,7 @@
             android:padding="8dp">
 
             <Button
+                android:id="@+id/btnRotate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="xoay"/>
@@ -86,7 +86,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btnShare"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -96,6 +95,7 @@
             android:padding="8dp">
 
             <Button
+                android:id="@+id/btnShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="chia sẻ"/>

@@ -76,6 +76,46 @@ class FileRepository (
             throw IllegalStateException("Không thể xóa file vật lý: ${file.path}")
         }
     }
+
+    suspend fun renameFile(file: FileModel, newName: String): FileModel = withContext(ioDispatcher){
+        val oldFile = file.file
+        if(!oldFile.exists()){
+            throw IllegalStateException("File không tồn tại: ${file.path}")
+        }
+
+        val finalName = if(newName.contains(".oldFile.extension")){
+            newName
+        } else {
+            "$newName.${oldFile.extension}"
+        }
+
+        val invalidChars = charArrayOf('<', '>', ':', '/', '\\', '|', '?', '*')
+        if(finalName.any{invalidChars.contains(it) || it in invalidChars}){
+            throw IllegalArgumentException("Tên file không hợp lệ: $finalName")
+        }
+
+        val parentDir = oldFile.parentFile
+        val newFile = File(parentDir, finalName)
+
+        if(newFile.exists() && newFile.absolutePath != oldFile.absolutePath){
+            throw IllegalStateException("File đã tồn tại: ${newFile.absolutePath}")
+        }
+
+        val renamed = try {
+            oldFile.renameTo(newFile)
+        } catch (e: SecurityException){
+            throw SecurityException("Không có quyền đổi tên file: ${e.message}")
+        } catch (e: Exception){
+            throw IllegalStateException("Không thể đổi tên file: ${e.message}")
+        }
+
+        if(!renamed){
+            throw IllegalStateException("Không thể đổi tên file: ${file.path}")
+        }
+        newFile.setLastModified(System.currentTimeMillis())
+
+        FileModel(newFile)
+    }
 }
 
 //suspend fun clearCache() = withContext(ioDispatcher) {

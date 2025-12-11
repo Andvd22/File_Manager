@@ -78,6 +78,8 @@ class FileViewModel(application: Application): AndroidViewModel(application){
     fun deleteFile(file: FileModel) = viewModelScope.launch {
         repository.deleteFile(file)
     }
+
+    suspend fun renameFile(file: FileModel, newName: String) = repository.renameFile(file, newName)
 }
 
 

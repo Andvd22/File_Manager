@@ -51,8 +51,6 @@
         android:text="Xem ngay"
         android:textSize="12sp"
         android:layout_marginStart="4dp"
-        android:minWidth="0dp"
-        android:minHeight="0dp"
         android:visibility="visible"
         style="@style/ThemeOverlay.Material3"
         />
