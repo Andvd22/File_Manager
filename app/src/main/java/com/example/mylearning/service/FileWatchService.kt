@@ -284,8 +284,9 @@ class FileWatchService : Service(){
         val lower = fullPath.lowercase()
         val isImage = lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") 
         
-        val openFileIntent = if(isImage) Intent(this, ScreenshotActivity::class.java).apply {
+        val openFileIntent = if(isImage) Intent(this, MainActivity::class.java).apply {
             putExtra("extra_path", fullPath)
+            putExtra("extra_auto_open", true)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         } else Intent(this, MainActivity::class.java).apply {
             putExtra("extra_path", fullPath)

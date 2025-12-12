@@ -55,12 +55,25 @@ class MainActivity : BaseActivity() {
     private fun handleIntentFromNotification(intent: Intent){
         intent ?: return
         val path = intent.getStringExtra("extra_path") ?: return
+
+        // Check auto_open TRƯỚC (nếu có thì mở ScreenshotActivity luôn)
+        val autoOpen = intent.getBooleanExtra("extra_auto_open", false)
+        if (autoOpen) {
+            val screenshotIntent = Intent(this, ScreenshotActivity::class.java).apply {
+                putExtra("extra_path", path)
+            }
+            Toast.makeText(this, "Noti -> MainActivity ->", Toast.LENGTH_SHORT).show()
+            startActivity(screenshotIntent)
+            return
+        }
+
+        // Xử lý các action khác
         when(intent.getStringExtra("extra_action_name")){
-            "open_file" ->{
+            "open_file" -> {
                 openFile(FileModel(file = File(path)))
             }
-            "go_to_app" ->{
-
+            "go_to_app" -> {
+                // TODO: scroll to file trong list
             }
         }
     }
@@ -137,7 +150,9 @@ class MainActivity : BaseActivity() {
     }
 
     override fun handleFileClick(file: FileModel) {
-        Toast.makeText(this,"${file.name}", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, ScreenshotActivity::class.java)
+        intent.putExtra("extra_path", file.path)
+        startActivity(intent)
     }
 
     override fun showFileOptions(file: FileModel) {
