@@ -1,5 +1,6 @@
 package com.example.mylearning.view
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
@@ -26,6 +27,7 @@ class SettingActivity : AppCompatActivity() {
             it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         }
         setupItems()
+        setupListeners()
     }
 
     private fun setupItems() {
@@ -58,6 +60,18 @@ class SettingActivity : AppCompatActivity() {
         binding.itemTerms.tvTitle.setText("Terms and Conditions")
         binding.itemAboutUs.ivIcon.setImageResource(R.drawable.icon12)
         binding.itemAboutUs.tvTitle.setText("About Us")
+//        binding nav
+        binding.bottomNavigation.itemHomeNav.ivIcon.setImageResource(R.drawable.home)
+        binding.bottomNavigation.itemFavouriteNav.ivIcon.setImageResource(R.drawable.favourite)
+        binding.bottomNavigation.itemToolNav.ivIcon.setImageResource(R.drawable.tool)
+        binding.bottomNavigation.itemSettingNav.ivIcon.setImageResource(R.drawable.setting)
+        binding.bottomNavigation.itemSettingNav.tvTitle.setTextColor(Color.parseColor("#FF5C01"))
+    }
+
+    private fun setupListeners(){
+        binding.itemChangeLanguage.root.setOnClickListener {
+            val intent
+        }
 
     }
 
