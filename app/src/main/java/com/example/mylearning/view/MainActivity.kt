@@ -87,12 +87,14 @@ class MainActivity : BaseActivity() {
         }
 
         binding.fabScan.setOnClickListener {
-            if(permissionHelper.hasStoragePermission()){
-                createTestFileInWatchedFolder()
-                scanFiles()
-            } else {
-                checkPermissionAndProceed()
-            }
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
+//            if(permissionHelper.hasStoragePermission()){
+//                createTestFileInWatchedFolder()
+//                scanFiles()
+//            } else {
+//                checkPermissionAndProceed()
+//            }
         }
         binding.goSelectAct.setOnClickListener {
             if(permissionHelper.hasStoragePermission())
