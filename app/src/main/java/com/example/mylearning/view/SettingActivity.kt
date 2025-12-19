@@ -1,5 +1,6 @@
 package com.example.mylearning.view
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -70,7 +71,8 @@ class SettingActivity : AppCompatActivity() {
 
     private fun setupListeners(){
         binding.itemChangeLanguage.root.setOnClickListener {
-            val intent
+            val intent = Intent(this, LanguageActivity::class.java)
+            startActivity(intent)
         }
 
     }
