@@ -47,7 +47,7 @@ class LanguageAdapter(
             binding.apply {
                 when (item) {
                     is LanguageItem.System -> {
-                        ivFlag.setImageResource(R.drawable.flag)
+                        ivFlag.setImageResource(R.drawable.flag_system)
                         tvLanguageName.text = item.name
                         hideArrows()
                         showRadio(item.isSelected)
