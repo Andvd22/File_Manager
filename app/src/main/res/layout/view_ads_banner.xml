@@ -14,12 +14,12 @@
             android:id="@+id/ivAdsSmallIcon"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:src="@drawable/ads_icon"/>
+            android:src="@drawable/setting_activity_ads_icon"/>
         <ImageView
             android:id="@+id/ivAdsLargeIcon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ads_large_icon"
+            android:src="@drawable/setting_activity_ads_large_icon"
             android:layout_marginStart="7dp"/>
         <LinearLayout
             android:layout_width="0dp"
@@ -50,7 +50,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginEnd="9dp"
             android:layout_marginStart="19dp"
-            android:background="@drawable/bg_button_ads"
+            android:background="@drawable/setting_activity_bg_button_ads"
             android:clickable="true"
             android:focusable="true"
             android:gravity="center"

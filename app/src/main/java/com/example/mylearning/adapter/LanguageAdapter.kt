@@ -47,7 +47,7 @@ class LanguageAdapter(
             binding.apply {
                 when (item) {
                     is LanguageItem.System -> {
-                        ivFlag.setImageResource(R.drawable.flag_system)
+                        ivFlag.setImageResource(R.drawable.language_activity_flag_system)
                         tvLanguageName.text = item.name
                         hideArrows()
                         showRadio(item.isSelected)
@@ -138,13 +138,13 @@ class LanguageAdapter(
         return when (item) {
             is LanguageItem.Child -> {
                 when (item.position) {
-                    ChildPosition.SINGLE -> R.drawable.bg_item_language_child_single_selector
-                    ChildPosition.FIRST -> R.drawable.bg_item_language_child_top_selector
-                    ChildPosition.MIDDLE -> R.drawable.bg_item_language_child_middle_selector
-                    ChildPosition.LAST -> R.drawable.bg_item_language_child_bottom_selector
+                    ChildPosition.SINGLE -> R.drawable.language_activity_bg_item_language_child_single_selector
+                    ChildPosition.FIRST -> R.drawable.language_activity_bg_item_language_child_top_selector
+                    ChildPosition.MIDDLE -> R.drawable.language_activity_bg_item_language_child_middle_selector
+                    ChildPosition.LAST -> R.drawable.language_activity_bg_item_language_child_bottom_selector
                 }
             }
-            else -> R.drawable.bg_item_language_parent_selector
+            else -> R.drawable.language_activity_bg_item_language_parent_selector
         }
     }
 }

@@ -19,7 +19,7 @@
             android:id="@+id/ivIcon"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:src="@drawable/home"/>
+            android:src="@drawable/setting_activity_home"/>
 
         <TextView
             android:id="@+id/tvTitle"

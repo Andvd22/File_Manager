@@ -29,7 +29,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="centerCrop"
-            tools:src="@drawable/flag" />
+            tools:src="@drawable/language_activity_flag" />
 
         <!-- Language Name -->
         <TextView
@@ -51,7 +51,7 @@
             android:layout_marginEnd="8dp"
             android:clickable="false"
             android:focusable="false"
-            android:src="@drawable/arrowright"
+            android:src="@drawable/setting_activity_arrowright"
             android:visibility="gone" />
 
         <!-- Arrow up (collapse) -->
@@ -62,7 +62,7 @@
             android:layout_marginEnd="8dp"
             android:clickable="false"
             android:focusable="false"
-            android:src="@drawable/arrowright"
+            android:src="@drawable/setting_activity_arrowright"
             android:visibility="gone" />
 
         <!-- Selected radio -->
@@ -73,7 +73,7 @@
             android:layout_marginEnd="8dp"
             android:clickable="false"
             android:focusable="false"
-            android:src="@drawable/selector_radio_button"
+            android:src="@drawable/language_activity_selector_radio_button"
             android:visibility="gone" />
 
         <!-- Unselected radio -->
@@ -84,7 +84,7 @@
             android:layout_marginEnd="8dp"
             android:clickable="false"
             android:focusable="false"
-            android:src="@drawable/radio_button"
+            android:src="@drawable/language_activity_radio_button"
             android:visibility="gone" />
 
     </LinearLayout>

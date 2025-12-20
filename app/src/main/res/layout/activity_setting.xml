@@ -68,7 +68,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:scaleType="fitXY"
-                        android:src="@drawable/frame"
+                        android:src="@drawable/setting_activity_frame"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -156,7 +156,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_setting_container"
+                        android:background="@drawable/setting_activity_bg_setting_container"
                         android:orientation="vertical">
                         <!-- Item 1: Change Language -->
                         <include
@@ -169,7 +169,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@drawable/divider_setting_item" />
+                            android:background="@drawable/setting_activity_divider_setting_item" />
 
                         <!-- Item 2: Add Widget -->
                         <include
@@ -182,7 +182,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@drawable/divider_setting_item" />
+                            android:background="@drawable/setting_activity_divider_setting_item" />
 
                         <!-- Item 3: Set as Default App -->
                         <include
@@ -216,7 +216,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_setting_container"
+                        android:background="@drawable/setting_activity_bg_setting_container"
                         android:orientation="vertical">
 
                         <include
@@ -229,7 +229,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@drawable/divider_setting_item" />
+                            android:background="@drawable/setting_activity_divider_setting_item" />
 
                         <!-- Item 2: Browse More Files -->
                         <include
@@ -242,7 +242,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@drawable/divider_setting_item" />
+                            android:background="@drawable/setting_activity_divider_setting_item" />
 
                         <!-- Item 3: Share this App -->
                         <include
@@ -283,7 +283,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_setting_container"
+                        android:background="@drawable/setting_activity_bg_setting_container"
                         android:orientation="vertical">
                         <!-- Item 1: Keep Screen On-->
                         <include
@@ -296,7 +296,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@drawable/divider_setting_item" />
+                            android:background="@drawable/setting_activity_divider_setting_item" />
 
                         <!-- Item 2: Night Mode (Beta) -->
                         <include
@@ -329,7 +329,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/bg_setting_container"
+                        android:background="@drawable/setting_activity_bg_setting_container"
                         android:orientation="vertical">
                         <!-- Item 1: Privacy Policy-->
                         <include
@@ -342,7 +342,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@drawable/divider_setting_item" />
+                            android:background="@drawable/setting_activity_divider_setting_item" />
 
                         <!-- Item 2: Terms and Conditions -->
                         <include
@@ -355,7 +355,7 @@
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:background="@drawable/divider_setting_item" />
+                            android:background="@drawable/setting_activity_divider_setting_item" />
 
                         <!-- Item 3: About Us -->
                         <include

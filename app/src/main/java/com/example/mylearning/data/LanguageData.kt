@@ -8,19 +8,19 @@ object LanguageData {
         LanguageItem.Child(
             id = "en_UK",
             name = "English (UK)",
-            flagRes = R.drawable.flag_en_uk,
+            flagRes = R.drawable.language_activity_flag_en_uk,
             parentId = "en"
         ),
         LanguageItem.Child(
             id = "en_US",
             name = "English US",
-            flagRes = R.drawable.flag_en_us,
+            flagRes = R.drawable.language_activity_flag_en_us,
             parentId = "en"
         ),
         LanguageItem.Child(
             id = "en_CA",
             name = "English (Canada)",
-            flagRes = R.drawable.flag_en_canada,
+            flagRes = R.drawable.language_activity_flag_en_canada,
             parentId = "en"
         )
     )
@@ -29,37 +29,37 @@ object LanguageData {
         LanguageItem.Parent(
             id = "en",
             name = "English",
-            flagRes = R.drawable.flag_en_uk,
+            flagRes = R.drawable.language_activity_flag_en_uk,
             hasChildren = true
         ),
         LanguageItem.Parent(
             id = "fr",
             name = "Français",
-            flagRes = R.drawable.flag_france,
+            flagRes = R.drawable.language_activity_flag_france,
             hasChildren = false 
         ),
         LanguageItem.Parent(
             id = "ko",
             name = "한국어",
-            flagRes = R.drawable.flag_korea,
+            flagRes = R.drawable.language_activity_flag_korea,
             hasChildren = false
         ),
         LanguageItem.Parent(
             id = "ja",
             name = "日本語",
-            flagRes = R.drawable.flag_japan,
+            flagRes = R.drawable.language_activity_flag_japan,
             hasChildren = false
         ),
         LanguageItem.Parent(
             id = "id",
             name = "Indonesia",
-            flagRes = R.drawable.flag_indo,
+            flagRes = R.drawable.language_activity_flag_indo,
             hasChildren = false
         ),
         LanguageItem.Parent(
             id = "zh",
             name = "Español",
-            flagRes = R.drawable.flag_espanha,
+            flagRes = R.drawable.language_activity_flag_espanha,
             hasChildren = false
         )
     )
