@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">MyLearning</string>
+    <string name="search_files">ファイルを検索...</string>
+    <string name="filter_ALL">すべて</string>
+    <string name="filter_document">ドキュメント</string>
+    <string name="filter_image">画像</string>
+    <string name="filter_video">動画</string>
+    <string name="filter_audio">音声</string>
+
+    <string name="no_files">ファイルがありません</string>
+    <string name="no_files_found">ファイルが見つかりません</string>
+    <string name="no_files_description">フィルターを変更するか、再スキャンしてください</string>
+
+    <string name="scanning_files">ファイルをスキャン中...</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">権限が必要です</string>
+    <string name="permission_description">このアプリはデバイス内のファイルを表示するためにアクセス権限が必要です。</string>
+    <string name="grant_permission">権限を許可</string>
+    <string name="later">後で</string>
+    <string name="permission_denied_forever">権限が永久に拒否されました。設定を開いて許可してください。</string>
+    <string name="open_settings">設定を開く</string>
+
+    <!-- Actions -->
+    <string name="scan_files">ファイルをスキャン</string>
+    <string name="more_options">その他のオプション</string>
+    <string name="file_icon">ファイルアイコン</string>
+    <string name="open">開く</string>
+    <string name="share">共有</string>
+    <string name="delete">削除</string>
+    <string name="details">詳細</string>
+    <string name="cancel">キャンセル</string>
+
+    <!-- Dialogs -->
+    <string name="delete_file">ファイルを削除しますか？</string>
+    <string name="delete_file_message">本当に削除しますか？この操作は元に戻せません。</string>
+    <string name="file_deleted">ファイルが削除されました</string>
+    <string name="file_delete_error">ファイルを削除できません</string>
+
+    <!-- File details -->
+    <string name="file_details">ファイルの詳細</string>
+    <string name="name">名前：</string>
+    <string name="path">パス：</string>
+    <string name="size">サイズ：</string>
+    <string name="type">種類：</string>
+    <string name="last_modified">最終更新：</string>
+
+    <!-- Toast messages -->
+    <string name="no_app_to_open">このファイルを開くアプリがありません</string>
+    <string name="files_found">%d 件のファイルが見つかりました</string>
+
+    <!-- Activity setting -->
+    <string name="setting">設定</string>
+    <string name="remove_ads">広告を削除</string>
+    <string name="enjoy">広告なしの体験を100%お楽しみください</string>
+    <string name="go_premium">プレミアムにアップグレード</string>
+
+    <string name="account">アカウント</string>
+    <string name="app">アプリ</string>
+    <string name="display">表示</string>
+    <string name="support">サポート</string>
+
+    <string name="change_language">言語を変更</string>
+    <string name="add_widget">ウィジェットを追加</string>
+    <string name="set_default_app">既定のアプリに設定</string>
+
+    <string name="feature_request">機能リクエスト</string>
+    <string name="browse_more_files">さらにファイルを閲覧</string>
+    <string name="share_this_app">このアプリを共有</string>
+    <string name="send_feedback">フィードバックを送信</string>
+
+    <string name="keep_screen_on">画面を常にオンにする</string>
+    <string name="night_mode">ナイトモード（ベータ）</string>
+
+    <string name="privacy_policy">プライバシーポリシー</string>
+    <string name="terms_and_conditions">利用規約</string>
+    <string name="about_us">私たちについて</string>
+    <string name="home">ホーム</string>
+    <string name="favorite">お気に入り</string>
+    <string name="tools">ツール</string>
+    <string name="settings">設定</string>
+
+
+    <!-- language activity -->
+    <string name="language">言語</string>
+    <string name="done">完了</string>
+    <string name="language_desc">
+    使用する言語を選択してください。\n後で設定から変更できます。
+</string>
+    <string name="language_hint">言語名を入力...</string>
+
+</resources>

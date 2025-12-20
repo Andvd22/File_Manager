@@ -170,4 +170,6 @@ class LanguageViewModel(
         }
         return result
     }
+
+    fun getSelectedLanguageTag(): String? = selectedLanguageId.value
 }

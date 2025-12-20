@@ -1,12 +1,16 @@
 package com.example.mylearning.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mylearning.adapter.LanguageAdapter
+import com.example.mylearning.data.LanguagePrefs
 import com.example.mylearning.databinding.ActivityLanguageBinding
 import com.example.mylearning.viewmodel.LanguageViewModel
 
@@ -49,7 +53,17 @@ class LanguageActivity : AppCompatActivity() {
 
     private fun setupClickListeners() {
         binding.btnDone.setOnClickListener {
-            finish()
+            onDoneClicked()
         }
     }
+
+    private fun onDoneClicked() {
+        val raw = viewModel.getSelectedLanguageTag() ?: return
+        val tag = if (raw == "system") "" else raw.replace('_', '-') // "" để về ngôn ngữ hệ thống
+        val locales = LocaleListCompat.forLanguageTags(tag)
+        AppCompatDelegate.setApplicationLocales(locales)
+        startActivity(Intent(this, SettingActivity::class.java))
+        finishAffinity()
+    }
+
 }

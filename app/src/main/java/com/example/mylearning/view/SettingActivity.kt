@@ -1,22 +1,36 @@
 package com.example.mylearning.view
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.mylearning.R
 import com.example.mylearning.databinding.ActivitySettingBinding
+import kotlin.getValue
 
-private lateinit var binding: ActivitySettingBinding
+
+
 
 class SettingActivity : AppCompatActivity() {
+    private val prefs by lazy {
+        getSharedPreferences("app_settings", MODE_PRIVATE)
+    }
+    companion object {
+        private const val KEY_KEEP_SCREEN_ON = "keep_screen_on"
+        private const val KEY_NIGHT_MODE = "night_mode"
+    }
+
+    private lateinit var binding: ActivitySettingBinding
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,43 +43,48 @@ class SettingActivity : AppCompatActivity() {
         }
         setupItems()
         setupListeners()
+        setupToggles()
     }
 
     private fun setupItems() {
         binding.itemChangeLanguage.ivIcon.setImageResource(R.drawable.icon1)
-        binding.itemChangeLanguage.tvTitle.setText("Change Language")
+        binding.itemChangeLanguage.tvTitle.setText(R.string.change_language)
         binding.itemAddWidget.ivIcon.setImageResource(R.drawable.icon2)
-        binding.itemAddWidget.tvTitle.setText("Add Widget")
+        binding.itemAddWidget.tvTitle.setText(R.string.add_widget)
         binding.itemSetDefaultApp.ivIcon.setImageResource(R.drawable.icon3)
-        binding.itemSetDefaultApp.tvTitle.setText("Set as Default App")
+        binding.itemSetDefaultApp.tvTitle.setText(R.string.set_default_app)
 
         binding.itemFeatureRequest.ivIcon.setImageResource(R.drawable.icon4)
-        binding.itemFeatureRequest.tvTitle.setText("Feature Request")
+        binding.itemFeatureRequest.tvTitle.setText(R.string.feature_request)
         binding.itemMoreFiles.ivIcon.setImageResource(R.drawable.icon5)
-        binding.itemMoreFiles.tvTitle.setText("Browse More Files")
+        binding.itemMoreFiles.tvTitle.setText(R.string.browse_more_files)
         binding.itemShare.ivIcon.setImageResource(R.drawable.icon6)
-        binding.itemShare.tvTitle.setText("Share this App")
+        binding.itemShare.tvTitle.setText(R.string.share_this_app)
         binding.itemSendFeedback.ivIcon.setImageResource(R.drawable.icon7)
-        binding.itemSendFeedback.tvTitle.setText("Send Feedback")
+        binding.itemSendFeedback.tvTitle.setText(R.string.send_feedback)
 
         binding.itemKeepScreenOn.ivIcon.setImageResource(R.drawable.icon8)
-        binding.itemKeepScreenOn.tvTitle.setText("Keep Screen On")
+        binding.itemKeepScreenOn.tvTitle.setText(R.string.keep_screen_on)
         binding.itemKeepScreenOn.ivArrow.setImageResource(R.drawable.iconoff)
         binding.itemNightMode.ivIcon.setImageResource(R.drawable.icon9)
-        binding.itemNightMode.tvTitle.setText("Night Mode (Beta)")
-        binding.itemNightMode.ivArrow.setImageResource(R.drawable.iconon)
+        binding.itemNightMode.tvTitle.setText(R.string.night_mode)
+        binding.itemNightMode.ivArrow.setImageResource(R.drawable.iconoff)
 
         binding.itemPrivacyPolicy.ivIcon.setImageResource(R.drawable.icon10)
-        binding.itemPrivacyPolicy.tvTitle.setText("Privacy Policy")
+        binding.itemPrivacyPolicy.tvTitle.setText(R.string.privacy_policy)
         binding.itemTerms.ivIcon.setImageResource(R.drawable.icon11)
-        binding.itemTerms.tvTitle.setText("Terms and Conditions")
+        binding.itemTerms.tvTitle.setText(R.string.terms_and_conditions)
         binding.itemAboutUs.ivIcon.setImageResource(R.drawable.icon12)
-        binding.itemAboutUs.tvTitle.setText("About Us")
+        binding.itemAboutUs.tvTitle.setText(R.string.about_us)
 //        binding nav
         binding.bottomNavigation.itemHomeNav.ivIcon.setImageResource(R.drawable.home)
+        binding.bottomNavigation.itemHomeNav.tvTitle.setText(R.string.home)
         binding.bottomNavigation.itemFavouriteNav.ivIcon.setImageResource(R.drawable.favourite)
+        binding.bottomNavigation.itemFavouriteNav.tvTitle.setText(R.string.favorite)
         binding.bottomNavigation.itemToolNav.ivIcon.setImageResource(R.drawable.tool)
+        binding.bottomNavigation.itemToolNav.tvTitle.setText(R.string.tools)
         binding.bottomNavigation.itemSettingNav.ivIcon.setImageResource(R.drawable.setting)
+        binding.bottomNavigation.itemSettingNav.tvTitle.setText(R.string.settings)
         binding.bottomNavigation.itemSettingNav.tvTitle.setTextColor(Color.parseColor("#FF5C01"))
     }
 
@@ -75,6 +94,46 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.bottomNavigation.itemHomeNav.root.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+    }
+
+    private fun setupToggles(){
+        applyKeepScreenOn(prefs.getBoolean(KEY_KEEP_SCREEN_ON,false))
+        binding.itemKeepScreenOn.root.setOnClickListener {
+            val next = !prefs.getBoolean(KEY_KEEP_SCREEN_ON,false)
+            applyKeepScreenOn(next)
+            prefs.edit().putBoolean(KEY_KEEP_SCREEN_ON, next).apply()
+        }
+        applyNightMode(prefs.getBoolean(KEY_NIGHT_MODE,false))
+        binding.itemNightMode.root.setOnClickListener {
+            val next = !prefs.getBoolean(KEY_NIGHT_MODE, false)
+            applyNightMode(next)
+            prefs.edit().putBoolean(KEY_NIGHT_MODE, next).apply()
+        }
+    }
+
+    private fun applyKeepScreenOn(enabled: Boolean){
+        if(enabled){
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            binding.itemKeepScreenOn.ivArrow.setImageResource(R.drawable.iconon)
+        }else {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            binding.itemKeepScreenOn.ivArrow.setImageResource(R.drawable.iconoff)
+        }
+    }
+    private fun applyNightMode(enabled: Boolean){
+        if(enabled){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            binding.itemNightMode.ivArrow.setImageResource(R.drawable.iconon)
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            binding.itemNightMode.ivArrow.setImageResource(R.drawable.iconoff)
+        }
+        delegate.applyDayNight()
     }
 
 }

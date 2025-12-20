@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">MyLearning</string>
+    <string name="search_files">Rechercher des fichiers...</string>
+    <string name="filter_ALL">Tous</string>
+    <string name="filter_document">Documents</string>
+    <string name="filter_image">Images</string>
+    <string name="filter_video">Vidéos</string>
+    <string name="filter_audio">Audio</string>
+
+    <string name="no_files">Aucun fichier</string>
+    <string name="no_files_found">Aucun fichier trouvé</string>
+    <string name="no_files_description">Essayez de modifier les filtres ou de relancer l’analyse</string>
+
+    <string name="scanning_files">Analyse des fichiers...</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">Autorisation requise</string>
+    <string name="permission_description">L’application a besoin d’un accès pour afficher les fichiers de votre appareil.</string>
+    <string name="grant_permission">Accorder l’autorisation</string>
+    <string name="later">Plus tard</string>
+    <string name="permission_denied_forever">Vous avez refusé définitivement. Veuillez ouvrir les paramètres pour accorder l’autorisation.</string>
+    <string name="open_settings">Ouvrir les paramètres</string>
+
+    <!-- Actions -->
+    <string name="scan_files">Analyser les fichiers</string>
+    <string name="more_options">Plus d’options</string>
+    <string name="file_icon">Icône de fichier</string>
+    <string name="open">Ouvrir</string>
+    <string name="share">Partager</string>
+    <string name="delete">Supprimer</string>
+    <string name="details">Détails</string>
+    <string name="cancel">Annuler</string>
+
+    <!-- Dialogs -->
+    <string name="delete_file">Supprimer le fichier ?</string>
+    <string name="delete_file_message">Êtes-vous sûr ? Cette action est irréversible.</string>
+    <string name="file_deleted">Fichier supprimé</string>
+    <string name="file_delete_error">Impossible de supprimer le fichier</string>
+
+    <!-- File details -->
+    <string name="file_details">Détails du fichier</string>
+    <string name="name">Nom :</string>
+    <string name="path">Chemin :</string>
+    <string name="size">Taille :</string>
+    <string name="type">Type :</string>
+    <string name="last_modified">Dernière modification :</string>
+
+    <!-- Toast messages -->
+    <string name="no_app_to_open">Aucune application ne peut ouvrir ce fichier</string>
+    <string name="files_found">%d fichiers trouvés</string>
+
+    <!-- Activity setting -->
+    <string name="setting">Paramètres</string>
+    <string name="remove_ads">Supprimer les publicités</string>
+    <string name="enjoy">Profitez d’une expérience 100 % sans publicité</string>
+    <string name="go_premium">Passer à Premium</string>
+
+    <string name="account">Compte</string>
+    <string name="app">Application</string>
+    <string name="display">Affichage</string>
+    <string name="support">Assistance</string>
+
+    <string name="change_language">Changer de langue</string>
+    <string name="add_widget">Ajouter un widget</string>
+    <string name="set_default_app">Définir comme application par défaut</string>
+
+    <string name="feature_request">Demande de fonctionnalité</string>
+    <string name="browse_more_files">Parcourir plus de fichiers</string>
+    <string name="share_this_app">Partager cette application</string>
+    <string name="send_feedback">Envoyer des commentaires</string>
+
+    <string name="keep_screen_on">Garder l’écran allumé</string>
+    <string name="night_mode">Mode nuit (Bêta)</string>
+
+    <string name="privacy_policy">Politique de confidentialité</string>
+    <string name="terms_and_conditions">Conditions générales</string>
+    <string name="about_us">À propos de nous</string>
+    <string name="home">Accueil</string>
+    <string name="favorite">Favoris</string>
+    <string name="tools">Outils</string>
+    <string name="settings">Paramètres</string>
+
+
+    <!-- language activity -->
+    <string name="language">Langue</string>
+    <string name="done">Terminé</string>
+    <string name="language_desc">
+    Veuillez choisir votre langue.\nVous pourrez la modifier plus tard dans les paramètres.
+</string>
+    <string name="language_hint">Entrez le nom de la langue...</string>
+
+</resources>

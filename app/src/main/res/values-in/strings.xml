@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">MyLearning</string>
+    <string name="search_files">Cari file...</string>
+    <string name="filter_ALL">Semua</string>
+    <string name="filter_document">Dokumen</string>
+    <string name="filter_image">Gambar</string>
+    <string name="filter_video">Video</string>
+    <string name="filter_audio">Audio</string>
+
+    <string name="no_files">Tidak ada file</string>
+    <string name="no_files_found">File tidak ditemukan</string>
+    <string name="no_files_description">Coba ubah filter atau pindai ulang</string>
+
+    <string name="scanning_files">Memindai file...</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">Izin diperlukan</string>
+    <string name="permission_description">Aplikasi memerlukan izin untuk menampilkan file di perangkat Anda.</string>
+    <string name="grant_permission">Berikan izin</string>
+    <string name="later">Nanti</string>
+    <string name="permission_denied_forever">Anda menolak izin secara permanen. Silakan buka Pengaturan untuk memberikan izin.</string>
+    <string name="open_settings">Buka Pengaturan</string>
+
+    <!-- Actions -->
+    <string name="scan_files">Pindai file</string>
+    <string name="more_options">Opsi lainnya</string>
+    <string name="file_icon">Ikon file</string>
+    <string name="open">Buka</string>
+    <string name="share">Bagikan</string>
+    <string name="delete">Hapus</string>
+    <string name="details">Detail</string>
+    <string name="cancel">Batal</string>
+
+    <!-- Dialogs -->
+    <string name="delete_file">Hapus file?</string>
+    <string name="delete_file_message">Apakah Anda yakin? Tindakan ini tidak dapat dibatalkan.</string>
+    <string name="file_deleted">File dihapus</string>
+    <string name="file_delete_error">Tidak dapat menghapus file</string>
+
+    <!-- File details -->
+    <string name="file_details">Detail file</string>
+    <string name="name">Nama:</string>
+    <string name="path">Lokasi:</string>
+    <string name="size">Ukuran:</string>
+    <string name="type">Jenis:</string>
+    <string name="last_modified">Terakhir diubah:</string>
+
+    <!-- Toast messages -->
+    <string name="no_app_to_open">Tidak ada aplikasi untuk membuka file ini</string>
+    <string name="files_found">Ditemukan %d file</string>
+
+    <!-- Activity setting -->
+    <string name="setting">Pengaturan</string>
+    <string name="remove_ads">Hapus iklan</string>
+    <string name="enjoy">Nikmati pengalaman 100% tanpa iklan</string>
+    <string name="go_premium">Tingkatkan ke Premium</string>
+
+    <string name="account">Akun</string>
+    <string name="app">Aplikasi</string>
+    <string name="display">Tampilan</string>
+    <string name="support">Dukungan</string>
+
+    <string name="change_language">Ubah bahasa</string>
+    <string name="add_widget">Tambahkan widget</string>
+    <string name="set_default_app">Tetapkan sebagai aplikasi default</string>
+
+    <string name="feature_request">Permintaan fitur</string>
+    <string name="browse_more_files">Jelajahi lebih banyak file</string>
+    <string name="share_this_app">Bagikan aplikasi ini</string>
+    <string name="send_feedback">Kirim masukan</string>
+
+    <string name="keep_screen_on">Biarkan layar tetap menyala</string>
+    <string name="night_mode">Mode malam (Beta)</string>
+
+    <string name="privacy_policy">Kebijakan privasi</string>
+    <string name="terms_and_conditions">Syarat dan ketentuan</string>
+    <string name="about_us">Tentang kami</string>
+    <string name="home">Beranda</string>
+    <string name="favorite">Favorit</string>
+    <string name="tools">Alat</string>
+    <string name="settings">Pengaturan</string>
+
+
+    <!-- language activity -->
+    <string name="language">Bahasa</string>
+    <string name="done">Selesai</string>
+    <string name="language_desc">
+    Silakan pilih bahasa Anda.\nAnda dapat mengubah bahasa di pengaturan nanti.
+</string>
+    <string name="language_hint">Masukkan nama bahasa...</string>
+
+</resources>

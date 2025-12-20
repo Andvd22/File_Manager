@@ -48,4 +48,46 @@
     <!-- Toast messages -->
     <string name="no_app_to_open">Không có ứng dụng nào để mở file này</string>
     <string name="files_found">Tìm thấy %d file</string>
+
+<!--    Activity setting-->
+    <!-- Activity setting -->
+    <string name="setting">Cài đặt</string>
+    <string name="remove_ads">Gỡ quảng cáo</string>
+    <string name="enjoy">Trải nghiệm ứng dụng không quảng cáo 100%</string>
+    <string name="go_premium">Nâng cấp Premium</string>
+
+    <string name="account">Tài khoản</string>
+    <string name="app">Ứng dụng</string>
+    <string name="display">Hiển thị</string>
+    <string name="support">Hỗ trợ</string>
+
+    <string name="change_language">Thay đổi ngôn ngữ</string>
+    <string name="add_widget">Thêm tiện ích</string>
+    <string name="set_default_app">Đặt làm ứng dụng mặc định</string>
+
+    <string name="feature_request">Yêu cầu tính năng</string>
+    <string name="browse_more_files">Duyệt thêm file</string>
+    <string name="share_this_app">Chia sẻ ứng dụng</string>
+    <string name="send_feedback">Gửi phản hồi</string>
+
+    <string name="keep_screen_on">Giữ màn hình luôn bật</string>
+    <string name="night_mode">Chế độ ban đêm (Beta)</string>
+
+    <string name="privacy_policy">Chính sách bảo mật</string>
+    <string name="terms_and_conditions">Điều khoản và điều kiện</string>
+    <string name="about_us">Về chúng tôi</string>
+    <string name="home">Trang chủ</string>
+    <string name="favorite">Yêu thích</string>
+    <string name="tools">Công cụ</string>
+    <string name="settings">Cài đặt</string>
+
+
+    <!-- language activity -->
+    <string name="language">Ngôn ngữ</string>
+    <string name="done">Xong</string>
+    <string name="language_desc">
+    Vui lòng chọn ngôn ngữ của bạn.\nBạn có thể thay đổi ngôn ngữ trong phần cài đặt sau.
+</string>
+    <string name="language_hint">Nhập tên ngôn ngữ...</string>
+
 </resources>

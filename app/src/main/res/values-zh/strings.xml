@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">MyLearning</string>
+    <string name="search_files">Buscar archivos...</string>
+    <string name="filter_ALL">Todos</string>
+    <string name="filter_document">Documentos</string>
+    <string name="filter_image">Imágenes</string>
+    <string name="filter_video">Vídeos</string>
+    <string name="filter_audio">Audio</string>
+
+    <string name="no_files">No hay archivos</string>
+    <string name="no_files_found">No se encontraron archivos</string>
+    <string name="no_files_description">Intenta cambiar los filtros o volver a escanear</string>
+
+    <string name="scanning_files">Escaneando archivos...</string>
+
+    <!-- Permissions -->
+    <string name="permission_required">Permiso requerido</string>
+    <string name="permission_description">La aplicación necesita acceso para mostrar los archivos de tu dispositivo.</string>
+    <string name="grant_permission">Conceder permiso</string>
+    <string name="later">Más tarde</string>
+    <string name="permission_denied_forever">Has denegado el permiso permanentemente. Abre Configuración para concederlo.</string>
+    <string name="open_settings">Abrir configuración</string>
+
+    <!-- Actions -->
+    <string name="scan_files">Escanear archivos</string>
+    <string name="more_options">Más opciones</string>
+    <string name="file_icon">Icono de archivo</string>
+    <string name="open">Abrir</string>
+    <string name="share">Compartir</string>
+    <string name="delete">Eliminar</string>
+    <string name="details">Detalles</string>
+    <string name="cancel">Cancelar</string>
+
+    <!-- Dialogs -->
+    <string name="delete_file">¿Eliminar archivo?</string>
+    <string name="delete_file_message">¿Estás seguro? Esta acción no se puede deshacer.</string>
+    <string name="file_deleted">Archivo eliminado</string>
+    <string name="file_delete_error">No se puede eliminar el archivo</string>
+
+    <!-- File details -->
+    <string name="file_details">Detalles del archivo</string>
+    <string name="name">Nombre:</string>
+    <string name="path">Ruta:</string>
+    <string name="size">Tamaño:</string>
+    <string name="type">Tipo:</string>
+    <string name="last_modified">Última modificación:</string>
+
+    <!-- Toast messages -->
+    <string name="no_app_to_open">No hay ninguna aplicación para abrir este archivo</string>
+    <string name="files_found">Se encontraron %d archivos</string>
+
+    <!-- Activity setting -->
+    <string name="setting">Configuración</string>
+    <string name="remove_ads">Eliminar anuncios</string>
+    <string name="enjoy">Disfruta de una experiencia 100 % sin anuncios</string>
+    <string name="go_premium">Actualizar a Premium</string>
+
+    <string name="account">Cuenta</string>
+    <string name="app">Aplicación</string>
+    <string name="display">Pantalla</string>
+    <string name="support">Soporte</string>
+
+    <string name="change_language">Cambiar idioma</string>
+    <string name="add_widget">Agregar widget</string>
+    <string name="set_default_app">Establecer como aplicación predeterminada</string>
+
+    <string name="feature_request">Solicitud de función</string>
+    <string name="browse_more_files">Explorar más archivos</string>
+    <string name="share_this_app">Compartir esta aplicación</string>
+    <string name="send_feedback">Enviar comentarios</string>
+
+    <string name="keep_screen_on">Mantener la pantalla encendida</string>
+    <string name="night_mode">Modo nocturno (Beta)</string>
+
+    <string name="privacy_policy">Política de privacidad</string>
+    <string name="terms_and_conditions">Términos y condiciones</string>
+    <string name="about_us">Acerca de nosotros</string>
+    <string name="home">Inicio</string>
+    <string name="favorite">Favoritos</string>
+    <string name="tools">Herramientas</string>
+    <string name="settings">Configuración</string>
+
+
+    <!-- language activity -->
+    <string name="language">Idioma</string>
+    <string name="done">Listo</string>
+    <string name="language_desc">
+    Por favor, elige tu idioma.\nPuedes cambiarlo más tarde desde la configuración.
+</string>
+    <string name="language_hint">Introduce el nombre del idioma...</string>
+
+</resources>

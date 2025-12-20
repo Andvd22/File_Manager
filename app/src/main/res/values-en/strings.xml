@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">MyLearning</string>
+    <string name="search_files">Search files..</string>
+    <string name="filter_ALL">All</string>
+    <string name="filter_document">Documents</string>
+    <string name="filter_image">Images</string>
+    <string name="filter_video">Videos</string>
+    <string name="filter_audio">Audio</string>
+
+    <string name="no_files">No files</string>
+    <string name="no_files_found">No files found</string>
+    <string name="no_files_description">Try changing filters or scanning again</string>
+
+    <string name="scanning_files">Scanning files...</string>
+
+    <string name="permission_required">Permission required</string>
+    <string name="permission_description">The app needs access to show your device files.</string>
+    <string name="grant_permission">Grant permission</string>
+    <string name="later">Later</string>
+    <string name="permission_denied_forever">You denied permanently. Please open Settings to grant.</string>
+    <string name="open_settings">Open Settings</string>
+
+    <string name="scan_files">Scan files</string>
+    <string name="more_options">More options</string>
+    <string name="file_icon">File icon</string>
+    <string name="open">Open</string>
+    <string name="share">Share</string>
+    <string name="delete">Delete</string>
+    <string name="details">Details</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="delete_file">Delete file?</string>
+    <string name="delete_file_message">Are you sure? This cannot be undone.</string>
+    <string name="file_deleted">File deleted</string>
+    <string name="file_delete_error">Cannot delete file</string>
+
+    <string name="file_details">File details</string>
+    <string name="name">Name:</string>
+    <string name="path">Path:</string>
+    <string name="size">Size:</string>
+    <string name="type">Type:</string>
+    <string name="last_modified">Last modified:</string>
+
+    <string name="no_app_to_open">No app can open this file</string>
+    <string name="files_found">Found %d files</string>
+
+    <!--    Activity setting-->
+    <string name="setting">Setting</string>
+    <string name="remove_ads">Remove ADS</string>
+    <string name="enjoy">Enjoy 100% ads free experience</string>
+    <string name="go_premium">GO PREMIUM</string>
+    <string name="account">Account</string>
+    <string name="app">App</string>
+    <string name="display">Display</string>
+    <string name="support">Support</string>
+    <string name="change_language">Change Language</string>
+    <string name="add_widget">Add Widget</string>
+    <string name="set_default_app">Set as Default App</string>
+    <string name="feature_request">Feature Request</string>
+    <string name="browse_more_files">Browse More Files</string>
+    <string name="share_this_app">Share this App</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="keep_screen_on">Keep Screen On</string>
+    <string name="night_mode">Night Mode (Beta)</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_and_conditions">Terms and Conditions</string>
+    <string name="about_us">About us</string>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
+    <string name="tools">Tools</string>
+    <string name="settings">Settings</string>
+
+<!--    language activity-->
+    <string name="language">Language</string>
+    <string name="done">Done</string>
+    <string name="language_desc">Please choose your native language.\nYou can change language from settings later.</string>
+    <string name="language_hint">Enter name of Language...</string>
+</resources>

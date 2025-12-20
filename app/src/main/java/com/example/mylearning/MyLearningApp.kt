@@ -1,6 +1,7 @@
 package com.example.mylearning
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.ExistingWorkPolicy
@@ -15,6 +16,12 @@ class MyLearningApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        val prefs = getSharedPreferences("app_settings", MODE_PRIVATE)
+        val night = prefs.getBoolean("night_mode", false)
+        AppCompatDelegate.setDefaultNightMode(
+            if (night) AppCompatDelegate.MODE_NIGHT_YES
+            else AppCompatDelegate.MODE_NIGHT_NO
+        )
 //        if (BuildConfig.DEBUG) {
 //            scheduleTestScanWork()
 //        } else {
