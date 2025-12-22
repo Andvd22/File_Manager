@@ -75,4 +75,18 @@
     <string name="done">Done</string>
     <string name="language_desc">Please choose your native language.\nYou can change language from settings later.</string>
     <string name="language_hint">Enter name of Language...</string>
+
+<!--    premium activity-->
+    <string name="stat_like_a_pro">START LIKE A PRO</string>
+    <string name="unlock">Unlock All Features</string>
+    <string name="basic">Basic</string>
+    <string name="pro">Pro</string>
+    <string name="read">Read All Format</string>
+    <string name="edit">Edit PDF</string>
+    <string name="add">Add Image to PDF</string>
+    <string name="scan">Scan to PDF</string>
+    <string name="sign">Sign Documents</string>
+    <string name="remove">Remove All Ads</string>
+    <string name="free_trial">START FREE TRIAL</string>
+    <string name="desc">Cancel Anytime. Subscription will auto-renew.</string>
 </resources>

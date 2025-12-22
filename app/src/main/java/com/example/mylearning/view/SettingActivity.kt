@@ -96,6 +96,11 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.btnGoPremium.setOnClickListener {
+            val intent = Intent(this, PremiumActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun setupToggles(){

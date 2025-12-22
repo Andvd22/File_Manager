@@ -49,7 +49,7 @@
     <string name="no_app_to_open">Không có ứng dụng nào để mở file này</string>
     <string name="files_found">Tìm thấy %d file</string>
 
-<!--    Activity setting-->
+    <!--    Activity setting-->
     <!-- Activity setting -->
     <string name="setting">Cài đặt</string>
     <string name="remove_ads">Gỡ quảng cáo</string>
@@ -89,5 +89,20 @@
     Vui lòng chọn ngôn ngữ của bạn.\nBạn có thể thay đổi ngôn ngữ trong phần cài đặt sau.
 </string>
     <string name="language_hint">Nhập tên ngôn ngữ...</string>
+
+    <!--    premium activity-->
+    <string name="stat_like_a_pro">START LIKE A PRO</string>
+    <string name="unlock">Unlock All Features</string>
+    <string name="basic">Basic</string>
+    <string name="pro">Pro</string>
+    <string name="read">Read All Format</string>
+    <string name="edit">Edit PDF</string>
+    <string name="add">Add Image to PDF</string>
+    <string name="scan">Scan to PDF</string>
+    <string name="sign">Sign Documents</string>
+    <string name="remove">Remove All Ads</string>
+    <string name="free_trial">START FREE TRIAL</string>
+    <string name="desc">Cancel Anytime. Subscription will auto-renew.</string>
+
 
 </resources>

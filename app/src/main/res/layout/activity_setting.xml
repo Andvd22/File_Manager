@@ -129,6 +129,7 @@
                             android:textColor="#FF5C01"
                             android:textSize="12sp"
                             android:textStyle="bold"
+                            android:foreground="?attr/selectableItemBackground"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tvEnjoyAdsFree" />
