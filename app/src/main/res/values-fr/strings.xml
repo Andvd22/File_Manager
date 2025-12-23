@@ -90,16 +90,31 @@
     <string name="language_hint">Entrez le nom de la langue...</string>
 
     <!--    premium activity-->
-    <string name="stat_like_a_pro">START LIKE A PRO</string>
-    <string name="unlock">Unlock All Features</string>
-    <string name="basic">Basic</string>
+    <string name="stat_like_a_pro">COMMENCER COMME UN PRO</string>
+    <string name="unlock">Débloquer toutes les fonctionnalités</string>
+    <string name="basic">Basique</string>
     <string name="pro">Pro</string>
-    <string name="read">Read All Format</string>
-    <string name="edit">Edit PDF</string>
-    <string name="add">Add Image to PDF</string>
-    <string name="scan">Scan to PDF</string>
-    <string name="sign">Sign Documents</string>
-    <string name="remove">Remove All Ads</string>
-    <string name="free_trial">START FREE TRIAL</string>
-    <string name="desc">Cancel Anytime. Subscription will auto-renew.</string>
+    <string name="read">Lire tous les formats</string>
+    <string name="edit">Modifier le PDF</string>
+    <string name="add">Ajouter une image au PDF</string>
+    <string name="scan">Scanner en PDF</string>
+    <string name="sign">Signer des documents</string>
+    <string name="remove">Supprimer toutes les publicités</string>
+    <string name="free_trial">DÉMARRER L’ESSAI GRATUIT</string>
+    <string name="desc">Annulez à tout moment. L’abonnement sera renouvelé automatiquement.</string>
+
+    <!--    feedback activity-->
+    <string name="fb_title">Faites-nous savoir le problème que vous rencontrez</string>
+    <string name="fb_issue_cannot_open_file">Impossible d’ouvrir le fichier</string>
+    <string name="fb_issue_error_bug">Erreurs et bugs</string>
+    <string name="fb_issue_slow">Lent</string>
+    <string name="fb_issue_too_many_notifications">Trop de notifications</string>
+    <string name="fb_issue_suggestion">Suggestions</string>
+    <string name="fb_issue_other">Autre</string>
+    <string name="fb_hint_detail">Veuillez fournir plus de détails afin que nous puissions résoudre votre problème plus rapidement</string>
+    <string name="fb_send">Envoyer</string>
+    <string name="fb_min_feedbacks">Veuillez sélectionner une option de retour</string>
+    <string name="fb_min_chars">Veuillez saisir au moins 6 caractères</string>
+
+
 </resources>

@@ -90,16 +90,31 @@
     <string name="language_hint">Masukkan nama bahasa...</string>
 
     <!--    premium activity-->
-    <string name="stat_like_a_pro">START LIKE A PRO</string>
-    <string name="unlock">Unlock All Features</string>
-    <string name="basic">Basic</string>
+    <string name="stat_like_a_pro">MULAI SEPERTI PRO</string>
+    <string name="unlock">Buka Semua Fitur</string>
+    <string name="basic">Dasar</string>
     <string name="pro">Pro</string>
-    <string name="read">Read All Format</string>
+    <string name="read">Baca Semua Format</string>
     <string name="edit">Edit PDF</string>
-    <string name="add">Add Image to PDF</string>
-    <string name="scan">Scan to PDF</string>
-    <string name="sign">Sign Documents</string>
-    <string name="remove">Remove All Ads</string>
-    <string name="free_trial">START FREE TRIAL</string>
-    <string name="desc">Cancel Anytime. Subscription will auto-renew.</string>
+    <string name="add">Tambahkan Gambar ke PDF</string>
+    <string name="scan">Pindai ke PDF</string>
+    <string name="sign">Tandatangani Dokumen</string>
+    <string name="remove">Hapus Semua Iklan</string>
+    <string name="free_trial">MULAI UJI COBA GRATIS</string>
+    <string name="desc">Batalkan kapan saja. Langganan akan diperpanjang secara otomatis.</string>
+
+    <!--    feedback activity-->
+    <string name="fb_title">Beri tahu kami masalah yang Anda alami</string>
+    <string name="fb_issue_cannot_open_file">Tidak dapat membuka file</string>
+    <string name="fb_issue_error_bug">Kesalahan dan bug</string>
+    <string name="fb_issue_slow">Lambat</string>
+    <string name="fb_issue_too_many_notifications">Terlalu banyak notifikasi</string>
+    <string name="fb_issue_suggestion">Saran</string>
+    <string name="fb_issue_other">Lainnya</string>
+    <string name="fb_hint_detail">Harap berikan detail lebih lanjut agar kami dapat menyelesaikan masalah Anda lebih cepat</string>
+    <string name="fb_send">Kirim</string>
+    <string name="fb_min_feedbacks">Silakan pilih opsi umpan balik</string>
+    <string name="fb_min_chars">Harap masukkan minimal 6 karakter</string>
+
+
 </resources>

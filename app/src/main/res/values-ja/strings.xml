@@ -90,16 +90,31 @@
     <string name="language_hint">言語名を入力...</string>
 
     <!--    premium activity-->
-    <string name="stat_like_a_pro">START LIKE A PRO</string>
-    <string name="unlock">Unlock All Features</string>
-    <string name="basic">Basic</string>
-    <string name="pro">Pro</string>
-    <string name="read">Read All Format</string>
-    <string name="edit">Edit PDF</string>
-    <string name="add">Add Image to PDF</string>
-    <string name="scan">Scan to PDF</string>
-    <string name="sign">Sign Documents</string>
-    <string name="remove">Remove All Ads</string>
-    <string name="free_trial">START FREE TRIAL</string>
-    <string name="desc">Cancel Anytime. Subscription will auto-renew.</string>
+    <string name="stat_like_a_pro">プロのように始める</string>
+    <string name="unlock">すべての機能を解除</string>
+    <string name="basic">ベーシック</string>
+    <string name="pro">プロ</string>
+    <string name="read">すべての形式を読む</string>
+    <string name="edit">PDFを編集</string>
+    <string name="add">PDFに画像を追加</string>
+    <string name="scan">PDFにスキャン</string>
+    <string name="sign">書類に署名</string>
+    <string name="remove">すべての広告を削除</string>
+    <string name="free_trial">無料トライアルを開始</string>
+    <string name="desc">いつでもキャンセル可能。サブスクリプションは自動更新されます。</string>
+
+    <!--    feedback activity-->
+    <string name="fb_title">発生している問題をお知らせください</string>
+    <string name="fb_issue_cannot_open_file">ファイルを開けません</string>
+    <string name="fb_issue_error_bug">エラーと不具合</string>
+    <string name="fb_issue_slow">動作が遅い</string>
+    <string name="fb_issue_too_many_notifications">通知が多すぎる</string>
+    <string name="fb_issue_suggestion">提案</string>
+    <string name="fb_issue_other">その他</string>
+    <string name="fb_hint_detail">問題を迅速に解決するため、詳細をご記入ください</string>
+    <string name="fb_send">送信</string>
+    <string name="fb_min_feedbacks">フィードバック項目を選択してください</string>
+    <string name="fb_min_chars">6文字以上入力してください</string>
+
+
 </resources>

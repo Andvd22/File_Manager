@@ -87,8 +87,10 @@ class MainActivity : BaseActivity() {
         }
 
         binding.fabScan.setOnClickListener {
-            val intent = Intent(this, SettingActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, FeedbackActivity::class.java)
+//            startActivity(intent)
+              val intent = Intent(this, SettingActivity::class.java)
+              startActivity(intent)
 //            if(permissionHelper.hasStoragePermission()){
 //                createTestFileInWatchedFolder()
 //                scanFiles()

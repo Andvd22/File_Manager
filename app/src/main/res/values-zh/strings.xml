@@ -90,16 +90,31 @@
     <string name="language_hint">Introduce el nombre del idioma...</string>
 
     <!--    premium activity-->
-    <string name="stat_like_a_pro">START LIKE A PRO</string>
-    <string name="unlock">Unlock All Features</string>
-    <string name="basic">Basic</string>
+    <string name="stat_like_a_pro">EMPEZAR COMO UN PRO</string>
+    <string name="unlock">Desbloquear todas las funciones</string>
+    <string name="basic">Básico</string>
     <string name="pro">Pro</string>
-    <string name="read">Read All Format</string>
-    <string name="edit">Edit PDF</string>
-    <string name="add">Add Image to PDF</string>
-    <string name="scan">Scan to PDF</string>
-    <string name="sign">Sign Documents</string>
-    <string name="remove">Remove All Ads</string>
-    <string name="free_trial">START FREE TRIAL</string>
-    <string name="desc">Cancel Anytime. Subscription will auto-renew.</string>
+    <string name="read">Leer todos los formatos</string>
+    <string name="edit">Editar PDF</string>
+    <string name="add">Agregar imagen al PDF</string>
+    <string name="scan">Escanear a PDF</string>
+    <string name="sign">Firmar documentos</string>
+    <string name="remove">Eliminar todos los anuncios</string>
+    <string name="free_trial">INICIAR PRUEBA GRATUITA</string>
+    <string name="desc">Cancela en cualquier momento. La suscripción se renovará automáticamente.</string>
+
+    <!--    feedback activity-->
+    <string name="fb_title">Cuéntanos el problema que estás experimentando</string>
+    <string name="fb_issue_cannot_open_file">No se puede abrir el archivo</string>
+    <string name="fb_issue_error_bug">Errores y fallos</string>
+    <string name="fb_issue_slow">Lento</string>
+    <string name="fb_issue_too_many_notifications">Demasiadas notificaciones</string>
+    <string name="fb_issue_suggestion">Sugerencias</string>
+    <string name="fb_issue_other">Otro</string>
+    <string name="fb_hint_detail">Proporciona más detalles para que podamos resolver tu problema más rápido</string>
+    <string name="fb_send">Enviar</string>
+    <string name="fb_min_feedbacks">Selecciona una opción de comentarios</string>
+    <string name="fb_min_chars">Ingresa al menos 6 caracteres</string>
+
+
 </resources>

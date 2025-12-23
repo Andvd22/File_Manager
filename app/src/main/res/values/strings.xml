@@ -91,18 +91,33 @@
     <string name="language_hint">Nhập tên ngôn ngữ...</string>
 
     <!--    premium activity-->
-    <string name="stat_like_a_pro">START LIKE A PRO</string>
-    <string name="unlock">Unlock All Features</string>
-    <string name="basic">Basic</string>
+    <string name="stat_like_a_pro">BẮT ĐẦU NHƯ MỘT CHUYÊN GIA</string>
+    <string name="unlock">Mở khóa tất cả tính năng</string>
+    <string name="basic">Cơ bản</string>
     <string name="pro">Pro</string>
-    <string name="read">Read All Format</string>
-    <string name="edit">Edit PDF</string>
-    <string name="add">Add Image to PDF</string>
-    <string name="scan">Scan to PDF</string>
-    <string name="sign">Sign Documents</string>
-    <string name="remove">Remove All Ads</string>
-    <string name="free_trial">START FREE TRIAL</string>
-    <string name="desc">Cancel Anytime. Subscription will auto-renew.</string>
+    <string name="read">Đọc mọi định dạng</string>
+    <string name="edit">Chỉnh sửa PDF</string>
+    <string name="add">Thêm hình ảnh vào PDF</string>
+    <string name="scan">Quét sang PDF</string>
+    <string name="sign">Ký tài liệu</string>
+    <string name="remove">Gỡ bỏ toàn bộ quảng cáo</string>
+    <string name="free_trial">BẮT ĐẦU DÙNG THỬ MIỄN PHÍ</string>
+    <string name="desc">Có thể hủy bất cứ lúc nào. Gói đăng ký sẽ tự động gia hạn.</string>
+
+    <!--    feedback activity-->
+    <string name="fb_title">Hãy cho chúng tôi biết vấn đề bạn gặp phải</string>
+    <string name="fb_issue_cannot_open_file">Không thể mở tệp</string>
+    <string name="fb_issue_error_bug">Lỗi và sự cố</string>
+    <string name="fb_issue_slow">Chậm</string>
+    <string name="fb_issue_too_many_notifications">Quá nhiều thông báo</string>
+    <string name="fb_issue_suggestion">Đề xuất</string>
+    <string name="fb_issue_other">Khác</string>
+    <string name="fb_hint_detail">Vui lòng cung cấp thêm chi tiết để chúng tôi có thể xác định và giải quyết vấn đề của bạn nhanh hơn</string>
+    <string name="fb_send">Gửi</string>
+    <string name="fb_min_feedbacks">Vui lòng chọn 1 tùy chọn phản hồi</string>
+    <string name="fb_min_chars">Vui lòng nhập ít nhất 6 ký tự</string>
+
+
 
 
 </resources>

@@ -76,17 +76,31 @@
     <string name="language_desc">Please choose your native language.\nYou can change language from settings later.</string>
     <string name="language_hint">Enter name of Language...</string>
 
-<!--    premium activity-->
+    <!--    premium activity-->
     <string name="stat_like_a_pro">START LIKE A PRO</string>
     <string name="unlock">Unlock All Features</string>
     <string name="basic">Basic</string>
     <string name="pro">Pro</string>
-    <string name="read">Read All Format</string>
+    <string name="read">Read All Formats</string>
     <string name="edit">Edit PDF</string>
     <string name="add">Add Image to PDF</string>
     <string name="scan">Scan to PDF</string>
     <string name="sign">Sign Documents</string>
     <string name="remove">Remove All Ads</string>
     <string name="free_trial">START FREE TRIAL</string>
-    <string name="desc">Cancel Anytime. Subscription will auto-renew.</string>
+    <string name="desc">Cancel anytime. Subscription will auto-renew.</string>
+
+    <!--    feedback activity-->
+    <string name="fb_title">Let us know the issue you are experiencing</string>
+    <string name="fb_issue_cannot_open_file">Cannot open file</string>
+    <string name="fb_issue_error_bug">Errors and bugs</string>
+    <string name="fb_issue_slow">Slow</string>
+    <string name="fb_issue_too_many_notifications">Too many notifications</string>
+    <string name="fb_issue_suggestion">Suggestions</string>
+    <string name="fb_issue_other">Other</string>
+    <string name="fb_hint_detail">Please provide more details so we can identify and resolve your issue faster</string>
+    <string name="fb_send">Send</string>
+    <string name="fb_min_feedbacks">Please select a feedback option</string>
+    <string name="fb_min_chars">Please enter at least 6 characters</string>
+
 </resources>

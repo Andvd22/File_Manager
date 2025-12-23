@@ -101,6 +101,11 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.itemSendFeedback.root.setOnClickListener {
+            val intent = Intent(this, FeedbackActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun setupToggles(){
