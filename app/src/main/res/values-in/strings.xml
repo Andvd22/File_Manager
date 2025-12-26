@@ -115,6 +115,7 @@
     <string name="fb_send">Kirim</string>
     <string name="fb_min_feedbacks">Silakan pilih opsi umpan balik</string>
     <string name="fb_min_chars">Harap masukkan minimal 6 karakter</string>
+    <string name="fb_head_email">Masukan Anda:</string>
 
 
 </resources>

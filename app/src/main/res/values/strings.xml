@@ -116,8 +116,5 @@
     <string name="fb_send">Gửi</string>
     <string name="fb_min_feedbacks">Vui lòng chọn 1 tùy chọn phản hồi</string>
     <string name="fb_min_chars">Vui lòng nhập ít nhất 6 ký tự</string>
-
-
-
-
+    <string name="fb_head_email">Phản hồi của bạn:</string>
 </resources>

@@ -115,6 +115,7 @@
     <string name="fb_send">Envoyer</string>
     <string name="fb_min_feedbacks">Veuillez sélectionner une option de retour</string>
     <string name="fb_min_chars">Veuillez saisir au moins 6 caractères</string>
+    <string name="fb_head_email">Votre retour :</string>
 
 
 </resources>

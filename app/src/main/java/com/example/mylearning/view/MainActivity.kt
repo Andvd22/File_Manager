@@ -29,6 +29,10 @@ import com.google.android.material.snackbar.Snackbar
 import java.io.File
 
 class MainActivity : BaseActivity() {
+
+    private val prefs by lazy {
+        getSharedPreferences("app_log", MODE_PRIVATE)
+    }
     private lateinit var binding: ActivityMainBinding
     private lateinit var permissionHelper: PermissionHelper
     // 2. Implement các biến Abstract từ BaseActivity
@@ -50,10 +54,17 @@ class MainActivity : BaseActivity() {
         setupListeners()
         checkPermissionAndProceed()
         handleIntentFromNotification(intent)
+
+        prefs.edit().putInt("time_enter_app", prefs.getInt("time_enter_app", 0) + 1).apply()
+
     }
 
     private fun handleIntentFromNotification(intent: Intent){
         intent ?: return
+        if(intent.getBooleanExtra("from_notification", false)){
+        prefs.edit().putInt("time_click_notification", prefs.getInt("time_click_notification",0)+1).apply()
+        }
+
         val path = intent.getStringExtra("extra_path") ?: return
 
         // Check auto_open TRƯỚC (nếu có thì mở ScreenshotActivity luôn)

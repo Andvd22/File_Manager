@@ -115,6 +115,7 @@
     <string name="fb_send">Enviar</string>
     <string name="fb_min_feedbacks">Selecciona una opción de comentarios</string>
     <string name="fb_min_chars">Ingresa al menos 6 caracteres</string>
+    <string name="fb_head_email">Tus comentarios:</string>
 
 
 </resources>

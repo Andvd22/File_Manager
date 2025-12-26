@@ -102,5 +102,6 @@
     <string name="fb_send">Send</string>
     <string name="fb_min_feedbacks">Please select a feedback option</string>
     <string name="fb_min_chars">Please enter at least 6 characters</string>
+    <string name="fb_head_email">Your feedback:</string>
 
 </resources>

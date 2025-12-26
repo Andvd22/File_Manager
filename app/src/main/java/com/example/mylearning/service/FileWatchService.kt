@@ -45,6 +45,10 @@ data class FileEvent(
     val timestamp: Long = System.currentTimeMillis()
 )
 class FileWatchService : Service(){
+    private val prefs by lazy {
+        getSharedPreferences("app_log", MODE_PRIVATE)
+    }
+
     private val processedEvents = ConcurrentHashMap<String, BooleanArray>()
     private val fileEventFlow = MutableSharedFlow<FileEvent>(
         extraBufferCapacity = 64
@@ -279,16 +283,19 @@ class FileWatchService : Service(){
     }
 
     private fun showFileChangedNotification(event: String, fullPath: String){
+        prefs.edit().putInt("time_show_notification", prefs.getInt("time_show_notification", 0) + 1).apply()
         val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val lower = fullPath.lowercase()
         val isImage = lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") 
         
         val openFileIntent = if(isImage) Intent(this, MainActivity::class.java).apply {
+            putExtra("from_notification", true)
             putExtra("extra_path", fullPath)
             putExtra("extra_auto_open", true)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
         } else Intent(this, MainActivity::class.java).apply {
+            putExtra("from_notification", true)
             putExtra("extra_path", fullPath)
             putExtra("extra_action_name", "open_file")
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -297,6 +304,7 @@ class FileWatchService : Service(){
         val openFilePendingIntent = PendingIntent.getActivity(this, 1, openFileIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
         val goToFileInAppIntent = Intent(this, MainActivity::class.java).apply {
+            putExtra("from_notification", true)
             putExtra("extra_path", fullPath)
             putExtra("extra_action_name", "go_to_app")
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)

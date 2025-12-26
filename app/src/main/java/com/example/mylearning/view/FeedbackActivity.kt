@@ -1,18 +1,38 @@
 package com.example.mylearning.view
 
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.doAfterTextChanged
 import com.example.mylearning.R
 import com.example.mylearning.databinding.ActivityFeedbackBinding
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.Date
+import java.util.Locale
 
 
-
+data class AppLog(
+    val appName: String,
+    val versionCode: Long,
+    val installTime : String,
+    val apiLevel: Int,
+    val deviceModel: String,
+    val locale: String,
+    val notificationGranted: Boolean,
+    val timeEnterApp: Int,
+    val timeShowNotification: Int,
+    val timeClickedNotification: Int,
+    val timestamp: String
+)
 class FeedbackActivity : AppCompatActivity() {
 
     private var firstStartActivity: Boolean = false
@@ -32,6 +52,7 @@ class FeedbackActivity : AppCompatActivity() {
         initDefaultState()
         setupUi()
         setupListeners()
+        getApplog()
     }
 
     private fun setupUi() {
@@ -88,11 +109,35 @@ class FeedbackActivity : AppCompatActivity() {
         binding.tvBtnSend.setOnClickListener {
             if (!checkCharBeforeSend()) return@setOnClickListener
             if(checkFeedbackBeforeSend()) {
-                var toastt = StringBuilder()
+                var issueTypes = StringBuilder()
                 items.forEachIndexed { index, tv ->
-                    if(tv.isSelected) toastt.append(tv.text.toString() )
+                    if(tv.isSelected) {
+                        if(issueTypes.isNotEmpty()) issueTypes.append(", ")
+                        issueTypes.append(tv.text.toString() )
+                    }
                 }
-                Toast.makeText(this, "$toastt", Toast.LENGTH_SHORT).show()
+                val description = binding.etDetail.text?.toString().orEmpty()
+                val headBody = getString(R.string.fb_head_email)
+                val divider: String = "===================="
+                val applogString = getApplog().toPrettyString()
+                val endBody = "Thông tin để chúng tôi có thể khắc phục sự cố của bạn nhanh hơn:\n" +
+                        "======================\n"+"$applogString\n" + "======================\n" + "Bằng cách gửi email này, bạn đồng ý chia sẻ thông tin trên với chúng tôi để giúp cải thiện ứng dụng."
+                val subject = getString(R.string.fb_title)
+                val body = "$headBody\n$divider\n$issueTypes\n$description\n$endBody"
+                val uri = Uri.parse(
+                    "mailto:office.adv.support@gmail.com" +
+                            "?subject=" + Uri.encode(subject) +
+                            "&body=" + Uri.encode(body)
+                )
+                val intent = Intent(Intent.ACTION_SENDTO, uri).apply {
+                    putExtra(Intent.EXTRA_SUBJECT, subject)
+                    putExtra(Intent.EXTRA_TEXT, body)
+                }
+                try {
+                    startActivity(intent)
+                }catch (e: Exception){
+                    Toast.makeText(this, "Không thể gửi phản hồi", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -114,5 +159,60 @@ class FeedbackActivity : AppCompatActivity() {
 
         return check1
     }
+
+    private fun getApplog(): AppLog{
+        val appName = getString(applicationInfo.labelRes)
+        val packageInfo = packageManager.getPackageInfo(packageName, 0)
+        val versionCode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            packageInfo.longVersionCode
+        } else {
+            packageInfo.versionCode.toLong()
+        }
+        val installTime = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date(packageInfo.firstInstallTime))
+        val apiLevel = Build.VERSION.SDK_INT
+        val deviceModel = Build.MODEL
+        val locale = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            resources.configuration.locales[0].toString()
+        } else {
+            resources.configuration.locale.toString()
+        }
+        val notificationGranted =
+            NotificationManagerCompat.from(this).areNotificationsEnabled()
+        val timestamp = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date(System.currentTimeMillis()))
+        val prefs = getSharedPreferences("app_log", MODE_PRIVATE)
+        val timeEnterApp = prefs.getInt("time_enter_app", 0)
+        val timeShowNotification = prefs.getInt("time_show_notification", 0)
+        val timeClickedNotification = prefs.getInt("time_click_notification", 0)
+
+        return AppLog(
+            appName = appName,
+            versionCode = versionCode,
+            installTime = installTime,
+            apiLevel = apiLevel,
+            deviceModel = deviceModel,
+            locale = locale,
+            notificationGranted = notificationGranted,
+            timeEnterApp = timeEnterApp,
+            timeShowNotification = timeShowNotification,
+            timeClickedNotification = timeClickedNotification,
+            timestamp = timestamp
+        )
+    }
+
+    fun AppLog.toPrettyString(): String = """
+        appName: $appName
+        versionCode: $versionCode
+        installTime: $installTime
+        apiLevel: $apiLevel
+        deviceModel: $deviceModel
+        locale: $locale
+        notificationGranted: $notificationGranted
+        timeEnterApp: $timeEnterApp
+        timeShowNotification: $timeShowNotification
+        timeClickedNotification: $timeClickedNotification
+        timestamp: $timestamp
+        """.trimIndent()
+
+
 
 }
