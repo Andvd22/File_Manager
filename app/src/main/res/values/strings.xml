@@ -117,4 +117,28 @@
     <string name="fb_min_feedbacks">Vui lòng chọn 1 tùy chọn phản hồi</string>
     <string name="fb_min_chars">Vui lòng nhập ít nhất 6 ký tự</string>
     <string name="fb_head_email">Phản hồi của bạn:</string>
+
+    <!-- feature request -->
+    <string name="fr_feature_request_title">Yêu cầu tính năng</string>
+    <string name="fr_feature_request_question">Bạn có yêu cầu tính năng nào khác không?</string>
+    <string name="fr_feature_request_description">Chúng tôi sẽ thêm các tính năng mới để đáp ứng nhu cầu của bạn.</string>
+
+    <string name="fr_smart_tools">Công cụ thông minh</string>
+    <string name="fr_edit_files">Chỉnh sửa tệp</string>
+    <string name="fr_merge_split">Gộp &amp; Tách</string>
+    <string name="fr_convert_files">Chuyển đổi tệp</string>
+    <string name="fr_compress_files">Nén tệp</string>
+
+    <string name="fr_view_setting">Cài đặt hiển thị</string>
+
+    <string name="fr_ai_tools">Công cụ AI</string>
+    <string name="fr_chat_with_document">Trò chuyện với tài liệu</string>
+    <string name="fr_ai_document_summary">Tóm tắt tài liệu bằng AI</string>
+    <string name="fr_translate_document">Dịch tài liệu</string>
+
+    <string name="fr_others">Khác</string>
+    <string name="fr_other_features_request">Các tính năng khác bạn muốn có</string>
+
+    <string name="fr_submit">Gửi</string>
+
 </resources>

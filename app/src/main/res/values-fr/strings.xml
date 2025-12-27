@@ -117,5 +117,27 @@
     <string name="fb_min_chars">Veuillez saisir au moins 6 caractères</string>
     <string name="fb_head_email">Votre retour :</string>
 
+    <!-- feature request -->
+    <string name="fr_feature_request_title">Demande de fonctionnalité</string>
+    <string name="fr_feature_request_question">Avez-vous d’autres demandes de fonctionnalités ?</string>
+    <string name="fr_feature_request_description">Nous ajouterons de nouvelles fonctionnalités pour répondre à vos besoins.</string>
+
+    <string name="fr_smart_tools">Outils intelligents</string>
+    <string name="fr_edit_files">Modifier les fichiers</string>
+    <string name="fr_merge_split">Fusionner &amp; Diviser</string>
+    <string name="fr_convert_files">Convertir les fichiers</string>
+    <string name="fr_compress_files">Compresser les fichiers</string>
+
+    <string name="fr_view_setting">Paramètres d’affichage</string>
+
+    <string name="fr_ai_tools">Outils IA</string>
+    <string name="fr_chat_with_document">Discuter avec le document</string>
+    <string name="fr_ai_document_summary">Résumé de document par IA</string>
+    <string name="fr_translate_document">Traduire le document</string>
+
+    <string name="fr_others">Autres</string>
+    <string name="fr_other_features_request">Autres fonctionnalités que vous souhaitez avoir</string>
+
+    <string name="fr_submit">Envoyer</string>
 
 </resources>

@@ -117,5 +117,27 @@
     <string name="fb_min_chars">Harap masukkan minimal 6 karakter</string>
     <string name="fb_head_email">Masukan Anda:</string>
 
+    <!-- feature request -->
+    <string name="fr_feature_request_title">Permintaan fitur</string>
+    <string name="fr_feature_request_question">Apakah Anda memiliki permintaan fitur lainnya?</string>
+    <string name="fr_feature_request_description">Kami akan menambahkan fitur baru untuk memenuhi kebutuhan Anda.</string>
+
+    <string name="fr_smart_tools">Alat pintar</string>
+    <string name="fr_edit_files">Edit file</string>
+    <string name="fr_merge_split">Gabung &amp; Pisah</string>
+    <string name="fr_convert_files">Konversi file</string>
+    <string name="fr_compress_files">Kompres file</string>
+
+    <string name="fr_view_setting">Pengaturan tampilan</string>
+
+    <string name="fr_ai_tools">Alat AI</string>
+    <string name="fr_chat_with_document">Chat dengan dokumen</string>
+    <string name="fr_ai_document_summary">Ringkasan dokumen AI</string>
+    <string name="fr_translate_document">Terjemahkan dokumen</string>
+
+    <string name="fr_others">Lainnya</string>
+    <string name="fr_other_features_request">Fitur lain yang ingin Anda miliki</string>
+
+    <string name="fr_submit">Kirim</string>
 
 </resources>

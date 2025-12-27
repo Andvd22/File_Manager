@@ -117,4 +117,27 @@
     <string name="fb_min_chars">6文字以上入力してください</string>
     <string name="fb_head_email">ご意見 :</string>
 
+    <!-- feature request -->
+    <string name="fr_feature_request_title">機能リクエスト</string>
+    <string name="fr_feature_request_question">他にご要望の機能はありますか？</string>
+    <string name="fr_feature_request_description">ご要望に応じて新しい機能を追加します。</string>
+
+    <string name="fr_smart_tools">スマートツール</string>
+    <string name="fr_edit_files">ファイル編集</string>
+    <string name="fr_merge_split">結合 &amp; 分割</string>
+    <string name="fr_convert_files">ファイル変換</string>
+    <string name="fr_compress_files">ファイル圧縮</string>
+
+    <string name="fr_view_setting">表示設定</string>
+
+    <string name="fr_ai_tools">AIツール</string>
+    <string name="fr_chat_with_document">ドキュメントとチャット</string>
+    <string name="fr_ai_document_summary">AIドキュメント要約</string>
+    <string name="fr_translate_document">ドキュメント翻訳</string>
+
+    <string name="fr_others">その他</string>
+    <string name="fr_other_features_request">ご希望のその他の機能</string>
+
+    <string name="fr_submit">送信</string>
+
 </resources>

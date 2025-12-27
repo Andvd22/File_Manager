@@ -113,5 +113,27 @@
     <string name="fb_min_chars">최소 6자 이상 입력해 주세요</string>
     <string name="fb_head_email">사용자 의견 :</string>
 
+    <!-- feature request -->
+    <string name="fr_feature_request_title">기능 요청</string>
+    <string name="fr_feature_request_question">다른 기능 요청이 있으신가요?</string>
+    <string name="fr_feature_request_description">필요에 맞는 새로운 기능을 추가하겠습니다.</string>
+
+    <string name="fr_smart_tools">스마트 도구</string>
+    <string name="fr_edit_files">파일 편집</string>
+    <string name="fr_merge_split">병합 &amp; 분할</string>
+    <string name="fr_convert_files">파일 변환</string>
+    <string name="fr_compress_files">파일 압축</string>
+
+    <string name="fr_view_setting">보기 설정</string>
+
+    <string name="fr_ai_tools">AI 도구</string>
+    <string name="fr_chat_with_document">문서와 채팅</string>
+    <string name="fr_ai_document_summary">AI 문서 요약</string>
+    <string name="fr_translate_document">문서 번역</string>
+
+    <string name="fr_others">기타</string>
+    <string name="fr_other_features_request">원하시는 다른 기능</string>
+
+    <string name="fr_submit">제출</string>
 
 </resources>

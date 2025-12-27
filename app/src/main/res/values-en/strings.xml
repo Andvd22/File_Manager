@@ -104,4 +104,26 @@
     <string name="fb_min_chars">Please enter at least 6 characters</string>
     <string name="fb_head_email">Your feedback:</string>
 
+    <!-- feature request -->
+    <string name="fr_feature_request_title">Feature request</string>
+    <string name="fr_feature_request_question">Have any other feature requests?</string>
+    <string name="fr_feature_request_description">We’ll add new features to meet your needs.</string>
+
+    <string name="fr_smart_tools">Smart Tools</string>
+    <string name="fr_edit_files">Edit Files</string>
+    <string name="fr_merge_split">Merge &amp; Split</string>
+    <string name="fr_convert_files">Convert Files</string>
+    <string name="fr_compress_files">Compress Files</string>
+
+    <string name="fr_view_setting">View Setting</string>
+
+    <string name="fr_ai_tools">AI Tools</string>
+    <string name="fr_chat_with_document">Chat with Document</string>
+    <string name="fr_ai_document_summary">AI Document Summary</string>
+    <string name="fr_translate_document">Translate Document</string>
+
+    <string name="fr_others">Others</string>
+    <string name="fr_other_features_request">Other features that you want to have</string>
+
+    <string name="fr_submit">Submit</string>
 </resources>
