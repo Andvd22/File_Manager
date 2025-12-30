@@ -106,6 +106,11 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.itemFeatureRequest.root.setOnClickListener {
+            val intent = Intent(this, FeatureRequestActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     private fun setupToggles(){

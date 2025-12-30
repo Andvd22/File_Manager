@@ -1,10 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.FeatureRequestActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- AppBar -->
+    <LinearLayout
+        android:id="@+id/header_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/feature_request_arrow_left"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fr_feature_request_title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            android:textColor="#040516"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vDivider"
+        android:layout_width="match_parent"
+        android:layout_height="2.5dp"
+        android:background="#E6E6E6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/header_bar"
+        android:layout_marginTop="20dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:paddingStart="20dp"
+        android:layout_marginTop="15dp"
+        android:paddingEnd="20dp"
+        android:clipToPadding="false"
+        android:clipChildren="false"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vDivider">
+
+        <!-- Content -->
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            app:layout_constraintBottom_toTopOf="@+id/tvOthers"
+            android:layout_marginBottom="24dp"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:clipChildren="false"
+                android:orientation="vertical">
+
+                <!-- Title -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fr_feature_request_question"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="#040516"/>
+
+                <!-- Subtitle -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    android:text="@string/fr_feature_request_description"
+                    android:textColor="#7A9FBF"
+                    android:textSize="14sp" />
+
+                <!-- Smart Tools -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/fr_smart_tools"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#040516"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSmartTools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_feature_tool" />
+                <!-- AI Tools -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/fr_ai_tools"
+                    android:textStyle="bold"
+                    android:textSize="14sp"
+                    android:textColor="#040516"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAiTools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_marginTop="12dp"
+                    tools:listitem="@layout/item_feature_tool"/>
+            </LinearLayout>
+        </ScrollView>
+        <!-- Others -->
+        <TextView
+            android:id="@+id/tvOthers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/fr_others"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="#040516"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tilDetail"
+            android:layout_marginBottom="12dp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxCornerRadiusTopStart="12dp"
+            app:boxCornerRadiusTopEnd="12dp"
+            app:boxCornerRadiusBottomStart="12dp"
+            app:boxCornerRadiusBottomEnd="12dp"
+            app:hintTextColor="#9E9E9E"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+            android:layout_marginBottom="40dp"
+            >
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="5"
+                android:maxLines="8"
+                android:gravity="top|start"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:hint="@string/fr_other_features_request"
+                android:inputType="textMultiLine|textCapSentences"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Submit -->
+        <TextView
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/fr_submit"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:background="@drawable/feature_request_bg_button_submit"
+            android:backgroundTint="@drawable/feature_request_bg_button_submit_selector"
+            android:enabled="false"
+            android:gravity="center"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -64,7 +65,7 @@ class FeedbackActivity : AppCompatActivity() {
         binding.fbIssueOther.tvText.setText(R.string.fb_issue_other)
     }
 
-    private val items by lazy {
+    private val items: List<TextView> by lazy {
         listOf(
             binding.fbIssueCannotOpenFile.tvText,
             binding.fbIssueErrorBug.tvText,
