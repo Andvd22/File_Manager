@@ -18,6 +18,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center_vertical">
         <ImageView
+            android:id="@+id/ivIconBack"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@drawable/feature_request_arrow_left"

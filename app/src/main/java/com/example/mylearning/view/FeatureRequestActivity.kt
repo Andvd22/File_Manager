@@ -1,9 +1,13 @@
 package com.example.mylearning.view
 
+import android.os.Build
 import android.os.Bundle
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -23,6 +27,7 @@ class FeatureRequestActivity : AppCompatActivity() {
     private val aiAdapter = FeatureRequestItemAdapter{ toolItem ->
         viewModel.toggleTool(toolItem.id) }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFeatureRequestBinding.inflate(layoutInflater)
@@ -31,6 +36,12 @@ class FeatureRequestActivity : AppCompatActivity() {
         setupRecycler()
         observeViewModel()
         setupInput()
+        setupListener()
+
+        window.insetsController?.let {
+            it.hide(WindowInsets.Type.navigationBars())
+            it.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
     }
 
     private fun setupRecycler(){
@@ -64,6 +75,9 @@ class FeatureRequestActivity : AppCompatActivity() {
         binding.btnSubmit.setOnClickListener {
             submit()
         }
+        binding.ivIconBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun submit() {
@@ -73,5 +87,8 @@ class FeatureRequestActivity : AppCompatActivity() {
         (if(!viewModel.otherText.value.isNullOrBlank()) viewModel.otherText.value.toString() else "")
 
         Toast.makeText(this, selectedTitles, Toast.LENGTH_LONG).show()
+    }
+
+    private fun setupListener(){
     }
 }
