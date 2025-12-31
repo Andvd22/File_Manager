@@ -32,13 +32,17 @@ class FeatureRequestViewModel : ViewModel(){
             ToolItem(2, R.drawable.feature_request_merge_split, R.string.fr_merge_split),
             ToolItem(3, R.drawable.feature_request_convert_files, R.string.fr_convert_files),
             ToolItem(4, R.drawable.feature_request_compress_files, R.string.fr_compress_files),
-            ToolItem(5, R.drawable.feature_request_view_setting, R.string.fr_view_setting)
+            ToolItem(5, R.drawable.feature_request_view_setting, R.string.fr_view_setting),
+                    ToolItem(9, R.drawable.feature_request_compress_files, R.string.fr_compress_files),
+        ToolItem(10, R.drawable.feature_request_view_setting, R.string.fr_view_setting)
         )
 
         _aiTools.value = listOf(
             ToolItem(6, R.drawable.feature_request_chat_with_document, R.string.fr_chat_with_document),
             ToolItem(7, R.drawable.feature_request_chat_ai_document_summary, R.string.fr_ai_document_summary),
-            ToolItem(8, R.drawable.feature_request_translate_document, R.string.fr_translate_document)
+            ToolItem(8, R.drawable.feature_request_translate_document, R.string.fr_translate_document),
+            ToolItem(11, R.drawable.feature_request_chat_ai_document_summary, R.string.fr_ai_document_summary),
+            ToolItem(12, R.drawable.feature_request_translate_document, R.string.fr_translate_document)
         )
     }
 

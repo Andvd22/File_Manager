@@ -17,7 +17,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mylearning.R
 import com.example.mylearning.adapter.FeatureRequestItemAdapter
 import com.example.mylearning.databinding.ActivityFeatureRequestBinding
+import com.example.mylearning.databinding.DialogScreenshotOptionsBinding
+import com.example.mylearning.databinding.FeatureRequestBottomDialogBinding
 import com.example.mylearning.viewmodel.FeatureRequestViewModel
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class FeatureRequestActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFeatureRequestBinding
@@ -87,8 +90,20 @@ class FeatureRequestActivity : AppCompatActivity() {
         (if(!viewModel.otherText.value.isNullOrBlank()) viewModel.otherText.value.toString() else "")
 
         Toast.makeText(this, selectedTitles, Toast.LENGTH_LONG).show()
+        showOptionsBottomSheet()
     }
 
     private fun setupListener(){
+    }
+
+    private fun showOptionsBottomSheet() {
+        val dialog = BottomSheetDialog(this)
+        val bindingDialog = FeatureRequestBottomDialogBinding.inflate(layoutInflater)
+        dialog.setContentView(bindingDialog.root)
+
+        bindingDialog.btnSubmit.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }
