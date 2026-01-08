@@ -111,6 +111,11 @@ class SettingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        binding.itemAddWidget.root.setOnClickListener {
+            val bottomSheet = AddWidgetBottomSheet()
+            bottomSheet.show(supportFragmentManager, AddWidgetBottomSheet.TAG)
+        }
+
     }
 
     private fun setupToggles(){
