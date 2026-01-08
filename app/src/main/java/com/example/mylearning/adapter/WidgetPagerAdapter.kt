@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mylearning.R
 
-class WidgetPagerAdapter : RecyclerView.Adapter<WidgetPagerAdapter.PageViewHolder>(){
+class WidgetPagerAdapter : RecyclerView.Adapter<WidgetPagerAdapter.PageViewHolder>() {
+
     private val layouts = listOf(
         R.layout.widget_preview_1,
         R.layout.widget_preview_2,
@@ -25,7 +26,6 @@ class WidgetPagerAdapter : RecyclerView.Adapter<WidgetPagerAdapter.PageViewHolde
         holder: PageViewHolder,
         position: Int
     ) {
-
     }
 
     override fun getItemCount(): Int {
@@ -36,5 +36,7 @@ class WidgetPagerAdapter : RecyclerView.Adapter<WidgetPagerAdapter.PageViewHolde
         return layouts[position]
     }
 
-    class PageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class PageViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+
+    }
 }

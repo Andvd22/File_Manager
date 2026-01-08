@@ -126,4 +126,6 @@
     <string name="fr_other_features_request">Other features that you want to have</string>
 
     <string name="fr_submit">Submit</string>
+
+    <string name="widget_dialog_content">Tap <font color="#FF5C01">Add</font> or hold the widget to add it to your home screen. Please select an option below:</string>
 </resources>

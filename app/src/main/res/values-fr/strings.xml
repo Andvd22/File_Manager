@@ -140,4 +140,6 @@
 
     <string name="fr_submit">Envoyer</string>
 
+    <string name="widget_dialog_content">Appuyez sur <font color="#FF5C01">Ajouter</font> ou maintenez le widget pour l\'ajouter à votre écran d\'accueil. Veuillez sélectionner une option ci-dessous:</string>
+
 </resources>

@@ -2,139 +2,141 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widgetRoot"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="210dp"
+    android:layout_height="105dp"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center_horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="12dp"
+    android:paddingTop="12dp"
+    android:background="@drawable/widget_bg_container">
 
-    <!-- 2 widget lớn -->
+    <!-- Search bar -->
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@drawable/widget_bg_search"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:clickable="true">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/testy" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search file here..."
+            android:textColor="#999999"
+            android:textSize="8sp"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="8dp">
+
+        <LinearLayout
+            android:id="@+id/btnHome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/testy" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trang chủ"
+                android:layout_marginTop="4dp"
+                android:textSize="8sp"
+                android:textColor="#040516" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btnRecent"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:background="#F5F5F5"
-            android:padding="8dp">
+            android:gravity="center"
+            android:clickable="true">
+
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/testy" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Gần đây"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:textSize="8sp"
+                android:textColor="#040516" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/btnFavorite"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:background="#F5F5F5"
-            android:layout_marginStart="12dp"
-            android:padding="8dp">
+            android:gravity="center"
+            android:clickable="true">
+
             <ImageView
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/testy" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Yêu thích"
-                android:textSize="12sp"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!-- 4 file type icons -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/btnPdf"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/testy" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pdf"
-                android:textSize="10sp"
-                android:layout_marginTop="4dp" />
+                android:layout_marginTop="4dp"
+                android:textSize="8sp"
+                android:textColor="#040516" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btnWord"
-            android:layout_width="50dp"
+            android:id="@+id/btnEdit"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_weight="1"
             android:orientation="vertical"
-            android:layout_marginStart="12dp">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/testy" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Word"
-                android:textSize="10sp"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnPpt"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical"
-            android:layout_marginStart="12dp">
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/testy" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ppt"
-                android:textSize="10sp"
-                android:layout_marginTop="4dp" />
-        </LinearLayout>
+            android:clickable="true">
 
-        <LinearLayout
-            android:id="@+id/btnExcel"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_marginStart="12dp">
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:src="@drawable/testy" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Excel"
-                android:textSize="10sp"
-                android:layout_marginTop="4dp" />
+                android:text="Chỉnh sửa"
+                android:layout_marginTop="4dp"
+                android:textSize="8sp"
+                android:textColor="#040516" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
