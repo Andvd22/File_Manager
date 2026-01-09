@@ -128,4 +128,12 @@
     <string name="fr_submit">Submit</string>
 
     <string name="widget_dialog_content">Tap <font color="#FF5C01">Add</font> or hold the widget to add it to your home screen. Please select an option below:</string>
+    <string name="widget_recent">Recent</string>
+    <string name="widget_bookmarks">Bookmarks</string>
+    <string name="widget_search_placeholder">Search file here...</string>
+    <string name="widget_home">Home</string>
+    <string name="widget_edit">Edit</string>
+
+
+
 </resources>

@@ -141,5 +141,11 @@
     <string name="fr_submit">Kirim</string>
 
     <string name="widget_dialog_content">Ketuk <font color="#FF5C01">Tambah</font> atau tahan widget untuk menambahkannya ke layar utama. Silakan pilih opsi di bawah ini:</string>
+    <string name="widget_recent">Terbaru</string>
+    <string name="widget_bookmarks">Penanda</string>
+    <string name="widget_search_placeholder">Cari file di sini...</string>
+    <string name="widget_home">Beranda</string>
+    <string name="widget_edit">Edit</string>
+
 
 </resources>

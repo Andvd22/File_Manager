@@ -1,116 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widgetRoot"
-    android:layout_width="210dp"
-    android:layout_height="140dp"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:paddingBottom="12dp"
-    android:paddingTop="12dp"
-    android:background="@drawable/widget_bg_container">
-
-    <!-- Search bar -->
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@android:color/transparent"
+    >
     <LinearLayout
-        android:id="@+id/searchBar"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/widgetRoot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/widget_bg_search"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:clickable="true">
+        android:layout_height="140dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:paddingTop="12dp"
+        android:background="@drawable/widget_bg_container">
 
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:src="@drawable/testy" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search file here..."
-            android:textColor="#999999"
-            android:textSize="8sp"
-            android:textStyle="italic" />
-    </LinearLayout>
-
-    <!-- File item 1 -->
-    <LinearLayout
-        android:id="@+id/fileItem1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:clickable="true">
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="32dp"
-            android:src="@drawable/testy" />
-
+        <!-- Search bar -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/searchBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:orientation="vertical">
+            android:background="@drawable/widget_bg_search"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/widget_search_png" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PDF-02.pdf"
-                android:textSize="14sp"
-                android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mar 4 10:01 AM | 100 KB"
+                android:text="Search file here..."
+                android:textColor="#999999"
                 android:textSize="8sp"
-                android:textColor="#999999" />
+                android:textStyle="italic" />
         </LinearLayout>
-    </LinearLayout>
 
-    <!-- File item 2 -->
-    <LinearLayout
-        android:id="@+id/fileItem2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:clickable="true">
-
-        <ImageView
-            android:layout_width="25dp"
-            android:layout_height="32dp"
-            android:src="@drawable/testy" />
-
+        <!-- File item 1 -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/fileItem1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:orientation="vertical">
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true">
 
-            <TextView
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="35dp"
+                android:src="@drawable/widget_pdf_png" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Homework.doc"
-                android:textSize="14sp"
-                android:textColor="#000000" />
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PDF-02.pdf"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mar 4 10:01 AM | 100 KB"
+                    android:textSize="8sp"
+                    android:textColor="#999999" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- File item 2 -->
+        <LinearLayout
+            android:id="@+id/fileItem2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:clickable="true">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="35dp"
+                android:src="@drawable/widget_docx_png" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mar 4 10:01 AM | 100 KB"
-                android:textSize="8sp"
-                android:textColor="#999999" />
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Homework.doc"
+                    android:textSize="14sp"
+                    android:textColor="#000000" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mar 4 10:01 AM | 100 KB"
+                    android:textSize="8sp"
+                    android:textColor="#999999" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
+

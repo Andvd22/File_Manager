@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@android:color/transparent"
+    >
 
     <LinearLayout
-        android:layout_width="210dp"
-        android:layout_height="105dp"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
         android:layout_gravity="center"
         android:orientation="vertical"
         android:gravity="center_horizontal"
@@ -36,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Search file here..."
+                android:text="@string/widget_search_placeholder"
                 android:textColor="#999999"
                 android:textSize="8sp"
                 android:textStyle="italic"
@@ -57,14 +60,14 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/add_feature_widget1_icon1s"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/add_feature_widget3_icon1s"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Trang chủ"
+                    android:text="@string/widget_home"
                     android:layout_marginTop="4dp"
                     android:textSize="8sp"
                     android:textColor="#040516"
@@ -77,14 +80,14 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@drawable/add_feature_widget1_icon1s"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gần đây"
+                    android:text="@string/widget_recent"
                     android:layout_marginTop="4dp"
                     android:textSize="8sp"
                     android:textColor="#040516"
@@ -97,14 +100,14 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/add_feature_widget1_icon1s"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/add_feature_widget1_icon2s"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yêu thích"
+                    android:text="@string/widget_bookmarks"
                     android:layout_marginTop="4dp"
                     android:textSize="8sp"
                     android:textColor="#040516"
@@ -117,14 +120,14 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/add_feature_widget1_icon1s"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/add_feature_widget3_icon2s"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Chỉnh sửa"
+                    android:text="@string/widget_edit"
                     android:layout_marginTop="4dp"
                     android:textSize="8sp"
                     android:textColor="#040516"
@@ -133,4 +136,4 @@
         </LinearLayout>
 
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

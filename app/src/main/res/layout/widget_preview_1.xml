@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@android:color/transparent"
+    >
 
     <LinearLayout
         android:id="@+id/widgetRoot"
-        android:layout_width="210dp"
+        android:layout_width="match_parent"
         android:layout_height="155dp"
         android:layout_gravity="center"
         android:orientation="vertical"
@@ -32,14 +35,14 @@
                 android:background="@drawable/widget_bg_item"
                 >
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
                     android:src="@drawable/add_feature_widget1_icon1s"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gần đây"
+                    android:text="@string/widget_recent"
                     android:layout_marginTop="4dp"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -56,14 +59,14 @@
                 android:layout_marginStart="7dp"
                 >
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/add_feature_widget1_icon1s"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/add_feature_widget1_icon2s"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Gần đây"
+                    android:text="@string/widget_bookmarks"
                     android:layout_marginTop="4dp"
                     android:textSize="12sp"
                     android:textStyle="bold"
@@ -86,9 +89,9 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/add_feature_widget1_icon1s"
+                    android:layout_width="28dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/add_feature_words"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -107,9 +110,9 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/add_feature_widget1_icon1s"
+                    android:layout_width="28dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/add_feature_excels"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -128,9 +131,9 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/add_feature_widget1_icon1s"
+                    android:layout_width="28dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/add_feature_pdfs"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -149,9 +152,9 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/add_feature_widget1_icon1s"
+                    android:layout_width="28dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/add_feature_ppts"
                     />
                 <TextView
                     android:layout_width="wrap_content"
@@ -165,4 +168,4 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</LinearLayout>

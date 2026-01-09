@@ -137,5 +137,11 @@
     <string name="fr_submit">제출</string>
 
     <string name="widget_dialog_content"><font color="#FF5C01">추가</font>를 탭하거나 위젯을 길게 눌러 홈 화면에 추가하세요. 아래에서 옵션을 선택하세요:</string>
+    <string name="widget_recent">최근</string>
+    <string name="widget_bookmarks">즐겨찾기</string>
+    <string name="widget_search_placeholder">여기에서 파일 검색...</string>
+    <string name="widget_home">홈</string>
+    <string name="widget_edit">편집</string>
+
 
 </resources>

@@ -1,176 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/widgetRoot"
-    android:layout_width="210dp"
-    android:layout_height="155dp"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp"
-    android:background="@drawable/widget_bg_container">
-
+    android:background="@android:color/transparent"
+    >
     <LinearLayout
+        android:id="@+id/widgetRoot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <LinearLayout
-            android:id="@+id/btnRecent"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/widget_bg_item"
-            android:clickable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/testy" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Gần đây"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#040516" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btnFavorite"
-            android:layout_width="0dp"
-            android:layout_height="55dp"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@drawable/widget_bg_item"
-            android:layout_marginStart="7dp"
-            android:clickable="true">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/testy" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Yêu thích"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#040516" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="155dp"
+        android:orientation="vertical"
         android:gravity="center"
-        android:layout_marginTop="8dp">
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:background="@drawable/widget_bg_container">
 
         <LinearLayout
-            android:id="@+id/btnWord"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:clickable="true">
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="32dp"
-                android:src="@drawable/testy" />
+            <LinearLayout
+                android:id="@+id/btnRecent"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/widget_bg_item"
+                android:clickable="true">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Word"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#040516" />
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/widget_recent_png" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/widget_recent"
+                    android:layout_marginTop="4dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#040516" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnFavorite"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="@drawable/widget_bg_item"
+                android:layout_marginStart="7dp"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/widget_bookmark_png" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/widget_bookmarks"
+                    android:layout_marginTop="4dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#040516" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btnExcel"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:clickable="true">
+            android:layout_marginTop="8dp">
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="32dp"
-                android:src="@drawable/testy" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/btnWord"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Excel"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#040516" />
-        </LinearLayout>
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true">
 
-        <LinearLayout
-            android:id="@+id/btnPdf"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:clickable="true">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/widget_docx_png" />
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="32dp"
-                android:src="@drawable/testy" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Word"
+                    android:layout_marginTop="4dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#040516" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/btnExcel"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="PDF"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#040516" />
-        </LinearLayout>
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true">
 
-        <LinearLayout
-            android:id="@+id/btnPpt"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:clickable="true">
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/widget_excel_png" />
 
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="32dp"
-                android:src="@drawable/testy" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Excel"
+                    android:layout_marginTop="4dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#040516" />
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/btnPdf"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="PPT"
-                android:layout_marginTop="4dp"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:textColor="#040516" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/widget_pdf_png" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PDF"
+                    android:layout_marginTop="4dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#040516" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnPpt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:clickable="true">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/widget_ppt_png" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PPT"
+                    android:layout_marginTop="4dp"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#040516" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

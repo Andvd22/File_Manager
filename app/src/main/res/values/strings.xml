@@ -142,5 +142,10 @@
     <string name="fr_submit">Gửi</string>
 
     <string name="widget_dialog_content">Chạm vào <font color="#FF5C01">Thêm</font> hoặc giữ widget để thêm ngay vào màn hình chính. Vui lòng chọn một tùy chỉnh bên dưới:</string>
+    <string name="widget_recent">Gần đây</string>
+    <string name="widget_bookmarks">Yêu thích</string>
+    <string name="widget_search_placeholder">Tìm file ở đây...</string>
+    <string name="widget_home">Trang chủ</string>
+    <string name="widget_edit">Chỉnh sửa</string>
 
 </resources>

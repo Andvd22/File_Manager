@@ -141,5 +141,12 @@
     <string name="fr_submit">Envoyer</string>
 
     <string name="widget_dialog_content">Appuyez sur <font color="#FF5C01">Ajouter</font> ou maintenez le widget pour l\'ajouter à votre écran d\'accueil. Veuillez sélectionner une option ci-dessous:</string>
+    <string name="widget_recent">Récents</string>
+    <string name="widget_bookmarks">Favoris</string>
+    <string name="widget_search_placeholder">Recherchez un fichier ici...</string>
+    <string name="widget_home">Accueil</string>
+    <string name="widget_edit">Modifier</string>
+
+
 
 </resources>

@@ -141,5 +141,11 @@
     <string name="fr_submit">送信</string>
 
     <string name="widget_dialog_content"><font color="#FF5C01">追加</font>をタップするか、ウィジェットを長押ししてホーム画面に追加します。以下からオプションを選択してください:</string>
+    <string name="widget_recent">最近</string>
+    <string name="widget_bookmarks">ブックマーク</string>
+    <string name="widget_search_placeholder">ここでファイルを検索...</string>
+    <string name="widget_home">ホーム</string>
+    <string name="widget_edit">編集</string>
+
 
 </resources>
