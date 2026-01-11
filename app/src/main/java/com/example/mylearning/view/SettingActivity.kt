@@ -112,8 +112,17 @@ class SettingActivity : AppCompatActivity() {
         }
 
         binding.itemAddWidget.root.setOnClickListener {
-            val bottomSheet = AddWidgetBottomSheet()
-            bottomSheet.show(supportFragmentManager, AddWidgetBottomSheet.TAG)
+            if (supportFragmentManager.findFragmentByTag(AddWidgetBottomSheet.TAG) == null) {
+                val bottomSheet = AddWidgetBottomSheet()
+                bottomSheet.show(supportFragmentManager, AddWidgetBottomSheet.TAG)
+            }
+        }
+
+        binding.itemSetDefaultApp.root.setOnClickListener {
+            if(supportFragmentManager.findFragmentByTag(SetAsDefaultBottomDialog1.TAG)==null){
+                val bottomSheet = SetAsDefaultBottomDialog1()
+                bottomSheet.show(supportFragmentManager, SetAsDefaultBottomDialog1.TAG)
+            }
         }
 
     }

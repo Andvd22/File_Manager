@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clContainer"
+        android:layout_width="61dp"
+        android:layout_height="47dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="54dp"
+            android:layout_height="43dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/set_as_default_ic1"
+            />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="28dp"
+            android:src="@drawable/set_as_default_ic2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Set WORD Reader as your default WORD File Viewer"
+        android:text="Set WORD Reader as your default WORD File Viewer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/clContainer"
+        android:layout_marginTop="16dp"
+        android:textColor="#040516"
+        />
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Pick this option to open files fast and make reading super easy and fun!"
+        android:text="Pick this option to open files fast and make reading super easy and fun!"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="14sp"
+        android:textStyle="normal"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        android:layout_marginTop="16dp"
+        android:textColor="#040516"
+        />
+    <TextView
+        android:id="@+id/btnSetAsDefault"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Set as Default"
+        android:text="Set as Default"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/tvDesc"
+        android:layout_marginTop="16dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/feedback_activity_bg_button_send"
+        android:gravity="center"
+        android:paddingVertical="12dp"
+        android:clickable="true"
+        android:enabled="true"
+        android:focusable="true"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -94,18 +94,21 @@ class LanguageAdapter(
 
         private fun adjustVerticalMargins(item: LanguageItem) {
             val params = binding.root.layoutParams as? ViewGroup.MarginLayoutParams ?: return
+
+            val strokeWidth = dpToPx(1f)
             val (topMargin, bottomMargin) = when (item) {
                 is LanguageItem.Parent -> {
                     val bottom = if (item.hasChildren && item.isExpanded) 0 else dpToPx(8f)
                     dpToPx(8f) to bottom
                 }
                 is LanguageItem.Child -> {
-                    val top = if (item.position == ChildPosition.FIRST) dpToPx(8f) else 0
+                    val top = if (item.position == ChildPosition.FIRST) dpToPx(8f) else -strokeWidth
                     val bottom = if (item.position == ChildPosition.LAST) dpToPx(8f) else 0
                     top to bottom
                 }
                 else -> dpToPx(0f) to dpToPx(8f)
             }
+
             if (params.topMargin != topMargin || params.bottomMargin != bottomMargin) {
                 params.topMargin = topMargin
                 params.bottomMargin = bottomMargin
@@ -115,6 +118,20 @@ class LanguageAdapter(
 
         private fun dpToPx(dp: Float): Int {
             return (dp * binding.root.resources.displayMetrics.density).toInt()
+        }
+
+        private fun backgroundFor(item: LanguageItem): Int {
+            return when (item) {
+                is LanguageItem.Child -> {
+                    when (item.position) {
+                        ChildPosition.SINGLE -> R.drawable.language_activity_bg_item_language_child_single_selector
+                        ChildPosition.FIRST -> R.drawable.language_activity_bg_item_language_child_top_selector
+                        ChildPosition.MIDDLE -> R.drawable.language_activity_bg_item_language_child_middle_selector
+                        ChildPosition.LAST -> R.drawable.language_activity_bg_item_language_child_bottom_selector
+                    }
+                }
+                else -> R.drawable.language_activity_bg_item_language_parent_selector
+            }
         }
     }
 
@@ -134,17 +151,4 @@ class LanguageAdapter(
         }
     }
 
-    private fun backgroundFor(item: LanguageItem): Int {
-        return when (item) {
-            is LanguageItem.Child -> {
-                when (item.position) {
-                    ChildPosition.SINGLE -> R.drawable.language_activity_bg_item_language_child_single_selector
-                    ChildPosition.FIRST -> R.drawable.language_activity_bg_item_language_child_top_selector
-                    ChildPosition.MIDDLE -> R.drawable.language_activity_bg_item_language_child_middle_selector
-                    ChildPosition.LAST -> R.drawable.language_activity_bg_item_language_child_bottom_selector
-                }
-            }
-            else -> R.drawable.language_activity_bg_item_language_parent_selector
-        }
-    }
 }
