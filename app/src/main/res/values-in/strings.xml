@@ -147,5 +147,18 @@
     <string name="widget_home">Beranda</string>
     <string name="widget_edit">Edit</string>
 
+    <!--    bottom dialog 1-->
+    <string name="app_display_name">POWERPOINT Reader</string>
+    <string name="set_default_title">Jadikan %1$s sebagai penampil file POWERPOINT bawaan</string>
+    <string name="set_default_desc">Pilih opsi ini untuk membuka file dengan cepat dan membuat membaca jadi mudah dan menyenangkan!</string>
+    <string name="set_default_cta">Jadikan Bawaan</string>
+    <!--    bottom dialog 2-->
+    <string name="set_default2_app_name">POWERPOINT Reader</string>
+    <string name="set_default2_app_name_def">POWERPOINT Reader</string>
+    <string name="set_default2_always">Selalu</string>
+    <string name="set_default2_step1">Pilih ikon %1$s di daftar aplikasi.</string>
+    <string name="set_default2_step2">Ketuk “%1$s” untuk menjadikannya pembaca default.</string>
+    <string name="set_default2_summary">Pilih ikon %1$s lalu ketuk “%2$s” untuk menjadikannya default!</string>
+    <string name="set_default2_ok">OK</string>
 
 </resources>

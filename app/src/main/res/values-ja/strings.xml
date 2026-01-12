@@ -147,5 +147,18 @@
     <string name="widget_home">ホーム</string>
     <string name="widget_edit">編集</string>
 
+    <!--    bottom dialog 1-->
+    <string name="app_display_name">POWERPOINT Reader</string>
+    <string name="set_default_title">%1$s をデフォルトの POWERPOINT ファイルビューアに設定</string>
+    <string name="set_default_desc">このオプションでファイルを素早く開き、楽しく簡単に読めます！</string>
+    <string name="set_default_cta">デフォルトに設定</string>
+    <!--    bottom dialog 2-->
+    <string name="set_default2_app_name">POWERPOINT Reader</string>
+    <string name="set_default2_app_name_def">POWERPOINT Reader</string>
+    <string name="set_default2_always">常に</string>
+    <string name="set_default2_step1">アプリ一覧で%1$sアイコンを選択してください。</string>
+    <string name="set_default2_step2">「%1$s」をタップしてデフォルトリーダーに設定します。</string>
+    <string name="set_default2_summary">%1$sアイコンを選び、「%2$s」をタップしてデフォルトに設定！</string>
+    <string name="set_default2_ok">OK</string>
 
 </resources>

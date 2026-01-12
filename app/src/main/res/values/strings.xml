@@ -148,4 +148,19 @@
     <string name="widget_home">Trang chủ</string>
     <string name="widget_edit">Chỉnh sửa</string>
 
+<!--    bottom dialog 1-->
+    <string name="app_display_name">POWERPOINT Reader</string>
+    <string name="set_default_title">Đặt %1$s làm ứng dụng xem file POWERPOINT mặc định</string>
+    <string name="set_default_desc">Chọn tùy chọn này để mở file nhanh và đọc siêu dễ dàng, thú vị!</string>
+    <string name="set_default_cta">Đặt làm mặc định</string>
+    <!--    bottom dialog 2-->
+    <string name="set_default2_app_name">POWERPOINT Reader</string>
+    <string name="set_default2_app_name_def">POWERPOINT Reader</string>
+    <string name="set_default2_always">Luôn chọn</string>
+    <string name="set_default2_step1">Chọn biểu tượng %1$s trong danh sách ứng dụng.</string>
+    <string name="set_default2_step2">Chạm “%1$s” để đặt làm trình đọc mặc định.</string>
+    <string name="set_default2_summary">Chọn biểu tượng %1$s và chạm “%2$s” để đặt làm mặc định!</string>
+    <string name="set_default2_ok">OK</string>
+
+
 </resources>

@@ -134,6 +134,18 @@
     <string name="widget_home">Home</string>
     <string name="widget_edit">Edit</string>
 
-
+    <!--    bottom dialog 1-->
+    <string name="app_display_name">POWERPOINT Reader</string>
+    <string name="set_default_title">Set %1$s as your default POWERPOINT File Viewer</string>
+    <string name="set_default_desc">Pick this option to open files fast and make reading super easy and fun!</string>
+    <string name="set_default_cta">Set as Default</string>
+    <!--    bottom dialog 2-->
+    <string name="set_default2_app_name">POWERPOINT Reader</string>
+    <string name="set_default2_app_name_def">POWERPOINT Reader</string>
+    <string name="set_default2_always">Always</string>
+    <string name="set_default2_step1">Select this %1$s icon in the app list.</string>
+    <string name="set_default2_step2">Tap “%1$s” to set it as the default reader.</string>
+    <string name="set_default2_summary">Select %1$s icon and tap “%2$s” to set it as default!</string>
+    <string name="set_default2_ok">OK</string>
 
 </resources>

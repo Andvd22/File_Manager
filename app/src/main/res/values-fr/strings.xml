@@ -147,6 +147,18 @@
     <string name="widget_home">Accueil</string>
     <string name="widget_edit">Modifier</string>
 
-
+    <!--    bottom dialog 1-->
+    <string name="app_display_name">POWERPOINT Reader</string>
+    <string name="set_default_title">Définir %1$s comme visionneuse de fichiers POWERPOINT par défaut</string>
+    <string name="set_default_desc">Choisissez cette option pour ouvrir les fichiers rapidement et rendre la lecture super simple et amusante !</string>
+    <string name="set_default_cta">Définir par défaut</string>
+    <!--    bottom dialog 2-->
+    <string name="set_default2_app_name">POWERPOINT Reader</string>
+    <string name="set_default2_app_name_def">POWERPOINT Reader</string>
+    <string name="set_default2_always">Toujours</string>
+    <string name="set_default2_step1">Sélectionnez cette icône %1$s dans la liste des apps.</string>
+    <string name="set_default2_step2">Touchez « %1$s » pour la définir comme lecteur par défaut.</string>
+    <string name="set_default2_summary">Sélectionnez l’icône %1$s et touchez « %2$s » pour la définir par défaut !</string>
+    <string name="set_default2_ok">OK</string>
 
 </resources>

@@ -33,12 +33,13 @@
                 android:layout_marginEnd="8dp"
                 />
             <TextView
+                android:id="@+id/tvStep1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textColor="#040516"
-                android:text="Select this WORD Reader icon in the app list."
-                tools:text="Select this WORD Reader icon in the app list."
+                android:text="@string/set_default2_step1"
+                tools:text="@string/set_default2_step1"
                 />
         </LinearLayout>
 <!--        row2-->
@@ -59,12 +60,13 @@
                 android:layout_marginEnd="8dp"
                 />
             <TextView
+                android:id="@+id/tvStep2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:textColor="#040516"
-                tools:text="Click “Always” to set it as the default reader."
-                android:text="Click “Always” to set it as the default reader."
+                tools:text="@string/set_default2_step2"
+                android:text="@string/set_default2_step2"
                 />
         </LinearLayout>
 <!--        row3-->
@@ -116,7 +118,8 @@
             android:layout_marginTop="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="WORD Reader"
+            tools:text="@string/set_default2_app_name_def"
+            android:text="@string/set_default2_app_name_def"
             android:textSize="8sp"
             android:textStyle="bold"
             android:textColor="#040516"/>
@@ -130,9 +133,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
             <TextView
+                android:id="@+id/tvAlwaysLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Always"
+                tools:text="@string/set_default2_always"
                 android:textColor="@color/primaryColor"
                 android:textSize="8dp"
                 android:gravity="center"
@@ -144,8 +148,8 @@
         android:id="@+id/tvContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Select WORD Reader icon and click Always to set it as default!"
-        android:text="Select WORD Reader icon and click Always to set it as default!"
+        tools:text="@string/set_default2_summary"
+        android:text="@string/set_default2_summary"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/llContainer"
@@ -161,8 +165,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvContent"
-        tools:text="OK"
-        android:text="OK"
+        tools:text="@string/set_default2_ok"
+        android:text="@string/set_default2_ok"
         android:background="@drawable/feedback_activity_bg_button_send"
         android:paddingVertical="12dp"
         android:textColor="#FFFFFF"
