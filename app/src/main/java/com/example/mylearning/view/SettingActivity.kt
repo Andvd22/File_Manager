@@ -173,6 +173,10 @@ class SettingActivity : AppCompatActivity() {
             handleSetDefaultClick()
         }
 
+        binding.itemShare.root.setOnClickListener {
+            shareApp()
+        }
+
     }
 
     private fun setupToggles(){
@@ -251,6 +255,24 @@ class SettingActivity : AppCompatActivity() {
         if(defaultPkg == null) return null
         if(defaultPkg == "android" || defaultPkg.contains("resolver")) return null
         return defaultPkg
+    }
+
+    private fun shareApp(showChooser: Boolean = false) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+            // Thay link bằng link thực tế trên store nếu có
+            putExtra(Intent.EXTRA_TEXT, "https://play.google.com/store/apps/details?id=$packageName")
+            addCategory(Intent.CATEGORY_DEFAULT)
+        }
+
+        if (showChooser) {
+            // Chỉ hiện chooser, không có “Chỉ một lần / Luôn chọn”
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_this_app)))
+        } else {
+            // Mở trực tiếp để hệ thống hiện sheet “Chỉ một lần / Luôn chọn”
+            startActivity(shareIntent)
+        }
     }
 
 
