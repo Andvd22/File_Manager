@@ -161,4 +161,23 @@
     <string name="set_default2_summary">Sélectionnez l’icône %1$s et touchez « %2$s » pour la définir par défaut !</string>
     <string name="set_default2_ok">OK</string>
 
+    <!-- activity clear default guide -->
+    <string name="clear_default_title">Effacer le lecteur par défaut</string>
+    <string name="clear_default_step1">Sélectionnez « %1$s »</string>
+    <string name="clear_default_step2">Puis appuyez sur « %1$s »</string>
+    <string name="clear_default_step3">Ensuite, appuyez sur « %1$s » pour revenir à l’application</string>
+    <string name="set_as_default_label">Définir par défaut</string>
+    <string name="clear_defaults_label">Effacer les valeurs par défaut</string>
+    <string name="back_symbol">&lt;</string>
+    <string name="clear_default_cta">ACCEPTER</string>
+
+    <!-- bottom dialog3 -->
+    <string name="dialog3_title">Définissez %1$s comme lecteur PPT par défaut</string>
+    <string name="dialog3_desc1">Vous avez apparemment défini une autre application par défaut</string>
+    <string name="dialog3_desc2">Vous pouvez appuyer sur Réinitialiser pour changer</string>
+    <string name="dialog3_app_name">PPT Reader</string>
+    <string name="dialog3_file_action">Voir PPT</string>
+    <string name="dialog3_btn_confirm">Définir par défaut</string>
+    <string name="dialog3_btn_later">Plus tard</string>
+
 </resources>

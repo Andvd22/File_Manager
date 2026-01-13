@@ -161,4 +161,23 @@
     <string name="set_default2_summary">Pilih ikon %1$s lalu ketuk “%2$s” untuk menjadikannya default!</string>
     <string name="set_default2_ok">OK</string>
 
+    <!-- activity clear default guide -->
+    <string name="clear_default_title">Hapus pembaca bawaan</string>
+    <string name="clear_default_step1">Pilih “%1$s”</string>
+    <string name="clear_default_step2">Lalu ketuk “%1$s”</string>
+    <string name="clear_default_step3">Lalu ketuk “%1$s” untuk kembali ke aplikasi</string>
+    <string name="set_as_default_label">Jadikan bawaan</string>
+    <string name="clear_defaults_label">Hapus bawaan</string>
+    <string name="back_symbol">&lt;</string>
+    <string name="clear_default_cta">SETUJU</string>
+
+    <!-- bottom dialog3 -->
+    <string name="dialog3_title">Jadikan %1$s sebagai penampil PPT bawaan</string>
+    <string name="dialog3_desc1">Sepertinya Anda telah mengatur aplikasi lain sebagai pembaca bawaan</string>
+    <string name="dialog3_desc2">Anda bisa ketuk Reset untuk mengubah</string>
+    <string name="dialog3_app_name">PPT Reader</string>
+    <string name="dialog3_file_action">Lihat PPT</string>
+    <string name="dialog3_btn_confirm">Jadikan bawaan</string>
+    <string name="dialog3_btn_later">Nanti</string>
+
 </resources>

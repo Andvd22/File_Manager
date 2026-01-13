@@ -1,5 +1,7 @@
 package com.example.mylearning.view
 
+import android.content.ClipData
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -47,40 +49,29 @@ class SetAsDefaultBottomDialog2 : BottomSheetDialogFragment(){
     private fun openDefaultChooser() {
         val ctx = context ?: return
         try {
-            // 1) Tạo file PDF mẫu trong cache (đường dẫn đã cho phép trong file_paths.xml)
-            //val tmpFile = File(ctx.cacheDir, "sample_default.pdf").apply
-            val tmpFile = File(ctx.cacheDir, "sample_default.pptx").apply {
-                if (!exists()) {
-                    //writeText("%PDF-1.4\n% temp\n")
+            val tmpFile = File(ctx.cacheDir, "test.ppt").apply {
+                if(!exists()){
                     writeBytes(ByteArray(0))
                 }
             }
-
-            // 2) Lấy content uri qua FileProvider
             val uri = FileProvider.getUriForFile(
                 ctx,
                 "${ctx.packageName}.fileprovider",
                 tmpFile
             )
-
-            // 3) Bắn ACTION_VIEW trực tiếp để hệ thống hiện sheet “Chỉ một lần / Luôn chọn”
             val intent = Intent(Intent.ACTION_VIEW).apply {
-                //setDataAndType(uri, "application/pdf")
+//                setDataAndType(uri, "application/vnd.ms-powerpoint")
                 setDataAndType(uri,"application/vnd.openxmlformats-officedocument.presentationml.presentation")
                 addCategory(Intent.CATEGORY_DEFAULT)
                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                // ClipData giúp chia sẻ quyền đọc cho mọi target nhận intent
-               // clipData = android.content.ClipData.newRawUri("temp_pdf", uri)
-                clipData = android.content.ClipData.newRawUri("temp_pptx", uri)
+                clipData = ClipData.newRawUri("temp_pptx",uri)
             }
-
             startActivity(intent)
             dismiss()
-        } catch (e: Exception) {
-            Toast.makeText(ctx, "Không mở được PowerPoint: ${e.message}", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception){
+            Toast.makeText(ctx, "Không mở được PPT/PPTX", Toast.LENGTH_SHORT).show()
         }
     }
-
     private fun styleTexts() {
         val appName = getString(R.string.set_default2_app_name)
         val always = getString(R.string.set_default2_always)
@@ -116,3 +107,41 @@ class SetAsDefaultBottomDialog2 : BottomSheetDialogFragment(){
         const val TAG = "SetAsDefaultBottomDialog2"
     }
 }
+
+
+//    private fun openDefaultChooser() {
+//        val ctx = context ?: return
+//        try {
+//            // 1) Tạo file PDF mẫu trong cache (đường dẫn đã cho phép trong file_paths.xml)
+//            //val tmpFile = File(ctx.cacheDir, "sample_default.pdf").apply
+//            val tmpFile = File(ctx.cacheDir, "sample_default.pptx").apply {
+//                if (!exists()) {
+//                    //writeText("%PDF-1.4\n% temp\n")
+//                    writeBytes(ByteArray(0))
+//                }
+//            }
+//
+//            // 2) Lấy content uri qua FileProvider
+//            val uri = FileProvider.getUriForFile(
+//                ctx,
+//                "${ctx.packageName}.fileprovider",
+//                tmpFile
+//            )
+//
+//            // 3) Bắn ACTION_VIEW trực tiếp để hệ thống hiện sheet “Chỉ một lần / Luôn chọn”
+//            val intent = Intent(Intent.ACTION_VIEW).apply {
+//                //setDataAndType(uri, "application/pdf")
+//                setDataAndType(uri,"application/vnd.openxmlformats-officedocument.presentationml.presentation")
+//                addCategory(Intent.CATEGORY_DEFAULT)
+//                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                // ClipData giúp chia sẻ quyền đọc cho mọi target nhận intent
+//               // clipData = android.content.ClipData.newRawUri("temp_pdf", uri)
+//                clipData = android.content.ClipData.newRawUri("temp_pptx", uri)
+//            }
+//
+//            startActivity(intent)
+//            dismiss()
+//        } catch (e: Exception) {
+//            Toast.makeText(ctx, "Không mở được PowerPoint: ${e.message}", Toast.LENGTH_SHORT).show()
+//        }
+//    }

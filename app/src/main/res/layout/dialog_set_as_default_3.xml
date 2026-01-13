@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp">
+    <ImageView
+        android:id="@+id/ivIcon1"
+        android:layout_width="61dp"
+        android:layout_height="47dp"
+        android:src="@drawable/set_as_default_dialog3_ic5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@string/dialog3_title"
+        android:text="@string/dialog3_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivIcon1"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#040516"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvDesc1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@string/dialog3_desc1"
+        android:text="@string/dialog3_desc1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        android:textSize="14sp"
+        android:textColor="#040516"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvDesc2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="@string/dialog3_desc2"
+        android:text="@string/dialog3_desc2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvDesc1"
+        android:textSize="14sp"
+        android:textColor="#040516"
+        android:layout_marginTop="16dp"/>
+
+    <LinearLayout
+        android:id="@+id/llContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDesc2"
+        android:orientation="horizontal"
+        android:paddingVertical="7.5dp"
+        android:paddingHorizontal="20dp"
+        android:gravity="center_vertical"
+        android:background="@drawable/set_as_default_bg_dialog_3"
+        android:layout_marginTop="16dp"
+        >
+
+        <ImageView
+            android:id="@+id/ivIconll"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:src="@drawable/set_as_default_dialog3_ic6" />
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="#00091D"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:text="@string/dialog3_file_action"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvBtnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/feedback_activity_bg_button_send"
+        android:text="@string/dialog3_btn_confirm"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llContainer"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        />
+
+    <TextView
+        android:id="@+id/tvBtnLater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/set_as_default_bg_dialog_3"
+        android:text="@string/dialog3_btn_later"
+        android:textColor="#8C8DAF"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBtnConfirm"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

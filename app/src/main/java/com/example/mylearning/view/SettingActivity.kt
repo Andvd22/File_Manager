@@ -1,18 +1,24 @@
 package com.example.mylearning.view
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.mylearning.R
 import com.example.mylearning.databinding.ActivitySettingBinding
+import com.example.mylearning.databinding.DialogSetAsDefault1Binding
 import kotlin.getValue
 
 
@@ -22,6 +28,12 @@ class SettingActivity : AppCompatActivity() {
     private val prefs by lazy {
         getSharedPreferences("app_settings", MODE_PRIVATE)
     }
+
+    private var checkSetAsDefault = false
+    private var checkAppDefault = false
+
+    private var backToClearDefaultGuideActivity= false
+
     companion object {
         private const val KEY_KEEP_SCREEN_ON = "keep_screen_on"
         private const val KEY_NIGHT_MODE = "night_mode"
@@ -29,6 +41,7 @@ class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
     @RequiresApi(Build.VERSION_CODES.R)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingBinding.inflate(layoutInflater)
@@ -42,6 +55,44 @@ class SettingActivity : AppCompatActivity() {
         setupListeners()
         setupToggles()
     }
+
+    override fun onResume() {
+        super.onResume()
+        val defaultPkg = findCurrentDefaultPptHandler()
+        checkAppDefault = defaultPkg == packageName
+        binding.itemSetDefaultApp.root.visibility = if(checkAppDefault) View.GONE else View.VISIBLE
+        if(backToClearDefaultGuideActivity&&defaultPkg==null){
+            val dialog1 = SetAsDefaultBottomDialog1()
+            if(supportFragmentManager.findFragmentByTag(SetAsDefaultBottomDialog1.TAG)==null){
+                dialog1.show(supportFragmentManager, SetAsDefaultBottomDialog1.TAG)
+            }
+            backToClearDefaultGuideActivity = false
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(checkSetAsDefault){
+            val intent = Intent(this, ClearDefaultGuideActivity::class.java)
+            startActivity(intent)
+            checkSetAsDefault = false
+            backToClearDefaultGuideActivity = true
+        }
+    }
+
+//    private val clearDefaultLauncher = registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult()
+//    ) {
+//        // Callback này sẽ chạy khi bạn quay lại từ ClearDefaultGuideActivity
+//        // Kiểm tra lại nếu bây giờ chưa có app mặc định thì hiện Dialog 1
+//        val defaultPkg = findCurrentDefaultPptHandler()
+//        if (defaultPkg == null) {
+//            val dialog1 = SetAsDefaultBottomDialog1()
+//            if(supportFragmentManager.findFragmentByTag(SetAsDefaultBottomDialog1.TAG)==null){
+//                dialog1.show(supportFragmentManager, SetAsDefaultBottomDialog1.TAG)
+//            }
+//        }
+//    }
 
     private fun setupItems() {
         binding.itemChangeLanguage.ivIcon.setImageResource(R.drawable.setting_activity_icon1)
@@ -119,10 +170,7 @@ class SettingActivity : AppCompatActivity() {
         }
 
         binding.itemSetDefaultApp.root.setOnClickListener {
-            if(supportFragmentManager.findFragmentByTag(SetAsDefaultBottomDialog1.TAG)==null){
-                val bottomSheet = SetAsDefaultBottomDialog1()
-                bottomSheet.show(supportFragmentManager, SetAsDefaultBottomDialog1.TAG)
-            }
+            handleSetDefaultClick()
         }
 
     }
@@ -161,5 +209,201 @@ class SettingActivity : AppCompatActivity() {
         }
         delegate.applyDayNight()
     }
+
+    private fun handleSetDefaultClick() {
+        val defaultPkg = findCurrentDefaultPptHandler()
+        if(defaultPkg != null){
+            Toast.makeText(this, "App mặc định: $defaultPkg", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Không tìm thấy app mặc định khác", Toast.LENGTH_SHORT).show()
+        }
+        val hasOtherDefault = defaultPkg != null && defaultPkg != packageName
+        if(hasOtherDefault){
+            val appInfo = packageManager.getApplicationInfo(defaultPkg, 0)
+            val appName = packageManager.getApplicationLabel(appInfo).toString()
+            val bottomDialog3 = SetAsDefaultBottomDialog3(onGoToSettings = {checkSetAsDefault = true }).apply { arguments =
+                Bundle().apply {
+                    putString("arg_pkg", defaultPkg)
+                    putString("arg_app_name", appName)
+                }
+            }
+            if(supportFragmentManager.findFragmentByTag(SetAsDefaultBottomDialog3.TAG)==null){
+                bottomDialog3.show(supportFragmentManager, SetAsDefaultBottomDialog3.TAG)
+            }
+        } else {
+            val bottomDialog1 = SetAsDefaultBottomDialog1()
+            if(supportFragmentManager.findFragmentByTag(SetAsDefaultBottomDialog1.TAG)==null){
+                bottomDialog1.show(supportFragmentManager, SetAsDefaultBottomDialog1.TAG)
+            }
+        }
+    }
+
+    /**
+     * Tìm app đang giữ mặc định mở PPT/PPTX; trả về packageName hoặc null nếu không có.
+     */
+    private fun findCurrentDefaultPptHandler(): String? {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(Uri.parse("content://hahaha.pptx"), "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+        }
+        val resolveInfo = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+        val defaultPkg = resolveInfo?.activityInfo?.packageName
+
+        if(defaultPkg == null) return null
+        if(defaultPkg == "android" || defaultPkg.contains("resolver")) return null
+        return defaultPkg
+    }
+
+
+    //    private fun handleSetDefaultClick() {
+//        val defaultPkg = findCurrentDefaultPptHandler()
+//        if (defaultPkg != null) {
+//            Toast.makeText(this, "App mặc định: $defaultPkg", Toast.LENGTH_SHORT).show()
+//        } else {
+//            Toast.makeText(this, "Không tìm thấy app mặc định khác", Toast.LENGTH_SHORT).show()
+//        }
+// //       val hasOtherDefault = defaultPkg != null && defaultPkg != packageName
+//        val hasOtherDefault = defaultPkg != null
+//
+//        if (hasOtherDefault) {
+//            val bottomDialog3 = SetAsDefaultBottomDialog3(
+//                onGoToSettings = {
+//                    checkSetAsDefault = true
+//                }
+//            ).apply {
+//                arguments = Bundle().apply { putString("arg_pkg", defaultPkg) }
+//            }
+//            if (supportFragmentManager.findFragmentByTag(SetAsDefaultBottomDialog3.TAG) == null) {
+//                bottomDialog3.show(
+//                    supportFragmentManager,
+//                    SetAsDefaultBottomDialog3.TAG
+//                )
+//            }
+//        } else {
+//            val bottomDialog1 = SetAsDefaultBottomDialog1()
+//            if (supportFragmentManager.findFragmentByTag(SetAsDefaultBottomDialog1.TAG) == null) {
+//                bottomDialog1.show(
+//                    supportFragmentManager,
+//                    SetAsDefaultBottomDialog1.TAG
+//                )
+//            }
+//        }
+//    }
+
+//        private fun findCurrentDefaultPptHandler(): String? {
+//        val intent = Intent(Intent.ACTION_VIEW).apply {
+//            val mimeType = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+//            setDataAndType(Uri.parse("content://dummy.pptx"), mimeType)
+//        }
+//
+//        // 1. Lấy App mà hệ thống sẽ dùng để mở Intent này
+//        val resolveInfo = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+//        val defaultPkg = resolveInfo?.activityInfo?.packageName
+//
+//        // 2. Nếu không tìm thấy gì
+//        if (defaultPkg == null) return null
+//
+//        // 3. Nếu nó trả về "android" hoặc "com.google.android.emergency" ...
+//        // thì có nghĩa là CHƯA có app nào được set "Always" (Luôn luôn), nó đang hiện bảng chọn.
+//        if (defaultPkg == "android" || defaultPkg.contains("resolver")) {
+//            return null
+//        }
+//
+//        // 4. Nếu nó trả về chính App của mình
+//        if (defaultPkg == packageName) {
+//            return null
+//        }
+//
+//        // 5. Nếu đến đây thì chắc chắn defaultPkg là một App cụ thể khác (WPS Office, OfficeSuite, v.v.)
+//        return defaultPkg
+//    }
+
+
+//    private fun findCurrentDefaultPptHandler(): String? {
+//        val intent = Intent(Intent.ACTION_VIEW).apply {
+//            val mimeType = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+//            // Sử dụng một Uri hợp lệ hoặc chỉ cần type
+//            setType(mimeType)
+//        }
+//
+//        // Lấy tất cả các App có thể mở file này
+//        val resolveInfo = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
+//        val defaultPkg = resolveInfo?.activityInfo?.packageName
+//
+//        // Nếu App mặc định KHÔNG PHẢI là App của mình thì mới coi là "có App khác đang chiếm"
+//        return if (defaultPkg != null && defaultPkg != packageName && defaultPkg != "android") {
+//            defaultPkg
+//        } else {
+//            null
+//        }
+//    }
+
+
+
+
+//    private fun findCurrentDefaultPptHandler(): String? {
+//        // Thử lần lượt các mime thường gặp
+//        val candidates = listOf(
+//            "application/vnd.openxmlformats-officedocument.presentationml.presentation" to "dummy.pptx",
+//            "application/vnd.ms-powerpoint" to "dummy.ppt"
+//        )
+//        val schemes = listOf("content", "file")
+//        candidates.forEach { (mime, fileName) ->
+//            schemes.forEach { scheme ->
+//                val intent = Intent(Intent.ACTION_VIEW).apply {
+//                    setDataAndType(
+//                        Uri.parse("$scheme://com.example.mylearning/$fileName"),
+//                        mime
+//                    )
+//                    addCategory(Intent.CATEGORY_DEFAULT)
+//                }
+//                val resolveInfo = packageManager.resolveActivity(
+//                    intent,
+//                    PackageManager.MATCH_DEFAULT_ONLY
+//                )
+//                if (resolveInfo != null) {
+//                    return resolveInfo.activityInfo?.packageName
+//                }
+//            }
+//        }
+//        return null
+//    }
+//    private fun findCurrentDefaultPptHandler(): String? {
+//        val intent = Intent(Intent.ACTION_VIEW).apply {
+//            setDataAndType(
+//                Uri.fromParts("file", "dummy.pdf", null),
+//                "application/pdf"
+//            )
+//            addCategory(Intent.CATEGORY_DEFAULT)
+//        }
+//
+//        val activities = packageManager.queryIntentActivities(
+//            intent,
+//            PackageManager.MATCH_DEFAULT_ONLY
+//        )
+//
+//        for (ri in activities) {
+//            if (ri.preferredOrder > 0) {
+//                return ri.activityInfo.packageName
+//            }
+//        }
+//        return null
+//    }
+
+
+//     private fun findCurrentDefaultPptHandler(): String? {
+//         val intent = Intent(Intent.ACTION_VIEW).apply {
+//             setDataAndType(
+//                 Uri.parse("content://com.example.mylearning/dummy.pptx"),
+//                 "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+//             )
+//             addCategory(Intent.CATEGORY_DEFAULT)
+//         }
+//         val resolveInfo = packageManager.resolveActivity(
+//             intent,
+//             PackageManager.MATCH_DEFAULT_ONLY
+//         ) ?: return null
+//         return resolveInfo.activityInfo?.packageName
+//     }
+
 
 }

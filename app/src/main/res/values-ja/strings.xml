@@ -161,4 +161,25 @@
     <string name="set_default2_summary">%1$sアイコンを選び、「%2$s」をタップしてデフォルトに設定！</string>
     <string name="set_default2_ok">OK</string>
 
+    <!-- activity clear default guide -->
+    <string name="clear_default_title">既定のリーダーを解除</string>
+    <string name="clear_default_step1">「%1$s」を選択</string>
+    <string name="clear_default_step2">次に「%1$s」をタップ</string>
+    <string name="clear_default_step3">その後「%1$s」をタップしてアプリに戻ります</string>
+    <string name="set_as_default_label">デフォルトに設定</string>
+    <string name="clear_defaults_label">デフォルトをクリア</string>
+    <string name="back_symbol">&lt;</string>
+    <string name="clear_default_cta">同意する</string>
+
+    <!-- bottom dialog3 -->
+    <string name="dialog3_title">%1$s を既定の PPT ビューアに設定</string>
+    <string name="dialog3_desc1">別のアプリを既定リーダーに設定しているようです</string>
+    <string name="dialog3_desc2">「リセット」をタップして変更できます</string>
+    <string name="dialog3_app_name">PPT Reader</string>
+    <string name="dialog3_file_action">PPT を表示</string>
+    <string name="dialog3_btn_confirm">デフォルトに設定</string>
+    <string name="dialog3_btn_later">後で</string>
+
+
+
 </resources>

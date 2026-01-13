@@ -14,6 +14,17 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="application/vnd.openxmlformats-officedocument.presentationml.presentation" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:mimeType="application/vnd.ms-powerpoint" />
+        </intent>
+    </queries>
+
     <application
         android:name=".MyLearningApp"
         android:allowBackup="true"
@@ -24,6 +35,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyLearning">
+        <activity
+            android:name=".view.ClearDefaultGuideActivity"
+            android:exported="false"
+            android:theme="@style/Theme.TransparentActivity"/>
         <activity
             android:name=".view.FeatureRequestActivity"
             android:exported="false" />
@@ -60,21 +75,27 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
             <!-- Nhận mở PPT/PPTX -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:mimeType="application/vnd.ms-powerpoint" />
                 <data android:mimeType="application/vnd.openxmlformats-officedocument.presentationml.presentation" />
                 <data android:scheme="content" />
                 <data android:scheme="file" />
             </intent-filter>
+        </activity>
 
-        </activity> <!-- THÊM MỚI: FileProvider -->
+
+
+        <!-- THÊM MỚI: FileProvider -->
         <service
             android:name=".service.FileWatchService"
             android:exported="false"
@@ -88,37 +109,36 @@
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
-        </provider>
-
-<!--        Widget1-->
+        </provider> <!-- Widget1 -->
         <receiver
             android:name=".widget.WidgetPage1Provider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_page1_info" />
-        </receiver>
-<!--Widget2-->
+        </receiver> <!-- Widget2 -->
         <receiver
             android:name=".widget.WidgetPage2Provider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_page2_info" />
-        </receiver>
-<!--Widget3-->
+        </receiver> <!-- Widget3 -->
         <receiver
             android:name=".widget.WidgetPage3Provider"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_page3_info" />

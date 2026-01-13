@@ -161,4 +161,23 @@
     <string name="set_default2_summary">Selecciona el ícono %1$s y toca “%2$s” para dejarlo predeterminado.</string>
     <string name="set_default2_ok">OK</string>
 
+    <!-- activity clear default guide -->
+    <string name="clear_default_title">Borrar lector predeterminado</string>
+    <string name="clear_default_step1">Selecciona “%1$s”</string>
+    <string name="clear_default_step2">Luego toca “%1$s”</string>
+    <string name="clear_default_step3">Luego toca “%1$s” para volver a la app</string>
+    <string name="set_as_default_label">Establecer como predeterminado</string>
+    <string name="clear_defaults_label">Borrar valores predeterminados</string>
+    <string name="back_symbol">&lt;</string>
+    <string name="clear_default_cta">ACEPTAR</string>
+
+    <!-- bottom dialog3 -->
+    <string name="dialog3_title">Establece %1$s como tu visor PPT predeterminado</string>
+    <string name="dialog3_desc1">Parece que has configurado otra app como lector predeterminado</string>
+    <string name="dialog3_desc2">Puedes pulsar Restablecer para cambiarlo</string>
+    <string name="dialog3_app_name">PPT Reader</string>
+    <string name="dialog3_file_action">Ver PPT</string>
+    <string name="dialog3_btn_confirm">Establecer como predeterminado</string>
+    <string name="dialog3_btn_later">Más tarde</string>
+
 </resources>

@@ -148,7 +148,7 @@
     <string name="widget_home">Trang chủ</string>
     <string name="widget_edit">Chỉnh sửa</string>
 
-<!--    bottom dialog 1-->
+    <!--    bottom dialog 1-->
     <string name="app_display_name">POWERPOINT Reader</string>
     <string name="set_default_title">Đặt %1$s làm ứng dụng xem file POWERPOINT mặc định</string>
     <string name="set_default_desc">Chọn tùy chọn này để mở file nhanh và đọc siêu dễ dàng, thú vị!</string>
@@ -162,5 +162,23 @@
     <string name="set_default2_summary">Chọn biểu tượng %1$s và chạm “%2$s” để đặt làm mặc định!</string>
     <string name="set_default2_ok">OK</string>
 
+    <!-- activity clear default guide -->
+    <string name="clear_default_title">Xóa trình đọc mặc định</string>
+    <string name="clear_default_step1">Chọn “%1$s”</string>
+    <string name="clear_default_step2">Sau đó nhấn “%1$s”</string>
+    <string name="clear_default_step3">Sau đó nhấn “%1$s” để trở về ứng dụng</string>
+    <string name="set_as_default_label">Đặt làm mặc định</string>
+    <string name="clear_defaults_label">Xóa mặc định</string>
+    <string name="back_symbol">&lt;</string>
+    <string name="clear_default_cta">ĐỒNG Ý</string>
+
+    <!-- bottom dialog3 -->
+    <string name="dialog3_title">Đặt %1$s làm trình xem file PPT mặc định</string>
+    <string name="dialog3_desc1">Có vẻ như bạn đã đặt ứng dụng khác làm trình đọc mặc định</string>
+    <string name="dialog3_desc2">Bạn có thể nhấn Đặt lại để thay đổi</string>
+    <string name="dialog3_app_name">PPT Reader</string>
+    <string name="dialog3_file_action">Xem PPT</string>
+    <string name="dialog3_btn_confirm">Đặt làm mặc định</string>
+    <string name="dialog3_btn_later">Để sau</string>
 
 </resources>

@@ -157,4 +157,23 @@
     <string name="set_default2_summary">%1$s 아이콘을 선택하고 “%2$s”을 눌러 기본으로 설정하세요!</string>
     <string name="set_default2_ok">OK</string>
 
+    <!-- activity clear default guide -->
+    <string name="clear_default_title">기본 리더 해제</string>
+    <string name="clear_default_step1">“%1$s”을(를) 선택</string>
+    <string name="clear_default_step2">그다음 “%1$s”을(를) 탭</string>
+    <string name="clear_default_step3">그다음 “%1$s”을(를) 눌러 앱으로 돌아가기</string>
+    <string name="set_as_default_label">기본값으로 설정</string>
+    <string name="clear_defaults_label">기본값 삭제</string>
+    <string name="back_symbol">&lt;</string>
+    <string name="clear_default_cta">동의</string>
+
+    <!-- bottom dialog3 -->
+    <string name="dialog3_title">%1$s를 기본 PPT 뷰어로 설정</string>
+    <string name="dialog3_desc1">다른 앱을 기본 리더로 설정한 것 같습니다</string>
+    <string name="dialog3_desc2">“초기화”를 눌러 변경할 수 있습니다</string>
+    <string name="dialog3_app_name">PPT Reader</string>
+    <string name="dialog3_file_action">PPT 보기</string>
+    <string name="dialog3_btn_confirm">기본값으로 설정</string>
+    <string name="dialog3_btn_later">나중에</string>
+
 </resources>

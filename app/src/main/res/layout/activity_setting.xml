@@ -252,6 +252,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="0dp" />
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@drawable/setting_activity_divider_setting_item" />
 
                         <!-- Item 4: Send Feedback -->
                         <include
