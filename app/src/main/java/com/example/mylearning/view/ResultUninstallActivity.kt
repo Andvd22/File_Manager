@@ -47,7 +47,7 @@ class ResultUninstallActivity : AppCompatActivity() {
             hasMinChars = (binding.etDetail.text?.length ?: 0) >= 6
         }
 
-        binding.btnCancel.setOnClickListener { finish() }
+        binding.btnCancel.setOnClickListener { goToHome() }
         binding.ivBack.setOnClickListener { finish() }
 
         listSelect.forEachIndexed { index, itemBinding ->
@@ -100,4 +100,11 @@ class ResultUninstallActivity : AppCompatActivity() {
         startActivity(intent)
         Toast.makeText(this, selectReason, Toast.LENGTH_SHORT).show()
     }
+
+    private fun goToHome() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+
 }
