@@ -68,19 +68,19 @@ class ResultUninstallActivity : AppCompatActivity() {
         }
 
         binding.btnUnInstall.setOnClickListener {
-            when (currentIndex) {
-                2 -> { // lựa chọn thứ 3, không cần minChar
+            when(currentIndex){
+                2 -> {
                     goToSettings()
                 }
-                0, 1, 3 -> { // cần >=6 ký tự
-                    if (hasMinChars) {
+                0, 1, 3 -> {
+                    if(hasMinChars){
                         goToSettings()
-                    } else {
-                        Toast.makeText(this, "Vui lòng nhập lý do ít nhất 6 ký tự", Toast.LENGTH_SHORT).show()
+                    }else{
+                        Toast.makeText(this, "Vui lòng nhập iít nhất 6 ký tự", Toast.LENGTH_SHORT).show()
                     }
                 }
                 else -> {
-                    Toast.makeText(this, "Vui lòng chọn lý do", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Vui lòng nhập iít nhất 6 ký tự", Toast.LENGTH_SHORT).show()
                 }
             }
         }
