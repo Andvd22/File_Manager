@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="22dp">
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Uninstalling the app may result in the loss of saved documents or recent files. Are you sure you want to continue?"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="#040516"/>
+    <ImageView
+        android:id="@+id/ivFrame"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/uninstall_frame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        android:layout_marginTop="12dp"/>
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Please try activating the app once more and let us know the reason."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivFrame"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/uninstall_warning_desc"
+        android:textColor="#040516"/>
+
+    <TextView
+        android:id="@id/btnConfirm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Agree"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvContent"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/feedback_activity_bg_button_send"
+        android:paddingVertical="12dp"
+        android:gravity="center"
+        android:text="@string/uninstall_warning_agree"
+        android:layout_marginTop="32dp"/>
+
+    <TextView
+        android:id="@+id/btnUnInstall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Still want to uninstall?"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnConfirm"
+        android:textColor="#8C8DAF"
+        android:paddingVertical="1dp"
+        android:gravity="center"
+        android:text="@string/uninstall_warning_uninstall"
+        android:layout_marginTop="20dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

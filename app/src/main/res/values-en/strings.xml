@@ -166,4 +166,26 @@
     <string name="dialog3_file_action">View PPT</string>
     <string name="dialog3_btn_confirm">Set as Default</string>
     <string name="dialog3_btn_later">Later</string>
+    <!--    shortcuts-->
+    <string name="shortcut_uninstall_short">Uninstall</string>
+    <string name="shortcut_uninstall_long">Uninstall the app</string>
+
+    <!-- uninstall_warning -->
+    <string name="uninstall_warning_title">Uninstalling the app may result in the loss of saved documents or recent files. Are you sure you want to continue?</string>
+    <string name="uninstall_warning_loss_highlight">the loss of saved documents or recent files</string>
+    <string name="uninstall_warning_desc">Please try activating the app once more and let us know the reason.</string>
+    <string name="uninstall_warning_agree">Agree</string>
+    <string name="uninstall_warning_uninstall">Still want to uninstall?</string>
+
+    <!-- result_uninstall -->
+    <string name="result_uninstall_header">Any issues while using the app?</string>
+    <string name="result_uninstall_reason1">Feature not working</string>
+    <string name="result_uninstall_reason2">Too many ads</string>
+    <string name="result_uninstall_reason3">I no longer need this app</string>
+    <string name="result_uninstall_reason4">Other</string>
+    <string name="result_uninstall_cancel">Cancel</string>
+    <string name="result_uninstall_uninstall">Uninstall</string>
+
+
+
 </resources>

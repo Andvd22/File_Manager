@@ -1,6 +1,11 @@
 package com.example.mylearning
 
 import android.app.Application
+import android.content.Intent
+import android.content.pm.ShortcutInfo
+import android.content.pm.ShortcutManager
+import android.graphics.drawable.Icon
+import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -9,6 +14,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.example.mylearning.view.UninstallWarningActivity
 import com.example.mylearning.worker.ScanFilesWorker
 import java.util.concurrent.TimeUnit
 
@@ -22,11 +28,22 @@ class MyLearningApp : Application() {
             if (night) AppCompatDelegate.MODE_NIGHT_YES
             else AppCompatDelegate.MODE_NIGHT_NO
         )
-//        if (BuildConfig.DEBUG) {
-//            scheduleTestScanWork()
-//        } else {
-            schedulePeriodicScanWork()
-//        }
+
+        schedulePeriodicScanWork()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            val intent = Intent(this, UninstallWarningActivity::class.java)
+                .setAction(Intent.ACTION_VIEW)
+
+            val shortcut = ShortcutInfo.Builder(this, "uninstall_shortcut")
+                .setShortLabel(getString(R.string.shortcut_uninstall_short))
+                .setLongLabel(getString(R.string.shortcut_uninstall_long))
+                .setIcon(Icon.createWithResource(this, R.drawable.feature_request_translate_document))
+                .setIntent(intent)
+                .build()
+
+            getSystemService(ShortcutManager::class.java).dynamicShortcuts = listOf(shortcut)
+        }
     }
 
     private fun schedulePeriodicScanWork(){

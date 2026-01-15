@@ -179,5 +179,26 @@
     <string name="dialog3_file_action">Lihat PPT</string>
     <string name="dialog3_btn_confirm">Jadikan bawaan</string>
     <string name="dialog3_btn_later">Nanti</string>
+    <!--    shortcuts-->
+    <string name="shortcut_uninstall_short">Hapus instalasi</string>
+    <string name="shortcut_uninstall_long">Hapus instalasi aplikasi</string>
+
+    <!-- uninstall_warning -->
+    <string name="uninstall_warning_title">Menghapus instalan dapat menyebabkan hilangnya dokumen tersimpan atau file terbaru. Yakin ingin lanjut?</string>
+    <string name="uninstall_warning_loss_highlight">hilangnya dokumen tersimpan atau file terbaru</string>
+    <string name="uninstall_warning_desc">Coba aktifkan aplikasi lagi dan beri tahu kami alasannya.</string>
+    <string name="uninstall_warning_agree">Setuju</string>
+    <string name="uninstall_warning_uninstall">Tetap ingin hapus instalan?</string>
+
+    <!-- result_uninstall -->
+    <string name="result_uninstall_header">Ada masalah saat menggunakan aplikasi?</string>
+    <string name="result_uninstall_reason1">Fitur tidak berfungsi</string>
+    <string name="result_uninstall_reason2">Terlalu banyak iklan</string>
+    <string name="result_uninstall_reason3">Saya tidak memerlukan aplikasi ini lagi</string>
+    <string name="result_uninstall_reason4">Lainnya</string>
+    <string name="result_uninstall_cancel">Batal</string>
+    <string name="result_uninstall_uninstall">Hapus instalan</string>
+
+
 
 </resources>

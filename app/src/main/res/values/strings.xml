@@ -180,5 +180,26 @@
     <string name="dialog3_file_action">Xem PPT</string>
     <string name="dialog3_btn_confirm">Đặt làm mặc định</string>
     <string name="dialog3_btn_later">Để sau</string>
+    <!--    shortcuts-->
+    <string name="shortcut_uninstall_short">Gỡ cài đặt</string>
+    <string name="shortcut_uninstall_long">Gỡ cài đặt ứng dụng</string>
+
+    <!-- uninstall_warning -->
+    <string name="uninstall_warning_title">Gỡ cài đặt ứng dụng có thể dẫn đến mất tài liệu đã lưu hoặc các tệp gần đây. Bạn có chắc muốn tiếp tục không?</string>
+    <string name="uninstall_warning_loss_highlight">mất tài liệu đã lưu hoặc các tệp gần đây</string>
+    <string name="uninstall_warning_desc">Vui lòng thử kích hoạt lại ứng dụng và cho chúng tôi biết lý do.</string>
+    <string name="uninstall_warning_agree">ĐỒNG Ý</string>
+    <string name="uninstall_warning_uninstall">Vẫn muốn gỡ cài đặt?</string>
+
+    <!-- result_uninstall -->
+    <string name="result_uninstall_header">Bạn gặp vấn đề gì khi dùng ứng dụng?</string>
+    <string name="result_uninstall_reason1">Tính năng không hoạt động</string>
+    <string name="result_uninstall_reason2">Quá nhiều quảng cáo</string>
+    <string name="result_uninstall_reason3">Tôi không cần ứng dụng nữa</string>
+    <string name="result_uninstall_reason4">Khác</string>
+    <string name="result_uninstall_cancel">Hủy</string>
+    <string name="result_uninstall_uninstall">Gỡ cài đặt</string>
+
+
 
 </resources>

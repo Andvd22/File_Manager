@@ -180,4 +180,26 @@
     <string name="dialog3_btn_confirm">Establecer como predeterminado</string>
     <string name="dialog3_btn_later">Más tarde</string>
 
+    <!--    shortcuts-->
+    <string name="shortcut_uninstall_short">Desinstalar</string>
+    <string name="shortcut_uninstall_long">Desinstalar la aplicación</string>
+
+    <!-- uninstall_warning -->
+    <string name="uninstall_warning_title">Desinstalar la app puede causar la pérdida de documentos guardados o archivos recientes. ¿Seguro que quieres continuar?</string>
+    <string name="uninstall_warning_loss_highlight">pérdida de documentos guardados o archivos recientes</string>
+    <string name="uninstall_warning_desc">Intenta activar la app otra vez y cuéntanos el motivo.</string>
+    <string name="uninstall_warning_agree">ACEPTAR</string>
+    <string name="uninstall_warning_uninstall">¿Aún quieres desinstalar?</string>
+
+    <!-- result_uninstall -->
+    <string name="result_uninstall_header">¿Algún problema al usar la app?</string>
+    <string name="result_uninstall_reason1">La función no funciona</string>
+    <string name="result_uninstall_reason2">Demasiados anuncios</string>
+    <string name="result_uninstall_reason3">Ya no necesito la app</string>
+    <string name="result_uninstall_reason4">Otro</string>
+    <string name="result_uninstall_cancel">Cancelar</string>
+    <string name="result_uninstall_uninstall">Desinstalar</string>
+
+
+
 </resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/llContainerItemBlog"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="12dp"
+    android:paddingVertical="16dp"
+    android:paddingHorizontal="12dp"
+    android:background="@drawable/result_uninstall_bg_selector"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        tools:text="Feature does not working"
+        android:textColor="#040516"
+        android:textSize="14sp"/>
+    <ImageView
+        android:id="@+id/ivNormal"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/result_uninstall_ic_normal"/>
+    <ImageView
+        android:id="@+id/ivSelected"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/result_uninstall_ic_select"
+        android:visibility="gone"/>
+</LinearLayout>

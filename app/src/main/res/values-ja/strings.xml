@@ -180,6 +180,26 @@
     <string name="dialog3_btn_confirm">デフォルトに設定</string>
     <string name="dialog3_btn_later">後で</string>
 
+    <!--    shortcuts-->
+    <string name="shortcut_uninstall_short">アンインストール</string>
+    <string name="shortcut_uninstall_long">アプリをアンインストール</string>
+
+    <!-- uninstall_warning -->
+    <string name="uninstall_warning_title">アンインストールすると保存済みのドキュメントや最近のファイルが失われる可能性があります。続行しますか？</string>
+    <string name="uninstall_warning_loss_highlight">保存済みドキュメントや最近のファイルの消失</string>
+    <string name="uninstall_warning_desc">もう一度アプリを有効にして、理由をお聞かせください。</string>
+    <string name="uninstall_warning_agree">同意する</string>
+    <string name="uninstall_warning_uninstall">それでもアンインストールしますか？</string>
+
+    <!-- result_uninstall -->
+    <string name="result_uninstall_header">アプリ使用中に問題がありましたか？</string>
+    <string name="result_uninstall_reason1">機能が動作しない</string>
+    <string name="result_uninstall_reason2">広告が多すぎる</string>
+    <string name="result_uninstall_reason3">もうこのアプリは不要</string>
+    <string name="result_uninstall_reason4">その他</string>
+    <string name="result_uninstall_cancel">キャンセル</string>
+    <string name="result_uninstall_uninstall">アンインストール</string>
+
 
 
 </resources>

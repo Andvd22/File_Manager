@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".view.ResultUninstallActivity">
+    <LinearLayout
+        android:id="@+id/llContainer"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/feature_request_arrow_left"
+            android:layout_marginEnd="32dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Any issues while using the app?"
+            android:text="@string/result_uninstall_header"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#040516"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llContainerBlog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llContainer"
+        android:layout_marginTop="24dp"
+        >
+        <include android:id="@+id/item1"
+            layout="@layout/item_result_uninstall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="Feature does not working"
+            android:layout_marginTop="0dp"/>
+        <include android:id="@+id/item2"
+            layout="@layout/item_result_uninstall"
+            tools:text="Too many ads"/>
+        <include android:id="@+id/item3"
+            layout="@layout/item_result_uninstall"
+            tools:text="I no longer need this app"/>
+        <include android:id="@+id/item4"
+            layout="@layout/item_result_uninstall"
+            tools:text="Other"/>
+    </LinearLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilDetail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:boxBackgroundColor="#FFFFFF"
+        app:boxCornerRadiusTopStart="12dp"
+        app:boxCornerRadiusTopEnd="12dp"
+        app:boxCornerRadiusBottomStart="12dp"
+        app:boxCornerRadiusBottomEnd="12dp"
+        app:hintTextColor="#9E9E9E"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llContainerBlog"
+        android:layout_marginTop="12dp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="1"
+            android:maxLines="4"
+            android:gravity="top|start"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:hint="Vui lòng chỉ rõ lý do của bạn"
+            android:inputType="textMultiLine|textCapSentences"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/llContainerButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilDetail"
+        android:layout_marginTop="32dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/btnCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            tools:text="Cancel"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="#040516"
+            android:text="@string/result_uninstall_cancel"
+            android:background="@drawable/result_uninstall_bg"/>
+        <View
+            android:layout_width="35dp"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/btnUnInstall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="10dp"
+            tools:text="Uninstall"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:clickable="false"
+            android:alpha="0.5"
+            android:text="@string/result_uninstall_uninstall"
+            android:background="@drawable/feedback_activity_bg_button_send"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

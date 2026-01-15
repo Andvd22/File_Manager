@@ -129,9 +129,9 @@
                     android:id="@+id/rvAiTools"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:nestedScrollingEnabled="false"
                     android:layout_marginTop="12dp"
-                    tools:listitem="@layout/item_feature_tool"/>
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_feature_tool" />
             </LinearLayout>
         </ScrollView>
         <!-- Others -->

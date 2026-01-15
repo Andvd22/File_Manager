@@ -179,5 +179,26 @@
     <string name="dialog3_file_action">Voir PPT</string>
     <string name="dialog3_btn_confirm">Définir par défaut</string>
     <string name="dialog3_btn_later">Plus tard</string>
+    <!--    shortcuts-->
+    <string name="shortcut_uninstall_short">Désinstaller</string>
+    <string name="shortcut_uninstall_long">Désinstaller l’application</string>
+
+    <!-- uninstall_warning -->
+    <string name="uninstall_warning_title">La désinstallation peut entraîner la perte de documents enregistrés ou de fichiers récents. Voulez-vous vraiment continuer ?</string>
+    <string name="uninstall_warning_loss_highlight">la perte de documents enregistrés ou de fichiers récents</string>
+    <string name="uninstall_warning_desc">Merci d’essayer de réactiver l’application et de nous indiquer la raison.</string>
+    <string name="uninstall_warning_agree">ACCEPTER</string>
+    <string name="uninstall_warning_uninstall">Toujours désinstaller ?</string>
+
+    <!-- result_uninstall -->
+    <string name="result_uninstall_header">Vous avez rencontré des problèmes en utilisant l’app ?</string>
+    <string name="result_uninstall_reason1">Fonctionnalité ne marche pas</string>
+    <string name="result_uninstall_reason2">Trop de publicités</string>
+    <string name="result_uninstall_reason3">Je n’ai plus besoin de l’app</string>
+    <string name="result_uninstall_reason4">Autre</string>
+    <string name="result_uninstall_cancel">Annuler</string>
+    <string name="result_uninstall_uninstall">Désinstaller</string>
+
+
 
 </resources>
