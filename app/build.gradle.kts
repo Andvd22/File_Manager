@@ -22,6 +22,7 @@ android {
         buildConfig = true
     }
 
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -65,4 +66,6 @@ dependencies {
     kapt("androidx.room:room-compiler:$roomVersion")
 
     implementation(libs.androidx.work.runtime)
+
+    implementation("com.airbnb.android:lottie:6.4.0")
 }
