@@ -39,6 +39,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyLearning">
         <activity
+            android:name=".view.RequestNotiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.RequestAllFileActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.LanguageActivity2"
             android:exported="false" />
         <activity

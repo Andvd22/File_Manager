@@ -199,6 +199,23 @@
     <string name="result_uninstall_cancel">Batal</string>
     <string name="result_uninstall_uninstall">Hapus instalan</string>
 
+    <!-- Common -->
+    <string name="presentation_reader">Presentation Reader</string>
+    <string name="common_allow">Izinkan</string>
+    <string name="common_later">Nanti</string>
+
+    <!-- Request Noti -->
+    <string name="request_noti_title">Izinkan Notifikasi</string>
+    <string name="request_noti_sample_title">Anda memiliki file PPT baru</string>
+    <string name="request_noti_open_file">Buka file</string>
+    <string name="request_noti_desc_1">Izinkan %1$s mengirim notifikasi?</string>
+    <string name="request_noti_desc_2">Demi kenyamanan Anda, izinkan aplikasi mengakses izin notifikasi. Jangan lewatkan pembaruan dokumen penting dan pengingat tugas.</string>
+
+    <!-- Request All File -->
+    <string name="request_allfile_welcome_to">Selamat datang di</string>
+    <string name="request_allfile_permission_required">Izin Diperlukan</string>
+    <string name="request_allfile_desc">Untuk membaca dan mengedit file Anda, izinkan %1$s mengakses semua file Anda.</string>
+
 
 
 </resources>

@@ -196,6 +196,23 @@
     <string name="result_uninstall_cancel">취소</string>
     <string name="result_uninstall_uninstall">삭제</string>
 
+    <!-- Common -->
+    <string name="presentation_reader">Presentation Reader</string>
+    <string name="common_allow">허용</string>
+    <string name="common_later">나중에</string>
+
+    <!-- Request Noti -->
+    <string name="request_noti_title">알림 허용</string>
+    <string name="request_noti_sample_title">새 PPT 파일이 있습니다</string>
+    <string name="request_noti_open_file">파일 열기</string>
+    <string name="request_noti_desc_1">%1$s에서 알림을 보내도록 허용하시겠습니까?</string>
+    <string name="request_noti_desc_2">더 편리하게 사용하려면 앱의 알림 권한을 허용해 주세요. 중요한 문서 업데이트와 작업 알림을 놓치지 마세요.</string>
+
+    <!-- Request All File -->
+    <string name="request_allfile_welcome_to">환영합니다</string>
+    <string name="request_allfile_permission_required">권한 필요</string>
+    <string name="request_allfile_desc">파일을 읽고 편집하려면 %1$s에서 모든 파일에 접근하도록 허용해 주세요.</string>
+
 
 
 </resources>

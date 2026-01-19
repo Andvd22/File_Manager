@@ -200,6 +200,23 @@
     <string name="result_uninstall_cancel">キャンセル</string>
     <string name="result_uninstall_uninstall">アンインストール</string>
 
+    <!-- Common -->
+    <string name="presentation_reader">Presentation Reader</string>
+    <string name="common_allow">許可</string>
+    <string name="common_later">後で</string>
+
+    <!-- Request Noti -->
+    <string name="request_noti_title">通知を許可</string>
+    <string name="request_noti_sample_title">新しいPPTファイルがあります</string>
+    <string name="request_noti_open_file">ファイルを開く</string>
+    <string name="request_noti_desc_1">%1$s の通知を許可しますか？</string>
+    <string name="request_noti_desc_2">利便性のため、アプリに通知の権限を許可してください。重要なドキュメント更新やタスクのリマインダーを見逃さないようにしましょう。</string>
+
+    <!-- Request All File -->
+    <string name="request_allfile_welcome_to">ようこそ</string>
+    <string name="request_allfile_permission_required">権限が必要です</string>
+    <string name="request_allfile_desc">ファイルを読み取り・編集するには、%1$s にすべてのファイルへのアクセスを許可してください。</string>
+
 
 
 </resources>

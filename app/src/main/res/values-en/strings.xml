@@ -186,6 +186,23 @@
     <string name="result_uninstall_cancel">Cancel</string>
     <string name="result_uninstall_uninstall">Uninstall</string>
 
+    <!-- Common -->
+    <string name="presentation_reader">Presentation Reader</string>
+    <string name="common_allow">Allow</string>
+    <string name="common_later">Later</string>
+
+    <!-- Request Noti -->
+    <string name="request_noti_title">Allow Notifications</string>
+    <string name="request_noti_sample_title">You have a new PPT File</string>
+    <string name="request_noti_open_file">Open file</string>
+    <string name="request_noti_desc_1">Allow %1$s to send notifications?</string>
+    <string name="request_noti_desc_2">For your convenience, please allow the app to access notifications permission. Don\'t miss important document updates and task reminders.</string>
+
+    <!-- Request All File -->
+    <string name="request_allfile_welcome_to">Welcome to</string>
+    <string name="request_allfile_permission_required">Permission Required</string>
+    <string name="request_allfile_desc">To read and edit your files, please allow %1$s to access all your files.</string>
+
 
 
 </resources>

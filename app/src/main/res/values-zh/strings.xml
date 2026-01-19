@@ -200,6 +200,21 @@
     <string name="result_uninstall_cancel">Cancelar</string>
     <string name="result_uninstall_uninstall">Desinstalar</string>
 
+    <!-- Common -->
+    <string name="presentation_reader">Presentation Reader</string>
+    <string name="common_allow">Permitir</string>
+    <string name="common_later">Más tarde</string>
 
+    <!-- Request Noti -->
+    <string name="request_noti_title">Permitir notificaciones</string>
+    <string name="request_noti_sample_title">Tienes un nuevo archivo PPT</string>
+    <string name="request_noti_open_file">Abrir archivo</string>
+    <string name="request_noti_desc_1">¿Permitir que %1$s envíe notificaciones?</string>
+    <string name="request_noti_desc_2">Para tu comodidad, permite que la app acceda al permiso de notificaciones. No te pierdas actualizaciones importantes de documentos y recordatorios de tareas.</string>
+
+    <!-- Request All File -->
+    <string name="request_allfile_welcome_to">Bienvenido a</string>
+    <string name="request_allfile_permission_required">Permiso requerido</string>
+    <string name="request_allfile_desc">Para leer y editar tus archivos, permite que %1$s acceda a todos tus archivos.</string>
 
 </resources>

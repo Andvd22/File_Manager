@@ -199,6 +199,24 @@
     <string name="result_uninstall_cancel">Annuler</string>
     <string name="result_uninstall_uninstall">Désinstaller</string>
 
+    <!-- Common -->
+    <string name="presentation_reader">Presentation Reader</string>
+    <string name="common_allow">Autoriser</string>
+    <string name="common_later">Plus tard</string>
+
+    <!-- Request Noti -->
+    <string name="request_noti_title">Autoriser les notifications</string>
+    <string name="request_noti_sample_title">Vous avez un nouveau fichier PPT</string>
+    <string name="request_noti_open_file">Ouvrir le fichier</string>
+    <string name="request_noti_desc_1">Autoriser %1$s à envoyer des notifications ?</string>
+    <string name="request_noti_desc_2">Pour votre confort, veuillez autoriser l\'application à accéder à l\'autorisation de notifications. Ne manquez pas les mises à jour importantes des documents et les rappels de tâches.</string>
+
+    <!-- Request All File -->
+    <string name="request_allfile_welcome_to">Bienvenue sur</string>
+    <string name="request_allfile_permission_required">Autorisation requise</string>
+    <string name="request_allfile_desc">Pour lire et modifier vos fichiers, veuillez autoriser %1$s à accéder à tous vos fichiers.</string>
+
+
 
 
 </resources>
