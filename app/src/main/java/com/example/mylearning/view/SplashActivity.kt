@@ -50,7 +50,7 @@ class SplashActivity : AppCompatActivity() {
     private fun goNextScreen() {
         lifecycleScope.launch {
             delay(3000) // thời gian splash
-            startActivity(Intent(this@SplashActivity, LanguageActivity::class.java))
+            startActivity(Intent(this@SplashActivity, LanguageActivity2::class.java))
             finish()
         }
     }

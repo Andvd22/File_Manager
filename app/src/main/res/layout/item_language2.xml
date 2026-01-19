@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    android:background="@drawable/language_activity_bg_item_language_parent_selector"
+    android:paddingVertical="5dp"
+    android:layout_marginBottom="10dp">
+
+    <LinearLayout
+        android:id="@+id/contentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Flag Icon -->
+        <ImageView
+            android:id="@+id/ivFlag"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/language_activity_flag" />
+
+        <!-- Language Name -->
+        <TextView
+            android:id="@+id/tvLanguageName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:textColor="#00091D"
+            android:textSize="13sp"
+            tools:text="English" />
+
+
+        <!-- Selected radio -->
+        <ImageView
+            android:id="@+id/radioSelectButton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:src="@drawable/language_activity_selector_radio_button"
+            android:visibility="gone" />
+
+        <!-- Unselected radio -->
+        <ImageView
+            android:id="@+id/radioButton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:src="@drawable/language_activity_radio_button"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
