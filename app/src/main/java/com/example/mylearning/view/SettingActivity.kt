@@ -138,7 +138,7 @@ class SettingActivity : AppCompatActivity() {
 
     private fun setupListeners(){
         binding.itemChangeLanguage.root.setOnClickListener {
-            val intent = Intent(this, LanguageActivity::class.java)
+            val intent = Intent(this, LanguageActivity2::class.java)
             startActivity(intent)
         }
 

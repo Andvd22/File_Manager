@@ -1,23 +1,38 @@
 package com.example.mylearning.view
 
+import android.Manifest
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.core.content.ContextCompat
 import com.example.mylearning.R
-import com.example.mylearning.databinding.ActivityRequestAllFileBinding
 import com.example.mylearning.databinding.ActivityRequestNotiBinding
 
 class RequestNotiActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRequestNotiBinding
 
+    // SharedPreferences để set onboarding_done
+    private val prefs by lazy { getSharedPreferences(SplashActivity.PREFS_ONBOARDING, Context.MODE_PRIVATE) }
+
+    // Launcher xin quyền notification (API 33+)
+    private val requestNotiPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { _ ->
+        // Dù Allow hay Deny đều vào MainActivity
+        goToMainAndFinish()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityRequestNotiBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -25,26 +40,64 @@ class RequestNotiActivity : AppCompatActivity() {
         setupClickListeners()
     }
 
-    private fun setupClickListeners(){
+    private fun setupClickListeners() {
+        // Nút "Cho phép" → hiện dialog xin quyền noti của hệ thống
+        binding.root.setOnClickListener {
+            requestNotificationPermission()
+        }
 
+        // Nút "Để sau" → vào Main luôn
+        binding.btnLater.setOnClickListener {
+            goToMainAndFinish()
+        }
     }
 
-    private fun styleTexts(){
+    /**
+     * Xin quyền notification:
+     * - API 33+ → hiện dialog hệ thống
+     * - API < 33 → không có runtime permission → đi thẳng Main
+     */
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Kiểm tra đã có quyền chưa
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                == PackageManager.PERMISSION_GRANTED
+            ) {
+                // Đã có quyền → đi Main luôn
+                goToMainAndFinish()
+            } else {
+                // Chưa có → xin quyền, callback sẽ xử lý điều hướng
+                requestNotiPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        } else {
+            // API < 33 → không xin được, đi Main luôn
+            goToMainAndFinish()
+        }
+    }
+
+    /**
+     * Đánh dấu onboarding hoàn thành và vào MainActivity
+     */
+    private fun goToMainAndFinish() {
+        prefs.edit().putBoolean(SplashActivity.KEY_ONBOARDING_DONE, true).apply()
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
+
+    private fun styleTexts() {
         val appName = getString(R.string.presentation_reader)
-
         val title = getString(R.string.request_noti_desc_1, appName)
-
         val primaryColor = getColor(R.color.primaryColor)
-
-
         binding.tvDesc1.text = colorize(title, primaryColor, appName)
     }
 
-    private fun colorize(text: String, color: Int, targetWord: String): SpannableString{
+    private fun colorize(text: String, color: Int, targetWord: String): SpannableString {
         val span = SpannableString(text)
         val start = text.indexOf(targetWord)
-        val end = start + targetWord.length
-        span.setSpan(ForegroundColorSpan(color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        if (start >= 0) {
+            val end = start + targetWord.length
+            span.setSpan(ForegroundColorSpan(color), start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
         return span
     }
 }
