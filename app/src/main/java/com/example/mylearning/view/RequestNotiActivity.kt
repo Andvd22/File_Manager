@@ -4,25 +4,40 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.Settings
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.mylearning.R
 import com.example.mylearning.databinding.ActivityRequestNotiBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class RequestNotiActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRequestNotiBinding
 
     // SharedPreferences để set onboarding_done
     private val prefs by lazy { getSharedPreferences(SplashActivity.PREFS_ONBOARDING, Context.MODE_PRIVATE) }
+    private var fromSplashDenyNoti = false
+    private var isRedirectedToSettings = false
 
     // Launcher xin quyền notification (API 33+)
+    private val settingsLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        goToMainAndFinish()
+    }
     private val requestNotiPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { _ ->
@@ -35,15 +50,44 @@ class RequestNotiActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityRequestNotiBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        fromSplashDenyNoti = intent.getBooleanExtra(SplashActivity.PERMANENTLY_DENIED_NOTI, false)
         styleTexts()
         setupClickListeners()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    override fun onStop() {
+        super.onStop()
+        lifecycleScope.launch {
+            val startTime = System.currentTimeMillis()
+            val maxDuration = 15000L // 15 giây
+            while (System.currentTimeMillis() - startTime < maxDuration) {
+                val notiEnabled =
+                    NotificationManagerCompat.from(this@RequestNotiActivity)
+                        .areNotificationsEnabled()
+                if (notiEnabled) {
+                    isRedirectedToSettings = false
+                    goToMainAndFinish()
+                    break
+                }
+                delay(500)
+            }
+        }
     }
 
     private fun setupClickListeners() {
         // Nút "Cho phép" → hiện dialog xin quyền noti của hệ thống
         binding.root.setOnClickListener {
-            requestNotificationPermission()
+            if(!fromSplashDenyNoti){
+                requestNotificationPermission()
+            }
+            else {
+                val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
+                    putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                }
+                isRedirectedToSettings = true
+                settingsLauncher.launch(intent)
+            }
         }
 
         // Nút "Để sau" → vào Main luôn

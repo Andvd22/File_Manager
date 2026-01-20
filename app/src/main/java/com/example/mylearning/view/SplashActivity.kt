@@ -15,9 +15,12 @@ import androidx.lifecycle.lifecycleScope
 import com.example.mylearning.database.AppDatabase
 import com.example.mylearning.databinding.ActivitySplashBinding
 import com.example.mylearning.repository.FileRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SplashActivity : AppCompatActivity() {
 
@@ -46,11 +49,24 @@ class SplashActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ){ isGranted ->
         prefs.edit().putBoolean(KEY_NOTI_GRANTED_ON_SPLASH, isGranted).apply()
-        if(prefs.getBoolean(KEY_ONBOARDING_DONE, false)){
-            navigateToMain()
+        if(isGranted){
+            if(prefs.getBoolean(KEY_ONBOARDING_DONE, false)){
+                navigateToMain()
+            } else{
+                prefs.edit().putBoolean(KEY_ONBOARDING_DONE, true).apply()
+                navigateToLanguage()
+            }
         } else{
-            prefs.edit().putBoolean(KEY_ONBOARDING_DONE, true).apply()
-            navigateToLanguage()
+            if (!shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                navigateToNoti()
+            } else{
+                if(prefs.getBoolean(KEY_ONBOARDING_DONE, false)){
+                    navigateToMain()
+                } else{
+                    prefs.edit().putBoolean(KEY_ONBOARDING_DONE, true).apply()
+                    navigateToLanguage()
+                }
+            }
         }
     }
 
@@ -64,7 +80,6 @@ class SplashActivity : AppCompatActivity() {
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setupViews()
         startLoadingText()
         checkOnboardingAndProceed()
@@ -123,9 +138,11 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun scanFiles(){
-        lifecycleScope.launch {
+        GlobalScope.launch {
             repository.refreshFiles()
-            Toast.makeText(this@SplashActivity, "Đang quét file...", Toast.LENGTH_LONG).show()
+            withContext(Dispatchers.Main){
+                Toast.makeText(this@SplashActivity, "Dang quet files.................", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -142,10 +159,22 @@ class SplashActivity : AppCompatActivity() {
         finish()
     }
 
+    private fun navigateToNoti() {
+        lifecycleScope.launch {
+            delay(3000)
+            val intent = Intent(this@SplashActivity, RequestNotiActivity::class.java)
+            intent.putExtra(PERMANENTLY_DENIED_NOTI, true)
+            startActivity(intent)
+            finish()
+
+        }
+    }
+
     companion object {
         const val PREFS_ONBOARDING = "onboarding_prefs"
         const val KEY_ONBOARDING_DONE = "onboarding_done"
         const val KEY_NOTI_GRANTED_ON_SPLASH = "noti_granted_on_splash"
         const val FROM_SPLASH = "from_splash"
+        const val PERMANENTLY_DENIED_NOTI = "deny_noti"
     }
 }
