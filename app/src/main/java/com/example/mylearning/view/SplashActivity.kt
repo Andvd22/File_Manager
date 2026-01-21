@@ -80,29 +80,29 @@ class SplashActivity : AppCompatActivity() {
 
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setupViews()
-        startLoadingText()
+//        setupViews()
+//        startLoadingText()
         checkOnboardingAndProceed()
         scanFiles()
     }
 
-    private fun setupViews() {
-        binding.lottieView.speed = 2f
+//    private fun setupViews() {
+//        binding.lottieView.speed = 2f
+//
+//        // LẤY TÊN APP
+//        val appName = applicationInfo.loadLabel(packageManager)
+//        binding.tvTitle.text = "Welcome to $appName"
+//    }
 
-        // LẤY TÊN APP
-        val appName = applicationInfo.loadLabel(packageManager)
-        binding.tvTitle.text = "Welcome to $appName"
-    }
-
-    private fun startLoadingText() {
-        lifecycleScope.launch {
-            while (isActive) {
-                binding.tvLoad.text = texts[index % texts.size]
-                index++
-                delay(1000) // 1s
-            }
-        }
-    }
+//    private fun startLoadingText() {
+//        lifecycleScope.launch {
+//            while (isActive) {
+//                binding.tvLoad.text = texts[index % texts.size]
+//                index++
+//                delay(1000) // 1s
+//            }
+//        }
+//    }
 
     /**
      * Kiểm tra đã qua onboarding chưa:
